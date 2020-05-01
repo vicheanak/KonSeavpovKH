@@ -8,32 +8,40 @@ import {
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 import { Toolbar, ToolbarMenu } from '../../components/toolbar.component';
-import { InfoIcon, LogoutIcon, MenuIcon, EyeIcon, EyeOffIcon } from '../../assets/icons';
+import { InfoIcon, LogoutIcon, StarIcon, MenuIcon, BookIcon, BookmarkIcon, Khmer, English } from '../../assets/icons';
 import { ThemeContext } from '../../services/theme.service';
+import { i18n, switchLanguage  } from '../../app/i18n';
 
 const menu: ToolbarMenu = [
-  { title: 'About', icon: InfoIcon },
-  { title: 'Log Out', icon: LogoutIcon },
-  { title: 'Dark Theme', icon: EyeIcon},
-  { title: 'Light Theme', icon: EyeOffIcon},
+  { title: i18n('highlight'), icon: StarIcon},
+  { title: i18n('saved'), icon: BookmarkIcon},
+  { title: i18n('khmer'), icon: Khmer},
+  { title: i18n('english'), icon: English},
 ];
 
 export const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
 
   const themeContext = React.useContext(ThemeContext);
 
+  const setLanguage = (lang) => {
+    switchLanguage(lang);
+  };
+
   const onMenuItemSelect = (index: number): void => {
     const { [index]: selectedItem } = menu;
 
-    switch (selectedItem.title) {
-      case 'Log Out':
+    switch (selectedItem.icon) {
+      case StarIcon:
         props.navigation.navigate(AppRoute.AUTH);
         break;
-      case 'Dark Theme':
+      case BookmarkIcon:
         themeContext.setCurrentTheme('dark');
         break;
-      case 'Light Theme':
-        themeContext.setCurrentTheme('light');
+      case Khmer:
+        setLanguage('kh');
+        break;
+      case English:
+        setLanguage('en');
         break;
       default:
         props.navigation.navigate(selectedItem.title);

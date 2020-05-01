@@ -1,7 +1,8 @@
 import { AsyncStorage, YellowBox } from 'react-native';
-import { Theme } from './theme.service';
+import { Theme, Local } from './theme.service';
 
 const THEME_KEY: string = 'theme';
+const LOCAL_KEY: string = 'local';
 
 export class AppStorage {
 
@@ -15,6 +16,17 @@ export class AppStorage {
   static setTheme = (theme: Theme): Promise<void> => {
     return AsyncStorage.setItem(THEME_KEY, theme);
   };
+
+  static getLocal = (fallback?: Local): Promise<Local> => {
+    return AsyncStorage.getItem(LOCAL_KEY).then((theme: any) => {
+      return theme || fallback;
+    });
+  };
+
+  static setLocal = (local: Local): Promise<void> => {
+    return AsyncStorage.setItem(LOCAL_KEY, local);
+  };
+  
 }
 
 /**

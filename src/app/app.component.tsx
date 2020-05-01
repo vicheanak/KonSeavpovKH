@@ -13,6 +13,8 @@ import * as eva from '@eva-design/eva';
 import {AppStorage} from '../services/app-storage.service';
 import {AppLoading, LoadFontsTask, Task} from './app-loading.component';
 import {SplashImage} from '../components/splash-image.component';
+import { AppIconsPack } from './app-icons-pack';
+import { i18n, switchLanguage  } from './i18n';
 
 const defaultConfig: {local: Local; theme: Theme} = {
   local: 'kh',
@@ -25,12 +27,19 @@ const loadingTasks: Task[] = [
       'currentTheme',
       result,
     ]),
+  () =>
+    AppStorage.getLocal(defaultConfig.local).then(result => [
+      'currentLang',
+      result,
+    ]),
 ];
 
-const App = ({ currentTheme }): React.ReactElement => {
+const App = ({ currentTheme, currentLang }): React.ReactElement => {
   // This value is used to determine the initial screen
   const isAuthorized: boolean = false;
   const [theme, setTheme] = React.useState(currentTheme);
+
+  // switchLanguage(currentLang);
 
   const setCurrentTheme = (theme: any) => {
     const nextTheme = theme;
@@ -40,7 +49,7 @@ const App = ({ currentTheme }): React.ReactElement => {
 
   return (
     <React.Fragment>
-      <IconRegistry icons={EvaIconsPack} />
+      <IconRegistry icons={[EvaIconsPack, AppIconsPack]} />
       <ThemeContext.Provider value={{...appTheming, theme, setCurrentTheme}}>
         <ApplicationProvider
           mapping={mapping}
