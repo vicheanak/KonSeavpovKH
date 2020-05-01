@@ -8,7 +8,7 @@ import App from './src/app/app.component';
 import { Provider } from 'react-redux';
 import configureStore from './src/redux/configureStore';
 
-const store = configureStore()
+const store = configureStore();
 
 const ReduxApp = () => (
   <Provider store={store}>

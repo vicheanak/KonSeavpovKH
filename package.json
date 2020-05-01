@@ -20,6 +20,7 @@
     "@react-navigation/stack": "^5.0.9",
     "@ui-kitten/components": "^4.4.1",
     "@ui-kitten/eva-icons": "^4.4.1",
+    "axios": "^0.19.2",
     "formik": "^2.1.4",
     "react": "16.9.0",
     "react-native": "^0.61.5",
@@ -32,6 +33,7 @@
     "react-native-svg": "^11.0.1",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
+    "redux-axios-middleware": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "yup": "^0.28.1"
   },

@@ -107,7 +107,7 @@ const SignInScreen = (props: any) => {
             props.appData.data.map((person, i) => {
               return <View key={i} >
                 <Text>Name: {person.name}</Text>
-                <Text>Age: {person.age}</Text>
+                <Text>Email: {person.email}</Text>
               </View>
             })
           ) : null
