@@ -4,6 +4,8 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import { ProfileTabNavigationProp } from './home.navigator';
 import { AppRoute } from './app-routes';
 import { ProfileScreen } from '../scenes/profile';
+import { connect } from 'react-redux';
+import { fetchData } from '../redux/actions';
 
 type ProfileNavigatorParams = {
   [AppRoute.PROFILE]: undefined;
@@ -18,8 +20,26 @@ export interface ProfileScreenProps {
 
 const Stack = createStackNavigator<ProfileNavigatorParams>();
 
-export const ProfileNavigator = (): React.ReactElement => (
+export const ProfileNavigator = (props): React.ReactElement => (
   <Stack.Navigator headerMode='none'>
     <Stack.Screen name={AppRoute.PROFILE} component={ProfileScreen}/>
   </Stack.Navigator>
 );
+
+
+const mapStateToProps = (state) => {
+  return {
+    appData: state.appData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: () => dispatch(fetchData())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileNavigator)

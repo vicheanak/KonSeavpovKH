@@ -10,6 +10,8 @@ import {
   TopNavigationProps,
 } from '@ui-kitten/components';
 import { BackIcon, MoreVerticalIcon } from '../assets/icons';
+import { connect } from 'react-redux';
+import { fetchData } from '../redux/actions';
 
 export type ToolbarMenu = OverflowMenuItemType[];
 

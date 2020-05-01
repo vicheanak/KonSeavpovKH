@@ -60,8 +60,8 @@ const App = ({ currentTheme, currentLang }): React.ReactElement => {
           theme={eva[theme]}>
           <SafeAreaProvider>
             <NavigationContainer>
-              {/* <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/> */}
-              <AppNavigator initialRouteName={AppRoute.HOME} />
+              <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/>
+              {/* <AppNavigator initialRouteName={AppRoute.HOME} /> */}
             </NavigationContainer>
           </SafeAreaProvider>
         </ApplicationProvider>
@@ -79,34 +79,7 @@ const Splash = ({ loading }): React.ReactElement => (
   />
 );
 
-const appLoading = (): React.ReactElement => (
-  <AppLoading
-    tasks={loadingTasks}
-    initialConfig={defaultConfig}
-    placeholder={Splash}>
-    {props => <App {...props} />}
-  </AppLoading>
-)
-
-const mapStateToProps = (state) => {
-  return {
-    appData: state.appData
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: () => dispatch(fetchData())
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(appLoading)
-
-  
-// export default (): React.ReactElement => (
+// const appLoading = (): React.ReactElement => (
 //   <AppLoading
 //     tasks={loadingTasks}
 //     initialConfig={defaultConfig}
@@ -114,3 +87,30 @@ export default connect(
 //     {props => <App {...props} />}
 //   </AppLoading>
 // )
+
+// const mapStateToProps = (state) => {
+//   return {
+//     appData: state.appData
+//   }
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     fetchData: () => dispatch(fetchData())
+//   }
+// }
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(App)
+
+  
+export default (): React.ReactElement => (
+  <AppLoading
+    tasks={loadingTasks}
+    initialConfig={defaultConfig}
+    placeholder={Splash}>
+    {props => <App {...props} />}
+  </AppLoading>
+)

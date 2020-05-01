@@ -21,10 +21,13 @@ export function getDataFailure() {
 }
 
 export function fetchData() {
+  console.log('fetch in redux');
   return (dispatch) => {
     dispatch(getData())
     getPeople()
       .then((data) => {
+          console.log('data');
+          console.log(data);
         dispatch(getDataSuccess(data))
       })
       .catch((err) => console.log('err:', err))
