@@ -15,6 +15,8 @@ import {AppLoading, LoadFontsTask, Task} from './app-loading.component';
 import {SplashImage} from '../components/splash-image.component';
 import { AppIconsPack } from './app-icons-pack';
 import { i18n, switchLanguage  } from './i18n';
+import { connect } from 'react-redux';
+import { fetchData } from '../redux/actions';
 
 const defaultConfig: {local: Local; theme: Theme} = {
   local: 'kh',
@@ -77,11 +79,38 @@ const Splash = ({ loading }): React.ReactElement => (
   />
 );
 
-export default (): React.ReactElement => (
+const appLoading = (): React.ReactElement => (
   <AppLoading
     tasks={loadingTasks}
     initialConfig={defaultConfig}
     placeholder={Splash}>
     {props => <App {...props} />}
   </AppLoading>
-);
+)
+
+const mapStateToProps = (state) => {
+  return {
+    appData: state.appData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: () => dispatch(fetchData())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(appLoading)
+
+  
+// export default (): React.ReactElement => (
+//   <AppLoading
+//     tasks={loadingTasks}
+//     initialConfig={defaultConfig}
+//     placeholder={Splash}>
+//     {props => <App {...props} />}
+//   </AppLoading>
+// )
