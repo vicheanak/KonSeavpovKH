@@ -7,6 +7,7 @@ import { AppRoute } from '../../navigation/app-routes';
 import { FormInput } from '../../components/form-input.component';
 import { EyeIcon, EyeOffIcon } from '../../assets/icons';
 import { SignInData, SignInSchema } from '../../data/sign-in.model';
+import { i18n } from '../../app/i18n';
 
 export const SignInScreen = (props: SignInScreenProps) => {
 
@@ -38,13 +39,13 @@ export const SignInScreen = (props: SignInScreenProps) => {
       <FormInput
         id='email'
         style={styles.formControl}
-        placeholder='Email'
+        placeholder={i18n('auth.email')}
         keyboardType='email-address'
       />
       <FormInput
         id='password'
         style={styles.formControl}
-        placeholder='Password'
+        placeholder={i18n('auth.password')}
         secureTextEntry={!passwordVisible}
         icon={passwordVisible ? EyeIcon : EyeOffIcon}
         onIconPress={onPasswordIconPress}
@@ -54,19 +55,19 @@ export const SignInScreen = (props: SignInScreenProps) => {
           style={styles.formControl}
           checked={shouldRemember}
           onChange={setShouldRemember}
-          text='Remember Me'
+          text={i18n('auth.remember_me')}
         />
         <Button
           appearance='ghost'
           status='basic'
           onPress={navigateResetPassword}>
-          Forgot password?
+          {i18n('auth.forgot_password')}
         </Button>
       </View>
       <Button
         style={styles.submitButton}
         onPress={props.handleSubmit}>
-        SIGN IN
+        {i18n('auth.sign_in')}
       </Button>
     </React.Fragment>
   );

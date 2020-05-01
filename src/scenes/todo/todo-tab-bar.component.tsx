@@ -8,14 +8,19 @@ import {
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 import { Toolbar, ToolbarMenu } from '../../components/toolbar.component';
-import { InfoIcon, LogoutIcon, MenuIcon } from '../../assets/icons';
+import { InfoIcon, LogoutIcon, MenuIcon, EyeIcon, EyeOffIcon } from '../../assets/icons';
+import { ThemeContext } from '../../services/theme.service';
 
 const menu: ToolbarMenu = [
   { title: 'About', icon: InfoIcon },
   { title: 'Log Out', icon: LogoutIcon },
+  { title: 'Dark Theme', icon: EyeIcon},
+  { title: 'Light Theme', icon: EyeOffIcon},
 ];
 
 export const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
+
+  const themeContext = React.useContext(ThemeContext);
 
   const onMenuItemSelect = (index: number): void => {
     const { [index]: selectedItem } = menu;
@@ -23,6 +28,12 @@ export const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
     switch (selectedItem.title) {
       case 'Log Out':
         props.navigation.navigate(AppRoute.AUTH);
+        break;
+      case 'Dark Theme':
+        themeContext.setCurrentTheme('dark');
+        break;
+      case 'Light Theme':
+        themeContext.setCurrentTheme('light');
         break;
       default:
         props.navigation.navigate(selectedItem.title);

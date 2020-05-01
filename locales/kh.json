@@ -1,0 +1,13 @@
+//kh
+{
+    "auth": {
+        "email": "អុីម៉ែល",
+        "password": "លេខសំងាត់",
+        "remember_me": "ចងចាំខ្ញុំ",
+        "sign_in": "ចូលឈ្មោះ",
+        "forgot_password": "ភ្លេចលេខសំងាត់?"
+    },
+    "todo": {
+        "new_book": "សៀវភៅថ្មី"
+    }
+}

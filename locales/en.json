@@ -1,0 +1,13 @@
+//en
+{
+    "auth": {
+      "email": "Email",
+      "password": "Password",
+      "remember_me": "Remember Me",
+      "sign_in": "Sign In",
+      "forgot_password": "Forgot Password?"
+    },
+    "todo": {
+      "new_book": "New Book"  
+    }
+  }

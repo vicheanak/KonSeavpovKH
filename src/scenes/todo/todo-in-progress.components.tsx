@@ -19,6 +19,7 @@ import { AppRoute } from '../../navigation/app-routes';
 import { ProgressBar } from '../../components/progress-bar.component';
 import { SearchIcon, BookmarkIcon } from '../../assets/icons';
 import { Todo } from '../../data/todo.model';
+import { i18n } from '../../app/i18n';
 
 const allTodos: Todo[] = [
   Todo.mocked0(),
@@ -86,7 +87,7 @@ export const TodoInProgressScreen = (props: TodoInProgressScreenProps): ListElem
       <Text
         style={styles.hint}
         category='s1'>
-        New Book
+        {i18n('todo.new_book')}
       </Text>
       <List
         horizontal={true}
