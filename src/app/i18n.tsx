@@ -4,7 +4,7 @@ import I18n from 'react-native-i18n';
 // Import all locales
 import en from '../../locales/en.json';
 import kh from '../../locales/kh.json';
-import { AppReloadService } from '../services/app-reload.service';
+import RNRestart from 'react-native-restart'; // Import package from node modules
 import { AppStorage } from '../services/app-storage.service';
 
 // Should the app fallback to English if user locale doesn't exists

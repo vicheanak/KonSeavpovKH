@@ -11,6 +11,9 @@ import { Toolbar, ToolbarMenu } from '../../components/toolbar.component';
 import { InfoIcon, LogoutIcon, StarIcon, MenuIcon, BookIcon, BookmarkIcon, Khmer, English } from '../../assets/icons';
 import { ThemeContext } from '../../services/theme.service';
 import { i18n, switchLanguage  } from '../../app/i18n';
+import { useFocusEffect } from '@react-navigation/native';
+import { InteractionManager } from 'react-native';
+import RNRestart from 'react-native-restart'; // Import package from node modules
 
 const menu: ToolbarMenu = [
   { title: i18n('highlight'), icon: StarIcon},
@@ -21,10 +24,13 @@ const menu: ToolbarMenu = [
 
 export const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
 
+  
   const themeContext = React.useContext(ThemeContext);
+
 
   const setLanguage = (lang) => {
     switchLanguage(lang);
+    RNRestart.Restart();
   };
 
   const onMenuItemSelect = (index: number): void => {

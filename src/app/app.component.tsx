@@ -39,7 +39,7 @@ const App = ({ currentTheme, currentLang }): React.ReactElement => {
   const isAuthorized: boolean = false;
   const [theme, setTheme] = React.useState(currentTheme);
 
-  // switchLanguage(currentLang);
+  switchLanguage(currentLang);
 
   const setCurrentTheme = (theme: any) => {
     const nextTheme = theme;
