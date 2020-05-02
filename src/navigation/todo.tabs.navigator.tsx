@@ -62,6 +62,7 @@ export type TodoScreenProps = MaterialTopTabBarProps & {
   navigation: TodoTabNavigationProp;
 };
 
+const Stack = createStackNavigator<TodoNavigatorParams>();
 const TopTab = createMaterialTopTabNavigator<TodoTabsNavigatorParams>();
 
 const TodoTabsNavigator = (props: any): React.ReactElement => {
@@ -70,7 +71,9 @@ const TodoTabsNavigator = (props: any): React.ReactElement => {
         <TopTab.Navigator
         swipeEnabled={false}
         tabBar={props => <TodoTabBar {...props} />}>
-        <TopTab.Screen
+            {/* <Stack.TodoInProgressScreen /> */}
+            <Stack.Screen name={AppRoute.TODO} component={TodoInProgressScreen}/>
+        {/* <TopTab.Screen
             name={AppRoute.TODO_IN_PROGRESS}
             component={TodoInProgressScreen}
             options={{title: props.intlData.messages['BOOKS'], tabBarIcon: GridIcon}}
@@ -79,7 +82,7 @@ const TodoTabsNavigator = (props: any): React.ReactElement => {
             name={AppRoute.TODO_DONE}
             component={TodoDoneScreen}
             options={{title: props.intlData.messages['READS'], tabBarIcon: DoneAllIcon}}
-        />
+        /> */}
         </TopTab.Navigator>
     );
 };
