@@ -21,7 +21,6 @@ I18n.defaultLocale = "kh";
 I18n.locale = "kh";
 
 const currentLocale = I18n.currentLocale();
-console.log(currentLocale);
 
 // The method we'll use instead of a regular string
 export function i18n(name, params = {}) {

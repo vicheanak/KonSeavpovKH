@@ -15,6 +15,9 @@ import { ProfileNavigator } from './profile.navigator';
 import { AppRoute } from './app-routes';
 import { AboutScreen, HomeDrawer, HomeTabBar } from '../scenes/home';
 import { HomeIcon, InfoIcon, LayoutIcon, PersonIcon } from '../assets/icons';
+import { connect } from 'react-redux';
+import { intlData } from './../reducers/intlReducer';
+import HomeBottomNavigator from './home.bottom.navigator';
 
 type HomeDrawerNavigatorParams = {
   [AppRoute.HOME]: undefined;
@@ -60,35 +63,37 @@ const BottomTab = createBottomTabNavigator<HomeBottomTabsNavigatorParams>();
 // rather than hard-coding business logic in navigators
 // like it is described in https://reactnavigation.org/docs/en/next/auth-flow.html
 
-const HomeBottomNavigator = (): React.ReactElement => (
-  // @ts-ignore: `tabBar` also contains a DrawerNavigationProp
-  <BottomTab.Navigator tabBar={HomeTabBar}>
-    <BottomTab.Screen
-      name={AppRoute.TODO}
-      component={TodoNavigator}
-      options={{ title: 'TODO', tabBarIcon: LayoutIcon }}
-    />
-    <BottomTab.Screen
-      name={AppRoute.PROFILE}
-      component={ProfileNavigator}
-      options={{ title: 'PROFILE', tabBarIcon: PersonIcon }}
-    />
-  </BottomTab.Navigator>
-);
 
-export const HomeNavigator = (): React.ReactElement => (
-  // @ts-ignore: `drawerContent` also contains a DrawerNavigationProp
-  <Drawer.Navigator drawerContent={HomeDrawer}>
+const HomeNavigator = (props:any): React.ReactElement => {
+  return (
+     // @ts-ignore: `drawerContent` also contains a DrawerNavigationProp
+    <Drawer.Navigator drawerContent={HomeDrawer}>
     <Drawer.Screen
       name={AppRoute.HOME}
       component={HomeBottomNavigator}
-      options={{ title: 'Home', drawerIcon: HomeIcon }}
+      options={{ title: props.intlData.messages['HOME'], drawerIcon: HomeIcon }}
     />
     <Drawer.Screen
       name={AppRoute.ABOUT}
       component={AboutScreen}
-      options={{ title: 'About', drawerIcon: InfoIcon }}
+      options={{ title: props.intlData.messages['READS'], drawerIcon: InfoIcon }}
     />
   </Drawer.Navigator>
-);
+  )
+};
 
+
+const mapStateToProps = (state) => {
+  return {
+    intlData: state.intlData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeNavigator)

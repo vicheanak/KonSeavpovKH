@@ -28,8 +28,7 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
     { title: props.intlData.messages['highlight'], icon: StarIcon},
     { title: props.intlData.messages['saved'], icon: BookmarkIcon},
     { title: props.intlData.messages['khmer'], icon: Khmer},
-    { title: props.intlData.messages['english'], icon: English},
-    { title: props.intlData.messages['forgot_password'], icon: InfoIcon},
+    { title: props.intlData.messages['english'], icon: English}
   ];
 
   const setLanguage = (lang) => {
@@ -52,12 +51,6 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
         break;
       case English:
         setLanguage('en');
-        break;
-      case InfoIcon:
-        props.addUser({
-          name: 'muhammad awais',
-          job: 'developer',
-        });
         break;
       default:
         props.navigation.navigate(selectedItem.title);
@@ -103,7 +96,6 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
 
 
 const mapStateToProps = (state) => {
-  console.log('mapState', state);
   return {
     intlData: state.intlData
   }

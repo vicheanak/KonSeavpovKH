@@ -19,13 +19,11 @@ export const getPeople = () => {
 
 export const addPeople = (params) => {
   return new Promise((resolve, reject) => {
-    console.log('addPeople', params)
     axios
       .post(`https://reqres.in/api/users`, { params })
       .then(res => {
         axios.get(`https://reqres.in/api/users`)
           .then(res => {
-            console.log('people', res.data);
             return resolve(res.data);
           })
       });

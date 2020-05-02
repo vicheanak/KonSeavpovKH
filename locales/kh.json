@@ -1,18 +1,33 @@
 //kh
 {
-    "auth": {
-        "email": "អុីម៉ែល",
-        "password": "លេខសំងាត់",
-        "remember_me": "ចងចាំខ្ញុំ",
-        "sign_in": "ចូលឈ្មោះ",
-        "forgot_password": "ភ្លេចលេខសំងាត់?"
-    },
-    "todo": {
-        "new_book": "សៀវភៅថ្មី"
-    },
+    "email": "អុីម៉ែល",
+    "password": "លេខសំងាត់",
+    "remember_me": "ចងចាំខ្ញុំ",
+    "sign_in": "ចូលឈ្មោះ",
+    "forgot_password": "ភ្លេចលេខសំងាត់?",
     "new_book": "សៀវភៅថ្មី",
     "khmer": "ខ្មែរ",
     "english": "អង់គ្លេស",
     "highlight": "ហាយឡាយ",
-    "saved": "ចំណាំ"
+    "saved": "ចំណាំ",
+    "HOME": "ទំព័រមុខ",
+    "LIBRARY": "បណ្ណាល័យ",
+    "BOOKS": "សៀវភៅ",
+    "READS": "អំនាន",
+    "search": "ស្វែងរក",
+    "book_for_you": "សៀវភៅសម្រាប់អ្នក",
+    "trending_book": "សៀវភៅពេញនិយម",
+    "new_books": "សៀវភៅថ្មី",
+    "purchase": "ទិញ",
+    "downloads": "ដោនឡូត",
+    "terms_of_services": "លក្ខខណ្ឌ​នៃ​សេវាកម្ម",
+    "privacy_policy": "គោលការណ៍​ភាព​ឯកជន",
+    "feedback": "បញ្ចេញមតិ",
+    "follow_us_facebook": "Like Facebook",
+    "about_us": "អំពីយេីង",
+    "filter": "តម្រង",
+    "read_in_progress": "កំពុងអាន",
+    "done_reading": "អានរួច",
+    "finished_downloads": "ដោនឡូតរួច",
+    "not_yet_read": "មិនទាន់អាន"
 }

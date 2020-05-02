@@ -16,8 +16,6 @@ const SignInScreen = (props: any) => {
   const [shouldRemember, setShouldRemember] = React.useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
 
-  console.log('props');
-  console.log(props);
   // props.fetchData();
 
   const onFormSubmit = (values: SignInData): void => {

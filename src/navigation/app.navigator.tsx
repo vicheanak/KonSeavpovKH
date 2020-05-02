@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthNavigator } from './auth.navigator';
-import { HomeNavigator } from './home.navigator';
+import HomeNavigator from './home.navigator';
 import { AppRoute } from './app-routes';
 
 type StackNavigatorProps = React.ComponentProps<typeof Stack.Navigator>;

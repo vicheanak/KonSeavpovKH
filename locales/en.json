@@ -1,18 +1,33 @@
 //en
 {
-    "auth": {
-      "email": "Email",
-      "password": "Password",
-      "remember_me": "Remember Me",
-      "sign_in": "Sign In",
-      "forgot_password": "Forgot Password?"
-    },
-    "todo": {
-      "new_book": "New Book"  
-    },
+    "email": "Email",
+    "password": "Password",
+    "remember_me": "Remember Me",
+    "sign_in": "Sign In",
+    "forgot_password": "Forgot Password?",
     "new_book": "New Book",
     "khmer": "Khmer",
     "english": "English",
     "highlight": "Highlight",
-    "saved": "Saved"
+    "saved": "Saved",
+    "HOME": "HOME",
+    "LIBRARY": "LIBRARY",
+    "BOOKS": "BOOKS",
+    "READS": "READS",
+    "search": "Search",
+    "book_for_you": "Books for you",
+    "trending_book": "Trending Books",
+    "new_books": "New Books",
+    "purchase": "Purchase",
+    "downloads": "Downloads",
+    "terms_of_services": "Terms of Services",
+    "privacy_policy": "Privacy Policy",
+    "feedback": "Feedback",
+    "follow_us_facebook": "Follow Us Facebook",
+    "about_us": "About Us",
+    "filter": "Filter",
+    "read_in_progress": "Read in Progress",
+    "done_reading": "Done Reading",
+    "finished_downloads": "Finished Downloads",
+    "not_yet_read": "Not Yet Read"
   }
