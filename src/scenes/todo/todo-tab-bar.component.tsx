@@ -14,23 +14,26 @@ import { i18n, switchLanguage  } from '../../app/i18n';
 import { useFocusEffect } from '@react-navigation/native';
 import { InteractionManager } from 'react-native';
 import RNRestart from 'react-native-restart'; // Import package from node modules
+import { connect } from 'react-redux'
+import { fetchData, updateLanguage } from '../../redux/actions';
 
-const menu: ToolbarMenu = [
-  { title: i18n('highlight'), icon: StarIcon},
-  { title: i18n('saved'), icon: BookmarkIcon},
-  { title: i18n('khmer'), icon: Khmer},
-  { title: i18n('english'), icon: English},
-];
 
-export const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
-
+// const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
+  const TodoTabBar = (props: any) => {
   
   const themeContext = React.useContext(ThemeContext);
 
+    
+  const menu: ToolbarMenu = [
+    { title: props.intlData.messages['highlight'], icon: StarIcon},
+    { title: props.intlData.messages['saved'], icon: BookmarkIcon},
+    { title: props.intlData.messages['khmer'], icon: Khmer},
+    { title: props.intlData.messages['english'], icon: English},
+  ];
 
   const setLanguage = (lang) => {
-    switchLanguage(lang);
-    RNRestart.Restart();
+    // switchLanguage(lang);
+    props.updateLanguage(lang);
   };
 
   const onMenuItemSelect = (index: number): void => {
@@ -90,3 +93,22 @@ export const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
     </SafeAreaLayout>
   );
 };
+
+
+const mapStateToProps = (state) => {
+  console.log('mapState', state);
+  return {
+    intlData: state.intlData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateLanguage: (lang) => dispatch(updateLanguage(lang))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoTabBar)

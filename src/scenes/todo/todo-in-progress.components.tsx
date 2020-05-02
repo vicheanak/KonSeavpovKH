@@ -20,6 +20,8 @@ import { ProgressBar } from '../../components/progress-bar.component';
 import { SearchIcon, BookmarkIcon } from '../../assets/icons';
 import { Todo } from '../../data/todo.model';
 import { i18n } from '../../app/i18n';
+import { connect } from 'react-redux'
+import { updateLanguage } from '../../redux/actions';
 
 const allTodos: Todo[] = [
   Todo.mocked0(),
@@ -29,7 +31,7 @@ const allTodos: Todo[] = [
 ];
 
 
-export const TodoInProgressScreen = (props: TodoInProgressScreenProps): ListElement => {
+const TodoInProgressScreen = (props: any): ListElement => {
 
   const [todos, setTodos] = React.useState<Todo[]>(allTodos);
   const [query, setQuery] = React.useState<string>('');
@@ -87,7 +89,7 @@ export const TodoInProgressScreen = (props: TodoInProgressScreenProps): ListElem
       <Text
         style={styles.hint}
         category='s1'>
-        {i18n('todo.new_book')}
+        {props.intlData.messages['new_book']}
       </Text>
       <List
         horizontal={true}
@@ -165,3 +167,19 @@ const themedStyles = StyleService.create({
 });
 
 
+const mapStateToProps = (state) => {
+  return {
+    intlData: state.intlData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateLanguage: (lang) => dispatch(updateLanguage(lang))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoInProgressScreen)

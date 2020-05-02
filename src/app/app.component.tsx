@@ -60,8 +60,8 @@ const App = ({ currentTheme, currentLang }): React.ReactElement => {
           theme={eva[theme]}>
           <SafeAreaProvider>
             <NavigationContainer>
-              <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/>
-              {/* <AppNavigator initialRouteName={AppRoute.HOME} /> */}
+              {/* <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/> */}
+              <AppNavigator initialRouteName={AppRoute.HOME} />
             </NavigationContainer>
           </SafeAreaProvider>
         </ApplicationProvider>

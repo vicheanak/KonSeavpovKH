@@ -1,4 +1,4 @@
-import { FETCHING_DATA, FETCHING_DATA_SUCCESS, FETCHING_DATA_FAILURE } from './constants'
+import { FETCHING_DATA, FETCHING_DATA_SUCCESS, FETCHING_DATA_FAILURE, UPDATE_LANGUAGE } from './constants'
 import getPeople from './api'
 
 export function getData() {
@@ -21,15 +21,21 @@ export function getDataFailure() {
 }
 
 export function fetchData() {
-  console.log('fetch in redux');
   return (dispatch) => {
     dispatch(getData())
     getPeople()
       .then((data) => {
-          console.log('data');
-          console.log(data);
         dispatch(getDataSuccess(data))
       })
       .catch((err) => console.log('err:', err))
   }
 }
+
+export function updateLanguage(language) {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_LANGUAGE,
+      language
+    });
+  };
+};
