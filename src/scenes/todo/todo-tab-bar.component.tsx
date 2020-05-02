@@ -15,7 +15,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { InteractionManager } from 'react-native';
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import { connect } from 'react-redux'
-import { fetchData, updateLanguage } from '../../redux/actions';
+import { fetchData, updateLanguage, addUser } from '../../redux/actions';
 
 
 // const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
@@ -29,6 +29,7 @@ import { fetchData, updateLanguage } from '../../redux/actions';
     { title: props.intlData.messages['saved'], icon: BookmarkIcon},
     { title: props.intlData.messages['khmer'], icon: Khmer},
     { title: props.intlData.messages['english'], icon: English},
+    { title: props.intlData.messages['forgot_password'], icon: InfoIcon},
   ];
 
   const setLanguage = (lang) => {
@@ -51,6 +52,12 @@ import { fetchData, updateLanguage } from '../../redux/actions';
         break;
       case English:
         setLanguage('en');
+        break;
+      case InfoIcon:
+        props.addUser({
+          name: 'muhammad awais',
+          job: 'developer',
+        });
         break;
       default:
         props.navigation.navigate(selectedItem.title);
@@ -104,7 +111,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateLanguage: (lang) => dispatch(updateLanguage(lang))
+    updateLanguage: (lang) => dispatch(updateLanguage(lang)),
+    addUser: (params) => dispatch(addUser(params))
   }
 }
 
