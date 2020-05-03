@@ -21,5 +21,6 @@ export enum AppRoute {
   UPDATE_PHONENUMBER = 'Update Phone Number',
   MEMBERSHIP = 'Membership',
   UPGRADE_NOW = 'Update Now',
-  CONTACT_US = 'Contact Us'
+  CONTACT_US = 'Contact Us',
+  HIGHLIGHT = 'High Light'
 }

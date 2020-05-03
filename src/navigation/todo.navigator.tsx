@@ -17,6 +17,7 @@ import {
 } from '../scenes/todo';
 import { DoneAllIcon, GridIcon } from '../assets/icons';
 import TodoTabsNavigator from './todo.tabs.navigator';
+import { HighlightScreen } from './../scenes/todo/highlight.component';
 
 type TodoNavigatorParams = {
   [AppRoute.TODO]: undefined;
@@ -51,6 +52,11 @@ export interface TodoDetailsScreenProps {
   route: RouteProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>;
 }
 
+export interface HighlightScreenProps {
+  navigation: StackNavigationProp<TodoNavigatorParams, AppRoute.HIGHLIGHT>;
+  route: RouteProp<TodoNavigatorParams, AppRoute.HIGHLIGHT>;
+}
+
 const Stack = createStackNavigator<TodoNavigatorParams>();
 const TopTab = createMaterialTopTabNavigator<TodoTabsNavigatorParams>();
 
@@ -79,5 +85,6 @@ export const TodoNavigator = (): React.ReactElement => (
   <Stack.Navigator headerMode='none'>
     <Stack.Screen name={AppRoute.TODO} component={TodoTabsNavigator}/>
     <Stack.Screen name={AppRoute.TODO_DETAILS} component={TodoDetailsScreen}/>
+    <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightScreen}/>
   </Stack.Navigator>
 );

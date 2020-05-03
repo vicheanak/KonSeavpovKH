@@ -19,7 +19,7 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
 
 
 // const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
-  const TodoTabBar = (props: any) => {
+  const TodoTabBar = (props: any): SafeAreaLayoutElement => {
   
   const themeContext = React.useContext(ThemeContext);
 
@@ -42,7 +42,7 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
 
     switch (selectedItem.icon) {
       case HighlightIcon:
-        props.navigation.navigate(AppRoute.AUTH);
+        props.navigation.navigate(AppRoute.HIGHLIGHT);
         break;
       case BookmarkIcon:
         themeContext.setCurrentTheme('dark');

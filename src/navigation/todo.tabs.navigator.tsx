@@ -25,11 +25,13 @@ import {CompositeNavigationProp, RouteProp} from '@react-navigation/core';
 type TodoNavigatorParams = {
   [AppRoute.TODO]: undefined;
   [AppRoute.TODO_DETAILS]: TodoDetailsRouteParams;
+  [AppRoute.HIGHLIGHT]: undefined;
 };
 
 type TodoTabsNavigatorParams = {
   [AppRoute.TODO_IN_PROGRESS]: undefined;
   [AppRoute.TODO_DONE]: undefined;
+  [AppRoute.HIGHLIGHT]: undefined;
 };
 
 export interface TodoInProgressScreenProps {
@@ -44,6 +46,10 @@ export interface TodoInProgressScreenProps {
   route: RouteProp<TodoTabsNavigatorParams, AppRoute.TODO_IN_PROGRESS>;
 }
 
+
+
+
+
 export interface TodoDoneScreenProps {
   navigation: CompositeNavigationProp<
     TodoTabNavigationProp &
@@ -57,6 +63,9 @@ export interface TodoDetailsScreenProps {
   navigation: StackNavigationProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>;
   route: RouteProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>;
 }
+
+
+
 
 export type TodoScreenProps = MaterialTopTabBarProps & {
   navigation: TodoTabNavigationProp;
