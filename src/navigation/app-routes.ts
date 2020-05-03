@@ -22,5 +22,7 @@ export enum AppRoute {
   MEMBERSHIP = 'Membership',
   UPGRADE_NOW = 'Update Now',
   CONTACT_US = 'Contact Us',
-  HIGHLIGHT = 'High Light'
+  HIGHLIGHT = 'Highlight',
+  SAVED = 'Saved',
+  HIGHLIGHT_DETAIL = 'Highlight Detail'
 }

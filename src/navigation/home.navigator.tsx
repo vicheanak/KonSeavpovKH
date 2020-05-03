@@ -61,6 +61,7 @@ type HomeDrawerNavigatorParams = {
 type HomeBottomTabsNavigatorParams = {
   [AppRoute.TODO]: undefined;
   [AppRoute.PROFILE]: undefined;
+  [AppRoute.HIGHLIGHT]: undefined;
 };
 
 export type TodoTabNavigationProp = CompositeNavigationProp<
@@ -70,6 +71,11 @@ export type TodoTabNavigationProp = CompositeNavigationProp<
 
 export type ProfileTabNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<HomeBottomTabsNavigatorParams, AppRoute.PROFILE>,
+  DrawerNavigationProp<HomeDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
+>;
+
+export type HighlightTabNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<HomeBottomTabsNavigatorParams, AppRoute.HIGHLIGHT>,
   DrawerNavigationProp<HomeDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
 >;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider, Layout, Text } from '@ui-kitten/components';
-import { HighlightScreenProps } from '../../navigation/todo.tabs.navigator';
+import { SavedScreenProps } from '../../navigation/todo.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
   SafeAreaLayout,
@@ -9,7 +9,7 @@ import {
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 
-export const HighlightScreen = (props: HighlightScreenProps): SafeAreaLayoutElement => (
+export const SavedScreen = (props: SavedScreenProps): SafeAreaLayoutElement => (
   <SafeAreaLayout
     style={styles.safeArea}
     insets={SaveAreaInset.TOP}>
@@ -20,7 +20,7 @@ export const HighlightScreen = (props: HighlightScreenProps): SafeAreaLayoutElem
     <Divider/>
     <Layout style={styles.container}>
       <Text category='h1'>
-        Highlight Us
+        Saved
       </Text>
     </Layout>
   </SafeAreaLayout>

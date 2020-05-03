@@ -45,7 +45,7 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
         props.navigation.navigate(AppRoute.HIGHLIGHT);
         break;
       case BookmarkIcon:
-        themeContext.setCurrentTheme('dark');
+        props.navigation.navigate(AppRoute.SAVED);
         break;
       case Khmer:
         setLanguage('kh');

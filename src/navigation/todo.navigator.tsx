@@ -17,7 +17,10 @@ import {
 } from '../scenes/todo';
 import { DoneAllIcon, GridIcon } from '../assets/icons';
 import TodoTabsNavigator from './todo.tabs.navigator';
-import { HighlightScreen } from './../scenes/todo/highlight.component';
+import { HighlightScreen } from './../scenes/highlight/highlight.component';
+import { HighlightDetailScreen } from './../scenes/highlight/highlight-detail.component';
+import HighlightNavigator from './highlight.navigator';
+import HighlightDetailNavigator from './highlight-detail.navigator';
 
 type TodoNavigatorParams = {
   [AppRoute.TODO]: undefined;
@@ -52,39 +55,14 @@ export interface TodoDetailsScreenProps {
   route: RouteProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>;
 }
 
-export interface HighlightScreenProps {
-  navigation: StackNavigationProp<TodoNavigatorParams, AppRoute.HIGHLIGHT>;
-  route: RouteProp<TodoNavigatorParams, AppRoute.HIGHLIGHT>;
-}
-
 const Stack = createStackNavigator<TodoNavigatorParams>();
 const TopTab = createMaterialTopTabNavigator<TodoTabsNavigatorParams>();
-
-// FIXME: Is it possible to track swipe progress?
-//
-// In this case, it's needed to synchronize tab-bar indicator in TodoScreen
-// Currently I have set `swipeEnabled` to `false` just for saving navigation consistence
-
-// const TodoTabsNavigator = (): React.ReactElement => (
-//   // @ts-ignore: `tabBar` also contains a DrawerNavigationProp & BottomTabNavigationProp
-//   <TopTab.Navigator swipeEnabled={false} tabBar={props => <TodoTabBar {...props} />}>
-//     <TopTab.Screen
-//       name={AppRoute.TODO_IN_PROGRESS}
-//       component={TodoInProgressScreen}
-//       options={{ title: 'IN PROGRESS', tabBarIcon: GridIcon }}
-//     />
-//     <TopTab.Screen
-//       name={AppRoute.TODO_DONE}
-//       component={TodoDoneScreen}
-//       options={{ title: 'DONE', tabBarIcon: DoneAllIcon }}
-//     />
-//   </TopTab.Navigator>
-// );
 
 export const TodoNavigator = (): React.ReactElement => (
   <Stack.Navigator headerMode='none'>
     <Stack.Screen name={AppRoute.TODO} component={TodoTabsNavigator}/>
     <Stack.Screen name={AppRoute.TODO_DETAILS} component={TodoDetailsScreen}/>
-    <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightScreen}/>
+    <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightNavigator}/>
+    <Stack.Screen name={AppRoute.HIGHLIGHT_DETAIL} component={HighlightDetailScreen}/>
   </Stack.Navigator>
 );

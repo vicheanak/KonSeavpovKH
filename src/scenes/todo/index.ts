@@ -4,4 +4,3 @@ export { TodoDetailsScreen, TodoDetailsRouteParams } from './todo-details.compon
 export { TodoInProgressScreen };
 export { TodoDoneScreen } from './todo-done.component';
 export { TodoTabBar };
-export { HighlightScreen } from './highlight.component'; 
