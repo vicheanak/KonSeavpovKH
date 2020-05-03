@@ -72,6 +72,7 @@ export const AppIconsPack = {
     'text-dark': IconProvider(require('../assets/images/icon-text-dark.png')),
     'toggle': IconProvider(require('../assets/images/icon-toggle.png')),
     'toggle-dark': IconProvider(require('../assets/images/icon-toggle-dark.png')),
+    'toggle-dark-small': IconProvider(require('../assets/images/icon-toggle-dark-small.png')),
     'tooltip': IconProvider(require('../assets/images/icon-tooltip.png')),
     'tooltip-dark': IconProvider(require('../assets/images/icon-tooltip-dark.png')),
     'top-navigation': IconProvider(require('../assets/images/icon-top-navigation.png')),

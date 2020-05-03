@@ -9,5 +9,6 @@ export const ThemeContext = React.createContext({
   setCurrentTheme: (nextTheme: Theme) => {
     AppStorage.setTheme(nextTheme);
   },
+  toggleTheme: () => {},
 });
 

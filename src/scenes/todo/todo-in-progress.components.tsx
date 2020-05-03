@@ -174,7 +174,7 @@ const themedStyles = StyleService.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,.6)',
+    backgroundColor: 'rgba(238,176,0,.4)',
     padding: 3,
     paddingLeft: 10,
     color: 'white',

@@ -10,4 +10,16 @@ export enum AppRoute {
   TODO_DETAILS = 'ToDo Details',
   PROFILE = 'Profile',
   ABOUT = 'About',
+  PURCHASE = 'Purchase',
+  DOWNLOADS = 'Downloads',
+  TERMS_OF_SERVICES = 'Terms of Service',
+  PRIVACY_POLICY = 'Privacy Policy',
+  FEEDBACK = 'Feedback',
+  HELP = 'Help',
+  FOLLOW_US_FACEBOOK = 'Follow Us Facebook',
+  ABOUT_US = 'About Us',
+  UPDATE_PHONENUMBER = 'Update Phone Number',
+  MEMBERSHIP = 'Membership',
+  UPGRADE_NOW = 'Update Now',
+  CONTACT_US = 'Contact Us'
 }

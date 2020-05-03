@@ -29,5 +29,10 @@
     "read_in_progress": "កំពុងអាន",
     "done_reading": "អានរួច",
     "finished_downloads": "ដោនឡូតរួច",
-    "not_yet_read": "មិនទាន់អាន"
+    "not_yet_read": "មិនទាន់អាន",
+    "change_color": "ប្តូរពេ័ណ៏",
+    "upgrade_now": "ចូលសមាជិក",
+    "update_phonenumber": "ប្តូរលេខទូរស័ព្ទ",
+    "membership": "សមាជិក",
+    "contact_us": "ទំនាក់ទំនង"
 }

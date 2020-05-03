@@ -367,3 +367,54 @@ export const English = (style: ImageStyle): IconElement => (
   <Icon style={{height: 5, width: 5}} pack='app' name='english'/>
 );
 
+export const BrushIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='brush-outline'/>
+);
+
+export const ToggleDarkSmallIcon = (style: ImageStyle): IconElement => (
+  <Icon style={{height: 5, width: 5}} pack='app' name='toggle-dark-small'/>
+);
+
+export const HighlightIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='edit-2-outline'/>
+);
+
+export const UpdatePhonenumberIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='phone-outline'  fill='#e1aa0f'/>
+);
+
+export const MembershipIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='person-outline'  fill='#e1aa0f'/>
+);
+
+export const UpgradeNowIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='gift-outline' fill='#51e108'/>
+);
+
+export const DownloadsIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='download-outline'  fill='#e1aa0f'/>
+);
+
+export const TermsOfServicesIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='file-text-outline'  fill='#e1aa0f'/>
+);
+
+export const PrivacyPolicyIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='alert-triangle-outline'  fill='#e1aa0f'/>
+);
+
+export const FeedbackIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='undo-outline'  fill='#e1aa0f'/>
+);
+
+export const FollowUsFacebookIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='facebook-outline'  fill='#e1aa0f'/>
+);
+
+export const AboutUsIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='info-outline'  fill='#e1aa0f'/>
+);
+
+export const ContactUsIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='message-circle-outline'  fill='#e1aa0f'/>
+);

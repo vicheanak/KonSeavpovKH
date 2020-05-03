@@ -8,7 +8,7 @@ import {
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 import { Toolbar, ToolbarMenu } from '../../components/toolbar.component';
-import { InfoIcon, LogoutIcon, StarIcon, MenuIcon, BookIcon, BookmarkIcon, Khmer, English } from '../../assets/icons';
+import { InfoIcon, LogoutIcon, HighlightIcon, MenuIcon, BookIcon, BookmarkIcon, Khmer, English, BrushIcon } from '../../assets/icons';
 import { ThemeContext } from '../../services/theme.service';
 import { i18n, switchLanguage  } from '../../app/i18n';
 import { useFocusEffect } from '@react-navigation/native';
@@ -25,10 +25,11 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
 
     
   const menu: ToolbarMenu = [
-    { title: props.intlData.messages['highlight'], icon: StarIcon},
+    { title: props.intlData.messages['highlight'], icon: HighlightIcon},
     { title: props.intlData.messages['saved'], icon: BookmarkIcon},
     { title: props.intlData.messages['khmer'], icon: Khmer},
-    { title: props.intlData.messages['english'], icon: English}
+    { title: props.intlData.messages['english'], icon: English},
+    { title: props.intlData.messages['change_color'], icon: BrushIcon}
   ];
 
   const setLanguage = (lang) => {
@@ -40,7 +41,7 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
     const { [index]: selectedItem } = menu;
 
     switch (selectedItem.icon) {
-      case StarIcon:
+      case HighlightIcon:
         props.navigation.navigate(AppRoute.AUTH);
         break;
       case BookmarkIcon:
@@ -51,6 +52,9 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
         break;
       case English:
         setLanguage('en');
+        break;
+      case BrushIcon:
+        themeContext.toggleTheme();
         break;
       default:
         props.navigation.navigate(selectedItem.title);

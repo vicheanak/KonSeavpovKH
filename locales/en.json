@@ -29,5 +29,10 @@
     "read_in_progress": "Read in Progress",
     "done_reading": "Done Reading",
     "finished_downloads": "Finished Downloads",
-    "not_yet_read": "Not Yet Read"
+    "not_yet_read": "Not Yet Read",
+    "change_color": "Change Color",
+    "upgrade_now": "Upgrade Now",
+    "update_phonenumber": "Update Phone Number",
+    "membership": "Membership",
+    "contact_us": "Contact Us"
   }

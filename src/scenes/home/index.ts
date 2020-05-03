@@ -1,3 +1,13 @@
 export { AboutScreen } from './about.component';
+export { UpdatePhonenumberScreen } from './update-phonenumber.component';
+export { MembershipScreen } from './membership.component';
+export { UpgradeNowScreen } from './upgrade-now.component';
+export { DownloadsScreen } from './downloads.component';
+export { TermsOfServicesScreen } from './terms-of-services.component';
+export { PrivacyPolicyScreen } from './privacy-policy.component';
+export { FeedbackScreen } from './feedback.component';
+export { FollowUsFacebookScreen } from './follow-us-facebook.component';
+export { AboutUsScreen } from './about-us.component';
+export { ContactUsScreen } from './contact-us.component';
 export { HomeDrawer } from './home-drawer.component';
 export { HomeTabBar } from './home-tab-bar.component';

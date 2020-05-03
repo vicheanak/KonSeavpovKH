@@ -49,15 +49,21 @@ const App = ({ currentTheme, currentLang }): React.ReactElement => {
     setTheme(nextTheme);
   };
 
+  const toggleTheme = () => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    AppStorage.setTheme(nextTheme);
+    setTheme(nextTheme);
+  };
+
   return (
     <React.Fragment>
       <IconRegistry icons={[EvaIconsPack, AppIconsPack]} />
-      <ThemeContext.Provider value={{...appTheming, theme, setCurrentTheme}}>
+      <ThemeContext.Provider value={{...appTheming, theme, setCurrentTheme, toggleTheme}}>
         <ApplicationProvider
           mapping={mapping}
           customMapping={appMapping}
           {...eva}
-          theme={eva[theme]}>
+          theme={{...eva[theme], ...appTheming}}>
           <SafeAreaProvider>
             <NavigationContainer>
               {/* <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/> */}

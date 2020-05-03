@@ -71,18 +71,16 @@ const TodoTabsNavigator = (props: any): React.ReactElement => {
         <TopTab.Navigator
         swipeEnabled={false}
         tabBar={props => <TodoTabBar {...props} />}>
-            {/* <Stack.TodoInProgressScreen /> */}
-            <Stack.Screen name={AppRoute.TODO} component={TodoInProgressScreen}/>
-        {/* <TopTab.Screen
-            name={AppRoute.TODO_IN_PROGRESS}
-            component={TodoInProgressScreen}
-            options={{title: props.intlData.messages['BOOKS'], tabBarIcon: GridIcon}}
-        />
-        <TopTab.Screen
-            name={AppRoute.TODO_DONE}
-            component={TodoDoneScreen}
-            options={{title: props.intlData.messages['READS'], tabBarIcon: DoneAllIcon}}
-        /> */}
+          <TopTab.Screen
+              name={AppRoute.TODO_IN_PROGRESS}
+              component={TodoInProgressScreen}
+              options={{title: props.intlData.messages['BOOKS'], tabBarIcon: GridIcon}}
+          />
+          <TopTab.Screen
+              name={AppRoute.TODO_DONE}
+              component={TodoDoneScreen}
+              options={{title: props.intlData.messages['READS'], tabBarIcon: DoneAllIcon}}
+          />
         </TopTab.Navigator>
     );
 };
