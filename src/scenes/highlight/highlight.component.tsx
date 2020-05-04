@@ -14,7 +14,8 @@ import { AppRoute } from '../../navigation/app-routes';
 export const HighlightScreen = (props: HighlightScreenProps): React.ReactElement => {
   
   const navigateHighlightDetail = () => {
-    props.navigation.navigate(AppRoute.HIGHLIGHT_DETAIL);
+    let param = 1;
+    props.navigation.navigate(AppRoute.HIGHLIGHT_DETAIL, {id: 1, title: 'One'});
   };
 
   return (

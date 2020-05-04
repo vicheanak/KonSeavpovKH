@@ -3,22 +3,16 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/core';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { ProfileTabNavigationProp } from './home.navigator';
 import { AppRoute } from './app-routes';
-import { HighlightScreen, HighlightDetailScreen } from '../scenes/highlight';
+import { HighlightScreen, HighlightDetailScreen, HighlightDetailRouteParams } from '../scenes/highlight';
 import { connect } from 'react-redux';
 import { fetchData } from '../redux/actions';
-import HighlightDetailNavigator from './highlight-detail.navigator';
 
 
 type HighlightNavigatorParams = {
   [AppRoute.HIGHLIGHT]: undefined;
-  [AppRoute.HIGHLIGHT_DETAIL]: undefined;
+  [AppRoute.HIGHLIGHT_DETAIL]: any;
 }
 
-
-type HighlightDetailNavigatorParams = {
-  [AppRoute.HIGHLIGHT]: undefined;
-  [AppRoute.HIGHLIGHT_DETAIL]: undefined;
-}
 
 // export interface HighlightScreenProps {
 //   navigation: CompositeNavigationProp<
@@ -35,8 +29,8 @@ export interface HighlightScreenProps {
 
 
 export interface HighlightDetailScreenProps {
-  navigation: StackNavigationProp<HighlightDetailNavigatorParams, AppRoute.HIGHLIGHT_DETAIL>;
-  route: RouteProp<HighlightDetailNavigatorParams, AppRoute.HIGHLIGHT_DETAIL>;
+  navigation: StackNavigationProp<HighlightNavigatorParams, AppRoute.HIGHLIGHT_DETAIL>;
+  route: RouteProp<HighlightNavigatorParams, AppRoute.HIGHLIGHT_DETAIL>;
 }
 
 
@@ -45,7 +39,7 @@ const Stack = createStackNavigator<HighlightNavigatorParams>();
 const HighlightNavigator = (props): React.ReactElement => (
   <Stack.Navigator headerMode='none'>
     <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightScreen}/>
-    {/* <Stack.Screen name={AppRoute.HIGHLIGHT_DETAIL} component={HighlightDetailNavigator}/> */}
+    <Stack.Screen name={AppRoute.HIGHLIGHT_DETAIL} component={HighlightDetailScreen}/>
   </Stack.Navigator>
 );
 

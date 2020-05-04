@@ -1,2 +1,2 @@
 export { HighlightScreen } from './highlight.component';
-export { HighlightDetailScreen } from './highlight-detail.component';
+export { HighlightDetailScreen, HighlightDetailRouteParams } from './highlight-detail.component';

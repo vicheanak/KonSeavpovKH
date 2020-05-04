@@ -17,10 +17,7 @@ import {
 } from '../scenes/todo';
 import { DoneAllIcon, GridIcon } from '../assets/icons';
 import TodoTabsNavigator from './todo.tabs.navigator';
-import { HighlightScreen } from './../scenes/highlight/highlight.component';
-import { HighlightDetailScreen } from './../scenes/highlight/highlight-detail.component';
 import HighlightNavigator from './highlight.navigator';
-import HighlightDetailNavigator from './highlight-detail.navigator';
 
 type TodoNavigatorParams = {
   [AppRoute.TODO]: undefined;
@@ -63,6 +60,5 @@ export const TodoNavigator = (): React.ReactElement => (
     <Stack.Screen name={AppRoute.TODO} component={TodoTabsNavigator}/>
     <Stack.Screen name={AppRoute.TODO_DETAILS} component={TodoDetailsScreen}/>
     <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightNavigator}/>
-    <Stack.Screen name={AppRoute.HIGHLIGHT_DETAIL} component={HighlightDetailScreen}/>
   </Stack.Navigator>
 );
