@@ -426,3 +426,7 @@ export const ContactUsIcon = (style: ImageStyle): IconElement => (
 export const HomeOrangeIcon = (style): IconElement => (
   <Icon {...style} name='home-outline'  fill='#e1aa0f'/>
 );
+
+export const LibrarySaveIcon = (style): IconElement => (
+  <Icon style={{height: 25, width: 25}}  fill='#e1aa0f'  name='bookmark-outline' />
+);

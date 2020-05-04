@@ -38,7 +38,7 @@ const HomeBottomNavigator = (props:any): React.ReactElement => {
       <BottomTab.Screen
         name={AppRoute.PROFILE}
         component={ProfileNavigator}
-        options={{ title: props.intlData.messages['LIBRARY'], tabBarIcon: SearchIcon }}
+        options={{ title: props.intlData.messages['LIBRARY'], tabBarIcon: BookOpenIcon }}
       />
     </BottomTab.Navigator>
   )

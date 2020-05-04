@@ -15,7 +15,7 @@ import {
 } from '@react-navigation/material-top-tabs';
 import {TodoTabNavigationProp} from './home.navigator';
 import {connect} from 'react-redux';
-import {BookIcon, DoneAllIcon, GridIcon, EyeIcon, BookOpenIcon} from '../assets/icons';
+import {BookIcon, DoneAllIcon, GridIcon, EyeIcon, BookOpenIcon, BookmarkIcon} from '../assets/icons';
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -80,7 +80,7 @@ const TodoTabsNavigator = (props: any): React.ReactElement => {
           <TopTab.Screen
               name={AppRoute.TODO_DONE}
               component={TodoDoneScreen}
-              options={{title: props.intlData.messages['READS'], tabBarIcon: BookOpenIcon}}
+              options={{title: props.intlData.messages['READS'], tabBarIcon: BookmarkIcon}}
           />
         </TopTab.Navigator>
     );
