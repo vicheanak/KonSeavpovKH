@@ -75,6 +75,10 @@ export const BookIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='book'/>
 );
 
+export const BookOpenIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='book-open-outline'/>
+);
+
 export const BookmarkOutlineIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='bookmark-outline'/>
 );
@@ -417,4 +421,8 @@ export const AboutUsIcon = (style: ImageStyle): IconElement => (
 
 export const ContactUsIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='message-circle-outline'  fill='#e1aa0f'/>
+);
+
+export const HomeOrangeIcon = (style): IconElement => (
+  <Icon {...style} name='home-outline'  fill='#e1aa0f'/>
 );

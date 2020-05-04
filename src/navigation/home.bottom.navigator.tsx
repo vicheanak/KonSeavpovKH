@@ -14,7 +14,7 @@ import { TodoNavigator } from './todo.navigator';
 import { ProfileNavigator } from './profile.navigator';
 import { AppRoute } from './app-routes';
 import { AboutScreen, HomeDrawer, HomeTabBar } from '../scenes/home';
-import { HomeIcon, InfoIcon, LayoutIcon, PersonIcon } from '../assets/icons';
+import { HomeIcon, InfoIcon, LayoutIcon, PersonIcon, BookOpenIcon, BookIcon, SearchIcon } from '../assets/icons';
 import { connect } from 'react-redux';
 import { intlData } from './../reducers/intlReducer';
 
@@ -33,12 +33,12 @@ const HomeBottomNavigator = (props:any): React.ReactElement => {
       <BottomTab.Screen
         name={AppRoute.TODO}
         component={TodoNavigator}
-        options={{ title: props.intlData.messages['HOME'], tabBarIcon: LayoutIcon }}
+        options={{ title: props.intlData.messages['HOME'], tabBarIcon: HomeIcon }}
       />
       <BottomTab.Screen
         name={AppRoute.PROFILE}
         component={ProfileNavigator}
-        options={{ title: props.intlData.messages['LIBRARY'], tabBarIcon: PersonIcon }}
+        options={{ title: props.intlData.messages['LIBRARY'], tabBarIcon: SearchIcon }}
       />
     </BottomTab.Navigator>
   )

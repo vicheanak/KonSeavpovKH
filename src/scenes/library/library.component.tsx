@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider, Layout, Text } from '@ui-kitten/components';
-import { ProfileScreenProps } from '../../navigation/profile.navigator';
+import { LibraryScreenProps } from '../../navigation/profile.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
   SafeAreaLayout,
@@ -10,7 +10,7 @@ import {
 } from '../../components/safe-area-layout.component';
 import { MenuIcon } from '../../assets/icons';
 
-export const ProfileScreen = (props: ProfileScreenProps): SafeAreaLayoutElement => (
+export const LibraryScreen = (props: LibraryScreenProps): SafeAreaLayoutElement => (
   <SafeAreaLayout
     style={styles.safeArea}
     insets={SaveAreaInset.TOP}>

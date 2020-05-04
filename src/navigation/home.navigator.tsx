@@ -27,6 +27,7 @@ import {AboutUsScreen,
    HomeTabBar} from '../scenes/home';
 import {
   HomeIcon,
+  HomeOrangeIcon,
   InfoIcon,
   LayoutIcon,
   PersonIcon,
@@ -201,7 +202,7 @@ const HomeNavigator = (props: any): React.ReactElement => {
         // component={UpdatePhonenumberScreen}
         options={{
           title: props.intlData.messages['HOME'],
-          drawerIcon: HomeIcon,
+          drawerIcon: HomeOrangeIcon,
         }}
       />
       <Drawer.Screen
