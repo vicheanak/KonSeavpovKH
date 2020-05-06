@@ -8,7 +8,7 @@ export enum AppRoute {
   TODO_IN_PROGRESS = 'ToDo In Progress',
   TODO_DONE = 'ToDo Done',
   TODO_DETAILS = 'ToDo Details',
-  PROFILE = 'Profile',
+  LIBRARY = 'Library',
   ABOUT = 'About',
   PURCHASE = 'Purchase',
   DOWNLOADS = 'Downloads',
@@ -24,5 +24,6 @@ export enum AppRoute {
   CONTACT_US = 'Contact Us',
   HIGHLIGHT = 'Highlight',
   SAVED = 'Saved',
-  HIGHLIGHT_DETAIL = 'Highlight Detail'
+  HIGHLIGHT_DETAIL = 'Highlight Detail',
+  LIBRARY_DETAIL = 'Library Detail'
 }

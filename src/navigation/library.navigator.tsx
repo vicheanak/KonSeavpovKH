@@ -1,28 +1,28 @@
 import React from 'react';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/core';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { ProfileTabNavigationProp } from './home.navigator';
+import { LibraryTabNavigationProp } from './home.navigator';
 import { AppRoute } from './app-routes';
 import { LibraryScreen } from '../scenes/library';
 import { connect } from 'react-redux';
 import { fetchData } from '../redux/actions';
 
-type ProfileNavigatorParams = {
-  [AppRoute.PROFILE]: undefined;
+type LibraryNavigatorParams = {
+  [AppRoute.LIBRARY]: undefined;
 }
 
 export interface LibraryScreenProps {
   navigation: CompositeNavigationProp<
-    ProfileTabNavigationProp,
-    StackNavigationProp<ProfileNavigatorParams, AppRoute.PROFILE>>;
-  route: RouteProp<ProfileNavigatorParams, AppRoute.PROFILE>;
+    LibraryTabNavigationProp,
+    StackNavigationProp<LibraryNavigatorParams, AppRoute.LIBRARY>>;
+  route: RouteProp<LibraryNavigatorParams, AppRoute.LIBRARY>;
 }
 
-const Stack = createStackNavigator<ProfileNavigatorParams>();
+const Stack = createStackNavigator<LibraryNavigatorParams>();
 
-export const ProfileNavigator = (props): React.ReactElement => (
+export const LibraryNavigator = (props): React.ReactElement => (
   <Stack.Navigator headerMode='none'>
-    <Stack.Screen name={AppRoute.PROFILE} component={LibraryScreen}/>
+    <Stack.Screen name={AppRoute.LIBRARY} component={LibraryScreen}/>
   </Stack.Navigator>
 );
 
@@ -42,4 +42,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfileNavigator)
+)(LibraryNavigator)

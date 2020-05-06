@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ListRenderItemInfo, View } from 'react-native';
-import { Divider, Layout, Text, List, Input, Button } from '@ui-kitten/components';
+import { Divider, Layout, Text, List, Input, Button, ListItemElement } from '@ui-kitten/components';
 import { LibraryScreenProps } from '../../navigation/profile.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
@@ -11,6 +11,7 @@ import {
 import { MenuIcon, SearchIcon } from '../../assets/icons';
 import { LibraryBook } from '../../data/library-book.model';
 import { LibraryBookComponent } from '../../components/library-book.component';
+import {AppRoute} from '../../navigation/app-routes';
 
 const initialLibraryBooks: LibraryBook[] = [
   LibraryBook.psychology(),
@@ -45,24 +46,21 @@ export const LibraryScreen = (props: LibraryScreenProps): SafeAreaLayoutElement 
   const [libraryBook] = React.useState<LibraryBook[]>(initialLibraryBooks);
   const [query, setQuery] = React.useState<string>('');
 
-  const onSaved = () => {
-    console.log('Saved Button Pressed');
+  const onGoDetail = (id: number) => {
+    const {[id]: book} = libraryBook;
+    console.log('book', book);
+    // props.navigation.navigate(AppRoute.LIBRARY_DETAIL, {book});
+    console.log('onGoDetail => empty function');
   }
 
-  const renderLibraryBookComponent = (info: ListRenderItemInfo<LibraryBook>): React.ReactElement => (
+  const renderLibraryBookComponent = (info: ListRenderItemInfo<LibraryBook>): ListItemElement => (
     <LibraryBookComponent
       style={styles.item}
       index={info.index}
       libraryBook={info.item}
-      onSavedPress={onSaved}
+      onDetailPress={() => {onGoDetail(info.item.id)}}
     />
   );
-
-  const renderItemSeparator = () => {
-      return (
-          <View style={{ height: StyleSheet.hairlineWidth, backgroundColor: 'rgba(0,0,0,0.3)' }} />
-      );
-  }
 
   const onChangeQuery = (query: string): void => {
     // const nextTodos: Todo[] = allTodos.filter((todo: Todo): boolean => {
@@ -97,7 +95,7 @@ export const LibraryScreen = (props: LibraryScreenProps): SafeAreaLayoutElement 
         <List
             data={libraryBook}
             renderItem={renderLibraryBookComponent}
-            ItemSeparatorComponent={renderItemSeparator}
+            ItemSeparatorComponent={Divider}
           />
       </Layout>
     </SafeAreaLayout>
@@ -116,10 +114,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
-    borderBottomWidth: 1
+    // borderBottomWidth: 1
   },
   hairlineWidth: {
-    height: 5
+    height: 20
   },
   categoryTitle: {
     marginHorizontal: 16,

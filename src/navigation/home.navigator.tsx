@@ -11,7 +11,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import {TodoNavigator} from './todo.navigator';
-import {ProfileNavigator} from './profile.navigator';
+import {LibraryNavigator} from './library.navigator';
 import {AppRoute} from './app-routes';
 import {AboutUsScreen,
   ContactUsScreen,
@@ -61,7 +61,7 @@ type HomeDrawerNavigatorParams = {
 
 type HomeBottomTabsNavigatorParams = {
   [AppRoute.TODO]: undefined;
-  [AppRoute.PROFILE]: undefined;
+  [AppRoute.LIBRARY]: undefined;
   [AppRoute.HIGHLIGHT]: undefined;
 };
 
@@ -70,8 +70,8 @@ export type TodoTabNavigationProp = CompositeNavigationProp<
   DrawerNavigationProp<HomeDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
 >;
 
-export type ProfileTabNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<HomeBottomTabsNavigatorParams, AppRoute.PROFILE>,
+export type LibraryTabNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<HomeBottomTabsNavigatorParams, AppRoute.LIBRARY>,
   DrawerNavigationProp<HomeDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
 >;
 

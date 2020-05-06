@@ -7,16 +7,19 @@ import { LibraryBook } from '../data/library-book.model';
 
 export const LibraryBookComponent = (props: any): React.ReactElement => {
 
-  const { style, libraryBook, index, onSavedPress, ...listItemProps } = props;
+  const { style, libraryBook, index, onDetailPress, ...listItemProps } = props;
 
-  const onSavedkButtonPress = (): void => {
-    onSavedPress('saved button');
+  const onRowSelected = (index:number, id: any): void => {
+    console.log('index', index);
+    console.log('id', id);
+    onDetailPress();
   };
 
   return (
     <ListItem
       {...listItemProps}
-      style={[styles.container, style]}>
+      style={[styles.container, style]}
+      onPress={() => onRowSelected(props.index, libraryBook.id)}>
       <Image
         style={styles.image}
         source={libraryBook.photo}
@@ -32,7 +35,6 @@ export const LibraryBookComponent = (props: any): React.ReactElement => {
         appearance='ghost'
         status="primary"
         icon={ArrowIosForwardIcon}
-        onPress={onSavedkButtonPress}
       />
     </ListItem>
   );

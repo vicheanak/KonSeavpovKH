@@ -1,7 +1,7 @@
 import React from 'react';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/core';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { ProfileTabNavigationProp } from './home.navigator';
+import { LibraryTabNavigationProp } from './home.navigator';
 import { AppRoute } from './app-routes';
 import { HighlightScreen, HighlightDetailScreen, HighlightDetailRouteParams } from '../scenes/highlight';
 import { connect } from 'react-redux';

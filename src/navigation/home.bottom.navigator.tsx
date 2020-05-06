@@ -11,7 +11,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { TodoNavigator } from './todo.navigator';
-import { ProfileNavigator } from './profile.navigator';
+import { LibraryNavigator } from './library.navigator';
 import { AppRoute } from './app-routes';
 import { AboutScreen, HomeDrawer, HomeTabBar } from '../scenes/home';
 import { HomeIcon, InfoIcon, LayoutIcon, PersonIcon, BookOpenIcon, BookIcon, SearchIcon } from '../assets/icons';
@@ -21,7 +21,7 @@ import { intlData } from './../reducers/intlReducer';
 
 type HomeBottomTabsNavigatorParams = {
   [AppRoute.TODO]: undefined;
-  [AppRoute.PROFILE]: undefined;
+  [AppRoute.LIBRARY]: undefined;
 }
 
 const BottomTab = createBottomTabNavigator<HomeBottomTabsNavigatorParams>();
@@ -36,8 +36,8 @@ const HomeBottomNavigator = (props:any): React.ReactElement => {
         options={{ title: props.intlData.messages['HOME'], tabBarIcon: HomeIcon }}
       />
       <BottomTab.Screen
-        name={AppRoute.PROFILE}
-        component={ProfileNavigator}
+        name={AppRoute.LIBRARY}
+        component={LibraryNavigator}
         options={{ title: props.intlData.messages['LIBRARY'], tabBarIcon: BookOpenIcon }}
       />
     </BottomTab.Navigator>

@@ -14,7 +14,7 @@ export class LibraryBook {
     return new LibraryBook(
       0,
       'Psychology',
-      require('../assets/images/image-profile.jpg')
+      require('../assets/images/categories/psychology.png')
     );
   }
 
@@ -22,7 +22,7 @@ export class LibraryBook {
     return new LibraryBook(
       1,
       'Productivity',
-      require('../assets/images/image-plant-1.jpg')
+      require('../assets/images/categories/productivity.png')
     );
   }
 
@@ -30,7 +30,7 @@ export class LibraryBook {
     return new LibraryBook(
       2,
       'Communication',
-      require('../assets/images/image-plant-1.jpg')
+      require('../assets/images/categories/communication.png')
     );
   }
 
@@ -38,7 +38,7 @@ export class LibraryBook {
     return new LibraryBook(
       3,
       'Mindfulness & Happiness',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/mindfulness_happiness.png')
     );
   }
 
@@ -46,7 +46,7 @@ export class LibraryBook {
     return new LibraryBook(
       4,
       'Parenting',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/parenting.png')
     );
   }
 
@@ -54,7 +54,7 @@ export class LibraryBook {
     return new LibraryBook(
       5,
       'Marketing & Sales',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/marketing_sales.png')
     );
   }
 
@@ -62,7 +62,7 @@ export class LibraryBook {
     return new LibraryBook(
       6,
       'History',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/history.png')
     );
   }
 
@@ -70,7 +70,7 @@ export class LibraryBook {
     return new LibraryBook(
       7,
       'Personal Development',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/personal_development.png')
     );
   }
 
@@ -78,7 +78,7 @@ export class LibraryBook {
     return new LibraryBook(
       8,
       'Philosophy',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/philosophy.png')
     );
   }
 
@@ -86,7 +86,7 @@ export class LibraryBook {
     return new LibraryBook(
       9,
       'Motivation & Inspiration',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/motivation_inspiration.png')
     );
   }
 
@@ -94,7 +94,7 @@ export class LibraryBook {
     return new LibraryBook(
       10,
       'Health & Nutrition',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/health_nutrition.png')
     );
   }
 
@@ -102,7 +102,7 @@ export class LibraryBook {
     return new LibraryBook(
       11,
       'Entrepreneurship',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/entrepreneurship.png')
     );
   }
 
@@ -110,7 +110,7 @@ export class LibraryBook {
     return new LibraryBook(
       12,
       'Creativity',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/creativity.png')
     );
   }
 
@@ -118,7 +118,7 @@ export class LibraryBook {
     return new LibraryBook(
       13,
       'Corporate Culture',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/corporate_culture.png')
     );
   }
 
@@ -126,7 +126,7 @@ export class LibraryBook {
     return new LibraryBook(
       14,
       'Education',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/education.png')
     );
   }
 
@@ -134,7 +134,7 @@ export class LibraryBook {
     return new LibraryBook(
       15,
       'Religion & Spirituality',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/religion_spirituality.png')
     );
   }
 
@@ -142,7 +142,7 @@ export class LibraryBook {
     return new LibraryBook(
       16,
       'Career & Success',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/career_success.png')
     );
   }
 
@@ -150,7 +150,7 @@ export class LibraryBook {
     return new LibraryBook(
       17,
       'Management & Leadership',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/management_leadership.png')
     );
   }
 
@@ -158,7 +158,7 @@ export class LibraryBook {
     return new LibraryBook(
       18,
       'Science',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/science.png')
     );
   }
 
@@ -166,7 +166,7 @@ export class LibraryBook {
     return new LibraryBook(
       19,
       'Technology & Future',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/technology_future.png')
     );
   }
 
@@ -174,7 +174,7 @@ export class LibraryBook {
     return new LibraryBook(
       20,
       'Sex & Relationship',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/sex_relationships.png')
     );
   }
 
@@ -182,7 +182,7 @@ export class LibraryBook {
     return new LibraryBook(
       21,
       'Society & Culture',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/society_culture.png')
     );
   }
 
@@ -190,7 +190,7 @@ export class LibraryBook {
     return new LibraryBook(
       22,
       'Nature & Environment',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/nature_environment.png')
     );
   }
 
@@ -198,7 +198,7 @@ export class LibraryBook {
     return new LibraryBook(
       23,
       'Politics',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/politic.png')
     );
   }
 
@@ -206,7 +206,7 @@ export class LibraryBook {
     return new LibraryBook(
       24,
       'Money & Investments',
-      require('../assets/images/image-plant-3.jpg')
+      require('../assets/images/categories/money_investment.png')
     );
   }
 }
