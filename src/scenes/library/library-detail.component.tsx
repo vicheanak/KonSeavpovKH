@@ -10,10 +10,10 @@ import {
 } from '../../components/safe-area-layout.component';
 import { MenuIcon } from '../../assets/icons';
 import { AppRoute } from '../../navigation/app-routes';
-import { LibraryBook } from '../../data/library-book.model';
+import { LibraryCategory } from '../../data/library-category.model';
 
 export type LibraryDetailRouteParams = {
-  libraryBook: LibraryBook;
+  libraryCategory: LibraryCategory;
 }
 
 export const LibraryDetailScreen = (props: LibraryDetailScreenProps): SafeAreaLayoutElement => {

@@ -2,12 +2,12 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Button, ListItem, ListItemProps, Text } from '@ui-kitten/components';
 import { CloseIcon, BookmarkIcon, LibrarySaveIcon, ArrowIosForwardIcon } from '../assets/icons';
-import { LibraryBook } from '../data/library-book.model';
+import { LibraryCategory } from '../data/library-category.model';
 
 
-export const LibraryBookComponent = (props: any): React.ReactElement => {
+export const LibraryCategoryComponent = (props: any): React.ReactElement => {
 
-  const { style, libraryBook, index, onDetailPress, ...listItemProps } = props;
+  const { style, libraryCategory, index, onDetailPress, ...listItemProps } = props;
 
   const onRowSelected = (index:number, id: any): void => {
     console.log('index', index);
@@ -19,15 +19,15 @@ export const LibraryBookComponent = (props: any): React.ReactElement => {
     <ListItem
       {...listItemProps}
       style={[styles.container, style]}
-      onPress={() => onRowSelected(props.index, libraryBook.id)}>
+      onPress={() => onRowSelected(props.index, libraryCategory.id)}>
       <Image
         style={styles.image}
-        source={libraryBook.photo}
+        source={libraryCategory.photo}
       />
       <View style={styles.detailsContainer}>
         <Text
           category='s1'>
-          {libraryBook.title}
+          {libraryCategory.title}
         </Text>
       </View>
       <Button

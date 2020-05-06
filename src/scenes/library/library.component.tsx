@@ -9,65 +9,60 @@ import {
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 import { MenuIcon, SearchIcon } from '../../assets/icons';
-import { LibraryBook } from '../../data/library-book.model';
-import { LibraryBookComponent } from '../../components/library-book.component';
+import { LibraryCategory } from '../../data/library-category.model';
+import { LibraryCategoryComponent } from '../../components/library-category.component';
 import {AppRoute} from '../../navigation/app-routes';
 
-const initialLibraryBooks: LibraryBook[] = [
-  LibraryBook.psychology(),
-  LibraryBook.productivity(),
-  LibraryBook.communication(),
-  LibraryBook.mindfulness_happiness(),
-  LibraryBook.parenting(),
-  LibraryBook.marketing_sales(),
-  LibraryBook.history(),
-  LibraryBook.personal_development(),
-  LibraryBook.philosophy(),
-  LibraryBook.motivation_inspiration(),
-  LibraryBook.health_nutrition(),
-  LibraryBook.entrepreneurship(),
-  LibraryBook.creative(),
-  LibraryBook.corporate_culture(),
-  LibraryBook.education(),
-  LibraryBook.religion_spirituality(),
-  LibraryBook.career_success(),
-  LibraryBook.management_leadership(),
-  LibraryBook.science(),
-  LibraryBook.technology_future(),
-  LibraryBook.sex_relationship(),
-  LibraryBook.society_culture(),
-  LibraryBook.nature_environment(),
-  LibraryBook.politics(),
-  LibraryBook.money_investments()
+const initialLibraryCategories: LibraryCategory[] = [
+  LibraryCategory.psychology(),
+  LibraryCategory.productivity(),
+  LibraryCategory.communication(),
+  LibraryCategory.mindfulness_happiness(),
+  LibraryCategory.parenting(),
+  LibraryCategory.marketing_sales(),
+  LibraryCategory.history(),
+  LibraryCategory.personal_development(),
+  LibraryCategory.philosophy(),
+  LibraryCategory.motivation_inspiration(),
+  LibraryCategory.health_nutrition(),
+  LibraryCategory.entrepreneurship(),
+  LibraryCategory.creative(),
+  LibraryCategory.corporate_culture(),
+  LibraryCategory.education(),
+  LibraryCategory.religion_spirituality(),
+  LibraryCategory.career_success(),
+  LibraryCategory.management_leadership(),
+  LibraryCategory.science(),
+  LibraryCategory.technology_future(),
+  LibraryCategory.sex_relationship(),
+  LibraryCategory.society_culture(),
+  LibraryCategory.nature_environment(),
+  LibraryCategory.politics(),
+  LibraryCategory.money_investments()
 ];
 
 export const LibraryScreen = (props: LibraryScreenProps): SafeAreaLayoutElement => {
 
-  const [libraryBook] = React.useState<LibraryBook[]>(initialLibraryBooks);
+  const [libraryCategory] = React.useState<LibraryCategory[]>(initialLibraryCategories);
   const [query, setQuery] = React.useState<string>('');
 
   const onGoDetail = (id: number) => {
-    const {[id]: book} = libraryBook;
-    console.log('book', book);
-    props.navigation.navigate(AppRoute.LIBRARY_DETAIL, {book});
+    const {[id]: category} = libraryCategory;
+    console.log('category', category);
+    props.navigation.navigate(AppRoute.LIBRARY_DETAIL, {category});
     console.log('onGoDetail => empty function');
   }
 
-  const renderLibraryBookComponent = (info: ListRenderItemInfo<LibraryBook>): ListItemElement => (
-    <LibraryBookComponent
+  const renderLibraryLibraryComponent = (info: ListRenderItemInfo<LibraryCategory>): ListItemElement => (
+    <LibraryCategoryComponent
       style={styles.item}
       index={info.index}
-      libraryBook={info.item}
+      libraryCategory={info.item}
       onDetailPress={() => {onGoDetail(info.item.id)}}
     />
   );
 
   const onChangeQuery = (query: string): void => {
-    // const nextTodos: Todo[] = allTodos.filter((todo: Todo): boolean => {
-    //   return todo.title.toLowerCase().includes(query.toLowerCase());
-    // });
-
-    // setTodos(nextTodos);
     setQuery(query);
   };
 
@@ -93,8 +88,8 @@ export const LibraryScreen = (props: LibraryScreenProps): SafeAreaLayoutElement 
           Category
         </Text>
         <List
-            data={libraryBook}
-            renderItem={renderLibraryBookComponent}
+            data={libraryCategory}
+            renderItem={renderLibraryLibraryComponent}
             ItemSeparatorComponent={Divider}
           />
       </Layout>
