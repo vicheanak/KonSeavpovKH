@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, ListRenderItemInfo, View } from 'react-native';
 import { Divider, Layout, Text, List, Input, Button, ListItemElement } from '@ui-kitten/components';
-import { LibraryScreenProps } from '../../navigation/profile.navigator';
+import { LibraryScreenProps } from '../../navigation/library.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
   SafeAreaLayout,

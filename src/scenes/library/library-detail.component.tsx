@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Divider, Layout, Text, Button } from '@ui-kitten/components';
+import { StyleSheet, ListRenderItemInfo } from 'react-native';
+import { Divider, Layout, Text, Button, ListItemElement, List } from '@ui-kitten/components';
 import { LibraryDetailScreenProps } from '../../navigation/library.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
@@ -11,14 +11,44 @@ import {
 import { MenuIcon } from '../../assets/icons';
 import { AppRoute } from '../../navigation/app-routes';
 import { LibraryCategory } from '../../data/library-category.model';
+import { LibraryBook } from '../../data/library-book.model';
+import { LibraryBookComponent } from '../../components/library-book.component';
 
 export type LibraryDetailRouteParams = {
   libraryCategory: LibraryCategory;
 }
 
+const initialLibraryBooks: LibraryBook[] = [
+  LibraryBook.mocked0(),
+  LibraryBook.mocked1(),
+  LibraryBook.mocked2(),
+  LibraryBook.mocked3(),
+  LibraryBook.mocked4(),
+  LibraryBook.mocked5(),
+  LibraryBook.mocked6()
+];
+
 export const LibraryDetailScreen = (props: LibraryDetailScreenProps): SafeAreaLayoutElement => {
   const library = props.route.params;
   console.log('Library Detail', library);
+  const [libraryBook] = React.useState<LibraryBook[]>(initialLibraryBooks);
+
+  const onGoDetail = (id: number) => {
+    const {[id]: book} = libraryBook;
+    console.log('category', book);
+    props.navigation.navigate(AppRoute.LIBRARY_DETAIL, {book});
+    console.log('onGoDetail => empty function');
+  }
+
+  const renderLibraryLibraryComponent = (info: ListRenderItemInfo<LibraryBook>): ListItemElement => (
+    <LibraryBookComponent
+      index={info.index}
+      libraryBook={info.item}
+      onDetailPress={() => {onGoDetail(info.item.id)}}
+    />
+  );
+
+
   return (
     <SafeAreaLayout
     style={styles.safeArea}
@@ -29,9 +59,11 @@ export const LibraryDetailScreen = (props: LibraryDetailScreenProps): SafeAreaLa
       />
       <Divider/>
       <Layout style={styles.container}>
-        <Text category='h1'>
-          Library Detail
-        </Text>
+        <List
+            data={libraryBook}
+            renderItem={renderLibraryLibraryComponent}
+            ItemSeparatorComponent={Divider}
+          />
       </Layout>
     </SafeAreaLayout>
   )
@@ -42,8 +74,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1
+  },
+  categoryTitle: {
+    marginHorizontal: 16,
+    marginVertical: 14,
   },
 });
