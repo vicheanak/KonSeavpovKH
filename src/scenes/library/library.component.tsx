@@ -49,7 +49,7 @@ export const LibraryScreen = (props: LibraryScreenProps): SafeAreaLayoutElement 
   const onGoDetail = (id: number) => {
     const {[id]: book} = libraryBook;
     console.log('book', book);
-    // props.navigation.navigate(AppRoute.LIBRARY_DETAIL, {book});
+    props.navigation.navigate(AppRoute.LIBRARY_DETAIL, {book});
     console.log('onGoDetail => empty function');
   }
 

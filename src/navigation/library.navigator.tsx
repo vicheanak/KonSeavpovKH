@@ -3,12 +3,13 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/core';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { LibraryTabNavigationProp } from './home.navigator';
 import { AppRoute } from './app-routes';
-import { LibraryScreen } from '../scenes/library';
+import { LibraryScreen, LibraryDetailScreen } from '../scenes/library';
 import { connect } from 'react-redux';
 import { fetchData } from '../redux/actions';
 
 type LibraryNavigatorParams = {
   [AppRoute.LIBRARY]: undefined;
+  [AppRoute.LIBRARY_DETAIL]: any;
 }
 
 export interface LibraryScreenProps {
@@ -18,11 +19,19 @@ export interface LibraryScreenProps {
   route: RouteProp<LibraryNavigatorParams, AppRoute.LIBRARY>;
 }
 
+export interface LibraryDetailScreenProps {
+  navigation: CompositeNavigationProp<
+    LibraryTabNavigationProp,
+    StackNavigationProp<LibraryNavigatorParams, AppRoute.LIBRARY_DETAIL>>;
+  route: RouteProp<LibraryNavigatorParams, AppRoute.LIBRARY_DETAIL>;
+}
+
 const Stack = createStackNavigator<LibraryNavigatorParams>();
 
 export const LibraryNavigator = (props): React.ReactElement => (
   <Stack.Navigator headerMode='none'>
     <Stack.Screen name={AppRoute.LIBRARY} component={LibraryScreen}/>
+    <Stack.Screen name={AppRoute.LIBRARY_DETAIL} component={LibraryDetailScreen}/>
   </Stack.Navigator>
 );
 

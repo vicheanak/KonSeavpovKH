@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider, Layout, Text, Button } from '@ui-kitten/components';
-import { LibraryDetailScreenProps } from '../../navigation/li';
+import { LibraryDetailScreenProps } from '../../navigation/library.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
   SafeAreaLayout,
@@ -17,8 +17,8 @@ export type LibraryDetailRouteParams = {
 }
 
 export const LibraryDetailScreen = (props: LibraryDetailScreenProps): SafeAreaLayoutElement => {
-  const highlight = props.route.params;
-  console.log('Highlight Detail', highlight);
+  const library = props.route.params;
+  console.log('Library Detail', library);
   return (
     <SafeAreaLayout
     style={styles.safeArea}
@@ -30,7 +30,7 @@ export const LibraryDetailScreen = (props: LibraryDetailScreenProps): SafeAreaLa
       <Divider/>
       <Layout style={styles.container}>
         <Text category='h1'>
-          HIGHLIGHT Detail
+          Library Detail
         </Text>
       </Layout>
     </SafeAreaLayout>
