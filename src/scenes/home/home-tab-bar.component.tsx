@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, Tab, TabBar, TabElement } from '@ui-kitten/components';
-import { TodoScreenProps } from '../../navigation/todo.navigator';
+import { HomeScreenProps } from '../../navigation/home.navigator';
 import { AppRoute } from '../../navigation/app-routes';
 import {
   SafeAreaLayout,
@@ -18,7 +18,7 @@ import { connect } from 'react-redux'
 import { fetchData, updateLanguage, addUser } from '../../redux/actions';
 
 
-const TodoTabBar = (props: any): SafeAreaLayoutElement => {
+const HomeTabBar = (props: any): SafeAreaLayoutElement => {
   
   const themeContext = React.useContext(ThemeContext);
 
@@ -115,4 +115,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoTabBar)
+)(HomeTabBar)

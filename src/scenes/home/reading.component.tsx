@@ -11,7 +11,7 @@ import {
   Text,
   useStyleSheet,
 } from '@ui-kitten/components';
-import { ReadingScreenProps } from '../../navigation/todo.navigator';
+import { ReadingScreenProps } from '../../navigation/home.navigator';
 import { AppRoute } from '../../navigation/app-routes';
 import { ProgressBar } from '../../components/progress-bar.component';
 import { SearchIcon } from '../../assets/icons';

@@ -5,15 +5,15 @@ import {
   TodoDetailsScreen,
   ReadingScreen,
   BookScreen,
-  TodoTabBar,
-} from '../scenes/todo';
+  HomeTabBar,
+} from '../scenes/home';
 
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBarProps,
   MaterialTopTabNavigationProp,
 } from '@react-navigation/material-top-tabs';
-import {TodoTabNavigationProp} from './menu.navigator';
+import {HomeTabNavigationProp} from './menu.navigator';
 import {connect} from 'react-redux';
 import {BookIcon, DoneAllIcon, GridIcon, EyeIcon, BookOpenIcon, BookmarkIcon} from '../assets/icons';
 import {
@@ -22,56 +22,56 @@ import {
 } from '@react-navigation/stack';
 import {CompositeNavigationProp, RouteProp} from '@react-navigation/core';
 
-type TodoNavigatorParams = {
-  [AppRoute.TODO]: undefined;
+type HomeNavigatorParams = {
+  [AppRoute.HOME]: undefined;
   [AppRoute.TODO_DETAILS]: TodoDetailsRouteParams;
 };
 
-type TodoTabsNavigatorParams = {
+type HomeTabsNavigatorParams = {
   [AppRoute.BOOK]: undefined;
   [AppRoute.READING]: undefined;
 };
 
 export interface BookScreenProps {
   navigation: CompositeNavigationProp<
-    TodoTabNavigationProp &
-      StackNavigationProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>,
+    HomeTabNavigationProp &
+      StackNavigationProp<HomeNavigatorParams, AppRoute.TODO_DETAILS>,
     MaterialTopTabNavigationProp<
-      TodoTabsNavigatorParams,
+      HomeTabsNavigatorParams,
       AppRoute.BOOK
     >
   >;
-  route: RouteProp<TodoTabsNavigatorParams, AppRoute.BOOK>;
+  route: RouteProp<HomeTabsNavigatorParams, AppRoute.BOOK>;
 }
 
 
 export interface ReadingScreenProps {
   navigation: CompositeNavigationProp<
-    TodoTabNavigationProp &
-      StackNavigationProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>,
-    MaterialTopTabNavigationProp<TodoTabsNavigatorParams, AppRoute.READING>
+    HomeTabNavigationProp &
+      StackNavigationProp<HomeNavigatorParams, AppRoute.TODO_DETAILS>,
+    MaterialTopTabNavigationProp<HomeTabsNavigatorParams, AppRoute.READING>
   >;
-  route: RouteProp<TodoTabsNavigatorParams, AppRoute.READING>;
+  route: RouteProp<HomeTabsNavigatorParams, AppRoute.READING>;
 }
 
 export interface TodoDetailsScreenProps {
-  navigation: StackNavigationProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>;
-  route: RouteProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>;
+  navigation: StackNavigationProp<HomeNavigatorParams, AppRoute.TODO_DETAILS>;
+  route: RouteProp<HomeNavigatorParams, AppRoute.TODO_DETAILS>;
 }
 
-export type TodoScreenProps = MaterialTopTabBarProps & {
-  navigation: TodoTabNavigationProp;
+export type HomeScreenProps = MaterialTopTabBarProps & {
+  navigation: HomeTabNavigationProp;
 };
 
-const Stack = createStackNavigator<TodoNavigatorParams>();
-const TopTab = createMaterialTopTabNavigator<TodoTabsNavigatorParams>();
+const Stack = createStackNavigator<HomeNavigatorParams>();
+const TopTab = createMaterialTopTabNavigator<HomeTabsNavigatorParams>();
 
-const TodoTabsNavigator = (props: any): React.ReactElement => {
+const HomeTabsNavigator = (props: any): React.ReactElement => {
     return (
         // @ts-ignore: `tabBar` also contains a DrawerNavigationProp & BottomTabNavigationProp
         <TopTab.Navigator
         swipeEnabled={false}
-        tabBar={props => <TodoTabBar {...props} />}>
+        tabBar={props => <HomeTabBar {...props} />}>
           <TopTab.Screen
               name={AppRoute.BOOK}
               component={BookScreen}
@@ -99,4 +99,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TodoTabsNavigator);
+)(HomeTabsNavigator);

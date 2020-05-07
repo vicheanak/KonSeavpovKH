@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider, Layout, Text } from '@ui-kitten/components';
-import { SavedScreenProps } from '../../navigation/todo.navigator';
+// import { SavedScreenProps } from '../../navigation/home.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
   SafeAreaLayout,
@@ -9,7 +9,7 @@ import {
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 
-export const SavedScreen = (props: SavedScreenProps): SafeAreaLayoutElement => (
+export const SavedScreen = (props: any): SafeAreaLayoutElement => (
   <SafeAreaLayout
     style={styles.safeArea}
     insets={SaveAreaInset.TOP}>

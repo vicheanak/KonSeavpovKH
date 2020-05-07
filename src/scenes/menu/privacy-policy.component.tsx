@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider, Layout, Text } from '@ui-kitten/components';
-import { PrivacyPolicyScreenProps } from '../../navigation/home.navigator';
+import { PrivacyPolicyScreenProps } from '../../navigation/menu.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
   SafeAreaLayout,

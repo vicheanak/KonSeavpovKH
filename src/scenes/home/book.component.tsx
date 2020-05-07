@@ -20,7 +20,7 @@ import {
   Button,
   ListProps,
 } from '@ui-kitten/components';
-import {BookScreenProps} from '../../navigation/todo.navigator';
+import {BookScreenProps} from '../../navigation/home.navigator';
 import {AppRoute} from '../../navigation/app-routes';
 import {ProgressBar} from '../../components/progress-bar.component';
 import {SearchIcon, BookmarkIcon} from '../../assets/icons';

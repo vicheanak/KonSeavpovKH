@@ -10,17 +10,17 @@ import {
   BottomTabNavigationProp,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { TodoNavigator } from './todo.navigator';
+import { HomeNavigator } from './home.navigator';
 import { LibraryNavigator } from './library.navigator';
 import { AppRoute } from './app-routes';
-import { AboutScreen, MenuDrawer, MenuTabBar } from '../scenes/menu';
+import { MenuDrawer, MenuTabBar } from '../scenes/menu';
 import { HomeIcon, InfoIcon, LayoutIcon, PersonIcon, BookOpenIcon, BookIcon, SearchIcon } from '../assets/icons';
 import { connect } from 'react-redux';
 import { intlData } from '../reducers/intlReducer';
 
 
 type MenuBottomTabsNavigatorParams = {
-  [AppRoute.TODO]: undefined;
+  [AppRoute.HOME]: undefined;
   [AppRoute.LIBRARY]: undefined;
 }
 
@@ -31,8 +31,8 @@ const HomeBottomNavigator = (props:any): React.ReactElement => {
     // @ts-ignore: `tabBar` also contains a DrawerNavigationProp
     <BottomTab.Navigator tabBar={MenuTabBar}>
       <BottomTab.Screen
-        name={AppRoute.TODO}
-        component={TodoNavigator}
+        name={AppRoute.HOME}
+        component={HomeNavigator}
         options={{ title: props.intlData.messages['HOME'], tabBarIcon: HomeIcon }}
       />
       <BottomTab.Screen

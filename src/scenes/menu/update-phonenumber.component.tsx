@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Divider, Layout, Text } from '@ui-kitten/components';
-import { UpdatePhonenumberScreenProps } from '../../navigation/home.navigator';
+import { UpdatePhonenumberScreenProps } from '../../navigation/menu.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
   SafeAreaLayout,
