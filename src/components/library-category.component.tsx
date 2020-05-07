@@ -3,11 +3,13 @@ import { Image, StyleSheet, View } from 'react-native';
 import { Button, ListItem, ListItemProps, Text } from '@ui-kitten/components';
 import { CloseIcon, BookmarkIcon, LibrarySaveIcon, ArrowIosForwardIcon } from '../assets/icons';
 import { LibraryCategory } from '../data/library-category.model';
+import { connect } from 'react-redux';
 
+const LibraryCategoryComponent = (props: any): React.ReactElement => {
 
-export const LibraryCategoryComponent = (props: any): React.ReactElement => {
+  const { style, libraryCategory, index, onDetailPress, intlData, ...listItemProps } = props;
 
-  const { style, libraryCategory, index, onDetailPress, ...listItemProps } = props;
+  console.log('intlData ', intlData);
 
   const onRowSelected = (index:number, id: any): void => {
     console.log('index', index);
@@ -27,7 +29,7 @@ export const LibraryCategoryComponent = (props: any): React.ReactElement => {
       <View style={styles.detailsContainer}>
         <Text
           category='s1'>
-          {libraryCategory.title}
+          {intlData.locale == 'kh' ? libraryCategory.title_kh : libraryCategory.title_en }
         </Text>
       </View>
       <Button
@@ -78,3 +80,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
 });
+
+
+const mapStateToProps = (state) => {
+  return {
+    intlData: state.intlData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LibraryCategoryComponent)
+

@@ -10,7 +10,7 @@ import {
 } from '../../components/safe-area-layout.component';
 import { MenuIcon, SearchIcon, HighlightIcon, BookIcon, BookmarkIcon, Khmer, English, BrushIcon  } from '../../assets/icons';
 import { LibraryCategory } from '../../data/library-category.model';
-import { LibraryCategoryComponent } from '../../components/library-category.component';
+import LibraryCategoryComponent from '../../components/library-category.component';
 import {AppRoute} from '../../navigation/app-routes';
 import { connect } from 'react-redux'
 import { fetchData, updateLanguage } from '../../redux/actions';
@@ -74,9 +74,9 @@ const LibraryScreen = (props: any): SafeAreaLayoutElement => {
   const menu: ToolbarMenu = [
     { title: props.intlData.messages['highlight'], icon: HighlightIcon},
     { title: props.intlData.messages['saved'], icon: BookmarkIcon},
+    { title: props.intlData.messages['change_color'], icon: BrushIcon},
     { title: props.intlData.messages['khmer'], icon: Khmer},
-    { title: props.intlData.messages['english'], icon: English},
-    { title: props.intlData.messages['change_color'], icon: BrushIcon}
+    { title: props.intlData.messages['english'], icon: English}
   ];
 
   const setLanguage = (lang) => {
@@ -123,15 +123,18 @@ const LibraryScreen = (props: any): SafeAreaLayoutElement => {
       />
       <Divider/>
       <Layout style={styles.container}>
+        <Text style={styles.categoryTitle} category="h6">
+          {props.intlData.messages['search']}
+        </Text>
         <Input
           style={styles.filterInput}
-          placeholder='Titles, authors, or topics'
+          placeholder={props.intlData.messages['titles_authors_topics']}
           value={query}
           icon={SearchIcon}
           onChangeText={onChangeQuery}
         />
         <Text style={styles.categoryTitle} category="h6">
-          Category
+        {props.intlData.messages['category']}
         </Text>
         <List
             data={libraryCategory}
