@@ -1,6 +1,6 @@
 import TodoTabBar from './todo-tab-bar.component';
-import TodoInProgressScreen from './todo-in-progress.components';
+import BookScreen from './book.component';
 export { TodoDetailsScreen, TodoDetailsRouteParams } from './todo-details.component';
-export { TodoInProgressScreen };
-export { TodoDoneScreen } from './todo-done.component';
+export { BookScreen };
+export { ReadingScreen } from './reading.component';
 export { TodoTabBar };

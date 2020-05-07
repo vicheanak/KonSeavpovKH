@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageBackground, ImageBackgroundProps, StyleSheet } from 'react-native';
 import { Drawer, DrawerElement, MenuItemType } from '@ui-kitten/components';
-import { DrawerHomeScreenProps } from '../../navigation/home.navigator';
+import { DrawerHomeScreenProps } from '../../navigation/menu.navigator';
 
 const DrawerHeader = (): React.ReactElement<ImageBackgroundProps> => (
   <ImageBackground
@@ -10,7 +10,7 @@ const DrawerHeader = (): React.ReactElement<ImageBackgroundProps> => (
   />
 );
 
-export const HomeDrawer = (props: DrawerHomeScreenProps): DrawerElement => {
+export const MenuDrawer = (props: DrawerHomeScreenProps): DrawerElement => {
 
   const onMenuItemSelect = (index: number): void => {
     const selectedTabRoute: string = props.state.routeNames[index];

@@ -18,8 +18,7 @@ import { connect } from 'react-redux'
 import { fetchData, updateLanguage, addUser } from '../../redux/actions';
 
 
-// const TodoTabBar = (props: TodoScreenProps): SafeAreaLayoutElement => {
-  const TodoTabBar = (props: any): SafeAreaLayoutElement => {
+const TodoTabBar = (props: any): SafeAreaLayoutElement => {
   
   const themeContext = React.useContext(ThemeContext);
 
@@ -28,9 +27,9 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
   const menu: ToolbarMenu = [
     { title: props.intlData.messages['highlight'], icon: HighlightIcon},
     { title: props.intlData.messages['saved'], icon: BookmarkIcon},
+    { title: props.intlData.messages['change_color'], icon: BrushIcon},
     { title: props.intlData.messages['khmer'], icon: Khmer},
-    { title: props.intlData.messages['english'], icon: English},
-    { title: props.intlData.messages['change_color'], icon: BrushIcon}
+    { title: props.intlData.messages['english'], icon: English}
   ];
 
   const setLanguage = (lang) => {

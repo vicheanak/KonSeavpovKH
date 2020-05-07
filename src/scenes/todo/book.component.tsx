@@ -20,7 +20,7 @@ import {
   Button,
   ListProps,
 } from '@ui-kitten/components';
-import {TodoInProgressScreenProps} from '../../navigation/todo.navigator';
+import {BookScreenProps} from '../../navigation/todo.navigator';
 import {AppRoute} from '../../navigation/app-routes';
 import {ProgressBar} from '../../components/progress-bar.component';
 import {SearchIcon, BookmarkIcon} from '../../assets/icons';
@@ -36,7 +36,7 @@ const allTodos: Todo[] = [
   Todo.mocked3(),
 ];
 
-const TodoInProgressScreen = (props: any): ListElement => {
+const BookScreen = (props: any): ListElement => {
   const [todos, setTodos] = React.useState<Todo[]>(allTodos);
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
@@ -225,4 +225,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TodoInProgressScreen);
+)(BookScreen);

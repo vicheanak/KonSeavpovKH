@@ -23,8 +23,8 @@ import {AboutUsScreen,
   TermsOfServicesScreen,
   UpdatePhonenumberScreen,
   UpgradeNowScreen,
-   HomeDrawer, 
-   HomeTabBar} from '../scenes/home';
+   MenuDrawer, 
+   MenuTabBar} from '../scenes/menu';
 import {
   HomeIcon,
   HomeOrangeIcon,
@@ -43,10 +43,10 @@ import {
   ContactUsIcon,
 } from '../assets/icons';
 import {connect} from 'react-redux';
-import {intlData} from './../reducers/intlReducer';
-import HomeBottomNavigator from './home.bottom.navigator';
+import {intlData} from '../reducers/intlReducer';
+import MenuBottomNavigator from './menu.bottom.navigator';
 
-type HomeDrawerNavigatorParams = {
+type MenuDrawerNavigatorParams = {
   [AppRoute.UPDATE_PHONENUMBER]: undefined;
   [AppRoute.MEMBERSHIP]: undefined;
   [AppRoute.UPGRADE_NOW]: undefined;
@@ -59,128 +59,128 @@ type HomeDrawerNavigatorParams = {
   [AppRoute.CONTACT_US]: undefined;
 };
 
-type HomeBottomTabsNavigatorParams = {
+type MenuBottomTabsNavigatorParams = {
   [AppRoute.TODO]: undefined;
   [AppRoute.LIBRARY]: undefined;
   [AppRoute.HIGHLIGHT]: undefined;
 };
 
 export type TodoTabNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<HomeBottomTabsNavigatorParams, AppRoute.TODO>,
-  DrawerNavigationProp<HomeDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
+  BottomTabNavigationProp<MenuBottomTabsNavigatorParams, AppRoute.TODO>,
+  DrawerNavigationProp<MenuDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
 >;
 
 export type LibraryTabNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<HomeBottomTabsNavigatorParams, AppRoute.LIBRARY>,
-  DrawerNavigationProp<HomeDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
+  BottomTabNavigationProp<MenuBottomTabsNavigatorParams, AppRoute.LIBRARY>,
+  DrawerNavigationProp<MenuDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
 >;
 
 export type HighlightTabNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<HomeBottomTabsNavigatorParams, AppRoute.HIGHLIGHT>,
-  DrawerNavigationProp<HomeDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
+  BottomTabNavigationProp<MenuBottomTabsNavigatorParams, AppRoute.HIGHLIGHT>,
+  DrawerNavigationProp<MenuDrawerNavigatorParams, AppRoute.UPGRADE_NOW>
 >;
 
 export interface UpdatePhonenumberScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.UPDATE_PHONENUMBER
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.UPDATE_PHONENUMBER>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.UPDATE_PHONENUMBER>;
 }
 
 export interface MembershipScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.MEMBERSHIP
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.MEMBERSHIP>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.MEMBERSHIP>;
 }
 
 export interface UpgradeNowScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.UPGRADE_NOW
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.UPGRADE_NOW>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.UPGRADE_NOW>;
 }
 
 export interface DownloadsScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.DOWNLOADS
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.DOWNLOADS>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.DOWNLOADS>;
 }
 
 export interface TermsOfServicesScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.TERMS_OF_SERVICES
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.TERMS_OF_SERVICES>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.TERMS_OF_SERVICES>;
 }
 
 export interface PrivacyPolicyScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.PRIVACY_POLICY
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.PRIVACY_POLICY>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.PRIVACY_POLICY>;
 }
 
 export interface TermsOfServicesScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.TERMS_OF_SERVICES
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.TERMS_OF_SERVICES>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.TERMS_OF_SERVICES>;
 }
 
 export interface FeedbackScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.FEEDBACK
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.FEEDBACK>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.FEEDBACK>;
 }
 
 export interface FollowUsFacebookScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.FOLLOW_US_FACEBOOK
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.FOLLOW_US_FACEBOOK>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.FOLLOW_US_FACEBOOK>;
 }
 
 export interface AboutUsScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.ABOUT_US
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.ABOUT_US>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.ABOUT_US>;
 }
 
 export interface ContactUsScreenProps {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.CONTACT_US
   >;
-  route: RouteProp<HomeDrawerNavigatorParams, AppRoute.CONTACT_US>;
+  route: RouteProp<MenuDrawerNavigatorParams, AppRoute.CONTACT_US>;
 }
 
-export type BottomHomeScreenProps = BottomTabBarProps & {
+export type MenuBottomScreenProps = BottomTabBarProps & {
   navigation: TodoTabNavigationProp;
 };
 
 export type DrawerHomeScreenProps = DrawerContentComponentProps & {
   navigation: DrawerNavigationProp<
-    HomeDrawerNavigatorParams,
+    MenuDrawerNavigatorParams,
     AppRoute.UPGRADE_NOW
   >;
 };
 
-const Drawer = createDrawerNavigator<HomeDrawerNavigatorParams>();
-const BottomTab = createBottomTabNavigator<HomeBottomTabsNavigatorParams>();
+const Drawer = createDrawerNavigator<MenuDrawerNavigatorParams>();
+const BottomTab = createBottomTabNavigator<MenuBottomTabsNavigatorParams>();
 
 // FIXME(REACT-NAVIGATION-5): Not able to disable a pan gesture.
 //
@@ -192,13 +192,13 @@ const BottomTab = createBottomTabNavigator<HomeBottomTabsNavigatorParams>();
 // rather than hard-coding business logic in navigators
 // like it is described in https://reactnavigation.org/docs/en/next/auth-flow.html
 
-const HomeNavigator = (props: any): React.ReactElement => {
+const MenuNavigator = (props: any): React.ReactElement => {
   return (
     // @ts-ignore: `drawerContent` also contains a DrawerNavigationProp
-    <Drawer.Navigator drawerContent={HomeDrawer}>
+    <Drawer.Navigator drawerContent={MenuDrawer}>
       <Drawer.Screen
         name={AppRoute.HOME}
-        component={HomeBottomNavigator}
+        component={MenuBottomNavigator}
         // component={UpdatePhonenumberScreen}
         options={{
           title: props.intlData.messages['HOME'],
@@ -207,7 +207,6 @@ const HomeNavigator = (props: any): React.ReactElement => {
       />
       <Drawer.Screen
         name={AppRoute.UPDATE_PHONENUMBER}
-        // component={HomeBottomNavigator}
         component={UpdatePhonenumberScreen}
         options={{
           title: props.intlData.messages['update_phonenumber'],
@@ -303,4 +302,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(HomeNavigator);
+)(MenuNavigator);

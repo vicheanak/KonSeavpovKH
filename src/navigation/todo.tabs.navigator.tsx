@@ -3,8 +3,8 @@ import {AppRoute} from './app-routes';
 import {
   TodoDetailsRouteParams,
   TodoDetailsScreen,
-  TodoDoneScreen,
-  TodoInProgressScreen,
+  ReadingScreen,
+  BookScreen,
   TodoTabBar,
 } from '../scenes/todo';
 
@@ -13,7 +13,7 @@ import {
   MaterialTopTabBarProps,
   MaterialTopTabNavigationProp,
 } from '@react-navigation/material-top-tabs';
-import {TodoTabNavigationProp} from './home.navigator';
+import {TodoTabNavigationProp} from './menu.navigator';
 import {connect} from 'react-redux';
 import {BookIcon, DoneAllIcon, GridIcon, EyeIcon, BookOpenIcon, BookmarkIcon} from '../assets/icons';
 import {
@@ -28,30 +28,30 @@ type TodoNavigatorParams = {
 };
 
 type TodoTabsNavigatorParams = {
-  [AppRoute.TODO_IN_PROGRESS]: undefined;
-  [AppRoute.TODO_DONE]: undefined;
+  [AppRoute.BOOK]: undefined;
+  [AppRoute.READING]: undefined;
 };
 
-export interface TodoInProgressScreenProps {
+export interface BookScreenProps {
   navigation: CompositeNavigationProp<
     TodoTabNavigationProp &
       StackNavigationProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>,
     MaterialTopTabNavigationProp<
       TodoTabsNavigatorParams,
-      AppRoute.TODO_IN_PROGRESS
+      AppRoute.BOOK
     >
   >;
-  route: RouteProp<TodoTabsNavigatorParams, AppRoute.TODO_IN_PROGRESS>;
+  route: RouteProp<TodoTabsNavigatorParams, AppRoute.BOOK>;
 }
 
 
-export interface TodoDoneScreenProps {
+export interface ReadingScreenProps {
   navigation: CompositeNavigationProp<
     TodoTabNavigationProp &
       StackNavigationProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>,
-    MaterialTopTabNavigationProp<TodoTabsNavigatorParams, AppRoute.TODO_DONE>
+    MaterialTopTabNavigationProp<TodoTabsNavigatorParams, AppRoute.READING>
   >;
-  route: RouteProp<TodoTabsNavigatorParams, AppRoute.TODO_DONE>;
+  route: RouteProp<TodoTabsNavigatorParams, AppRoute.READING>;
 }
 
 export interface TodoDetailsScreenProps {
@@ -73,13 +73,13 @@ const TodoTabsNavigator = (props: any): React.ReactElement => {
         swipeEnabled={false}
         tabBar={props => <TodoTabBar {...props} />}>
           <TopTab.Screen
-              name={AppRoute.TODO_IN_PROGRESS}
-              component={TodoInProgressScreen}
+              name={AppRoute.BOOK}
+              component={BookScreen}
               options={{title: props.intlData.messages['BOOKS'], tabBarIcon: BookIcon}}
           />
           <TopTab.Screen
-              name={AppRoute.TODO_DONE}
-              component={TodoDoneScreen}
+              name={AppRoute.READING}
+              component={ReadingScreen}
               options={{title: props.intlData.messages['READS'], tabBarIcon: BookmarkIcon}}
           />
         </TopTab.Navigator>

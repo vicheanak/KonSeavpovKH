@@ -13,23 +13,23 @@ import {
 import { TodoNavigator } from './todo.navigator';
 import { LibraryNavigator } from './library.navigator';
 import { AppRoute } from './app-routes';
-import { AboutScreen, HomeDrawer, HomeTabBar } from '../scenes/home';
+import { AboutScreen, MenuDrawer, MenuTabBar } from '../scenes/menu';
 import { HomeIcon, InfoIcon, LayoutIcon, PersonIcon, BookOpenIcon, BookIcon, SearchIcon } from '../assets/icons';
 import { connect } from 'react-redux';
-import { intlData } from './../reducers/intlReducer';
+import { intlData } from '../reducers/intlReducer';
 
 
-type HomeBottomTabsNavigatorParams = {
+type MenuBottomTabsNavigatorParams = {
   [AppRoute.TODO]: undefined;
   [AppRoute.LIBRARY]: undefined;
 }
 
-const BottomTab = createBottomTabNavigator<HomeBottomTabsNavigatorParams>();
+const BottomTab = createBottomTabNavigator<MenuBottomTabsNavigatorParams>();
 
 const HomeBottomNavigator = (props:any): React.ReactElement => {
   return (
     // @ts-ignore: `tabBar` also contains a DrawerNavigationProp
-    <BottomTab.Navigator tabBar={HomeTabBar}>
+    <BottomTab.Navigator tabBar={MenuTabBar}>
       <BottomTab.Screen
         name={AppRoute.TODO}
         component={TodoNavigator}

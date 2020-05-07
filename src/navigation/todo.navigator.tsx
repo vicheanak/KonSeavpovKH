@@ -6,13 +6,13 @@ import {
   MaterialTopTabBarProps,
   MaterialTopTabNavigationProp,
 } from '@react-navigation/material-top-tabs';
-import { TodoTabNavigationProp } from './home.navigator';
+import { TodoTabNavigationProp } from './menu.navigator';
 import { AppRoute } from './app-routes';
 import {
   TodoDetailsRouteParams,
   TodoDetailsScreen,
-  TodoDoneScreen,
-  TodoInProgressScreen,
+  ReadingScreen,
+  BookScreen,
   TodoTabBar,
 } from '../scenes/todo';
 import { DoneAllIcon, GridIcon } from '../assets/icons';
@@ -25,26 +25,26 @@ type TodoNavigatorParams = {
 }
 
 type TodoTabsNavigatorParams = {
-  [AppRoute.TODO_IN_PROGRESS]: undefined;
-  [AppRoute.TODO_DONE]: undefined;
+  [AppRoute.BOOK]: undefined;
+  [AppRoute.READING]: undefined;
 }
 
 export type TodoScreenProps = MaterialTopTabBarProps & {
   navigation: TodoTabNavigationProp;
 }
 
-export interface TodoInProgressScreenProps {
+export interface BookScreenProps {
   navigation: CompositeNavigationProp<
     TodoTabNavigationProp & StackNavigationProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>,
-    MaterialTopTabNavigationProp<TodoTabsNavigatorParams, AppRoute.TODO_IN_PROGRESS>>;
-  route: RouteProp<TodoTabsNavigatorParams, AppRoute.TODO_IN_PROGRESS>;
+    MaterialTopTabNavigationProp<TodoTabsNavigatorParams, AppRoute.BOOK>>;
+  route: RouteProp<TodoTabsNavigatorParams, AppRoute.BOOK>;
 }
 
-export interface TodoDoneScreenProps {
+export interface ReadingScreenProps {
   navigation: CompositeNavigationProp<
     TodoTabNavigationProp & StackNavigationProp<TodoNavigatorParams, AppRoute.TODO_DETAILS>,
-    MaterialTopTabNavigationProp<TodoTabsNavigatorParams, AppRoute.TODO_DONE>>;
-  route: RouteProp<TodoTabsNavigatorParams, AppRoute.TODO_DONE>;
+    MaterialTopTabNavigationProp<TodoTabsNavigatorParams, AppRoute.READING>>;
+  route: RouteProp<TodoTabsNavigatorParams, AppRoute.READING>;
 }
 
 export interface TodoDetailsScreenProps {

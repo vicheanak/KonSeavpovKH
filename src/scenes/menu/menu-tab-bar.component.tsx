@@ -5,14 +5,14 @@ import {
   BottomNavigationTabElement,
   Divider,
 } from '@ui-kitten/components';
-import { BottomHomeScreenProps } from '../../navigation/home.navigator';
+import { MenuBottomScreenProps } from '../../navigation/menu.navigator';
 import {
   SafeAreaLayout,
   SafeAreaLayoutElement,
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 
-export const HomeTabBar = (props: BottomHomeScreenProps): SafeAreaLayoutElement => {
+export const MenuTabBar = (props: MenuBottomScreenProps): SafeAreaLayoutElement => {
 
   const onSelect = (index: number): void => {
     const selectedTabRoute: string = props.state.routeNames[index];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/core';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { LibraryTabNavigationProp } from './home.navigator';
+import { LibraryTabNavigationProp } from './menu.navigator';
 import { AppRoute } from './app-routes';
 import { LibraryScreen, LibraryDetailScreen } from '../scenes/library';
 import { connect } from 'react-redux';

@@ -11,7 +11,7 @@ import {
   Text,
   useStyleSheet,
 } from '@ui-kitten/components';
-import { TodoDoneScreenProps } from '../../navigation/todo.navigator';
+import { ReadingScreenProps } from '../../navigation/todo.navigator';
 import { AppRoute } from '../../navigation/app-routes';
 import { ProgressBar } from '../../components/progress-bar.component';
 import { SearchIcon } from '../../assets/icons';
@@ -29,7 +29,7 @@ const allTodos: Todo[] = [
   Todo.mocked2(),
 ];
 
-export const TodoDoneScreen = (props: TodoDoneScreenProps): ListElement => {
+export const ReadingScreen = (props: ReadingScreenProps): ListElement => {
 
   const [todos, setTodos] = React.useState<Todo[]>(allTodos);
   const [query, setQuery] = React.useState<string>('');
