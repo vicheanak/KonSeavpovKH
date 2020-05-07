@@ -66,8 +66,6 @@ const TodoInProgressScreen = (props: any): ListElement => {
       <ImageBackground style={styles.itemHeader} source={item.photo} />
       <Text numberOfLines={1} style={styles.authorName}>Author Name is Very Long so Be Careful</Text>
     </View>
-
-    // <View><Text>Hello World</Text></View>
   );
 
   const renderTodo = (item: ListRenderItemInfo<Todo>): ListItemElement => (

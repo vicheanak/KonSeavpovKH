@@ -2,16 +2,19 @@ import React from 'react';
 import { StyleSheet, ListRenderItemInfo, View } from 'react-native';
 import { Divider, Layout, Text, List, Input, Button, ListItemElement } from '@ui-kitten/components';
 import { LibraryScreenProps } from '../../navigation/library.navigator';
-import { Toolbar } from '../../components/toolbar.component';
+import { Toolbar, ToolbarMenu } from '../../components/toolbar.component';
 import {
   SafeAreaLayout,
   SafeAreaLayoutElement,
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
-import { MenuIcon, SearchIcon } from '../../assets/icons';
+import { MenuIcon, SearchIcon, HighlightIcon, BookIcon, BookmarkIcon, Khmer, English, BrushIcon  } from '../../assets/icons';
 import { LibraryCategory } from '../../data/library-category.model';
 import { LibraryCategoryComponent } from '../../components/library-category.component';
 import {AppRoute} from '../../navigation/app-routes';
+import { connect } from 'react-redux'
+import { fetchData, updateLanguage } from '../../redux/actions';
+import { ThemeContext } from '../../services/theme.service';
 
 const initialLibraryCategories: LibraryCategory[] = [
   LibraryCategory.psychology(),
@@ -41,7 +44,7 @@ const initialLibraryCategories: LibraryCategory[] = [
   LibraryCategory.money_investments()
 ];
 
-export const LibraryScreen = (props: LibraryScreenProps): SafeAreaLayoutElement => {
+const LibraryScreen = (props: any): SafeAreaLayoutElement => {
 
   const [libraryCategory] = React.useState<LibraryCategory[]>(initialLibraryCategories);
   const [query, setQuery] = React.useState<string>('');
@@ -66,12 +69,55 @@ export const LibraryScreen = (props: LibraryScreenProps): SafeAreaLayoutElement 
     setQuery(query);
   };
 
+  console.log('props.intlData', props.intlData);
+
+  const menu: ToolbarMenu = [
+    { title: props.intlData.messages['highlight'], icon: HighlightIcon},
+    { title: props.intlData.messages['saved'], icon: BookmarkIcon},
+    { title: props.intlData.messages['khmer'], icon: Khmer},
+    { title: props.intlData.messages['english'], icon: English},
+    { title: props.intlData.messages['change_color'], icon: BrushIcon}
+  ];
+
+  const setLanguage = (lang) => {
+    props.updateLanguage(lang);
+  };
+
+  const themeContext = React.useContext(ThemeContext);
+
+  const onMenuItemSelect = (index: number): void => {
+    const { [index]: selectedItem } = menu;
+
+    switch (selectedItem.icon) {
+      case HighlightIcon:
+        props.navigation.navigate(AppRoute.HIGHLIGHT);
+        break;
+      case BookmarkIcon:
+        props.navigation.navigate(AppRoute.SAVED);
+        break;
+      case Khmer:
+        setLanguage('kh');
+        break;
+      case English:
+        setLanguage('en');
+        break;
+      case BrushIcon:
+        themeContext.toggleTheme();
+        break;
+      default:
+        props.navigation.navigate(selectedItem.title);
+        break;
+    }
+  };
+
   return (
     <SafeAreaLayout
       style={styles.safeArea}
       insets={SaveAreaInset.TOP}>
       <Toolbar
         title='Kon Seavpov'
+        onMenuItemSelect={onMenuItemSelect}
+        menu={menu}
         backIcon={MenuIcon}
         onBackPress={props.navigation.toggleDrawer}
       />
@@ -119,3 +165,21 @@ const styles = StyleSheet.create({
     marginVertical: 14,
   },
 });
+
+
+const mapStateToProps = (state) => {
+  return {
+    intlData: state.intlData
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateLanguage: (lang) => dispatch(updateLanguage(lang))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LibraryScreen)
