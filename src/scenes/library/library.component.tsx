@@ -139,6 +139,7 @@ const LibraryScreen = (props: any): SafeAreaLayoutElement => {
         <List
             data={libraryCategory}
             renderItem={renderLibraryLibraryComponent}
+            numColumns={2}
             ItemSeparatorComponent={Divider}
           />
       </Layout>
