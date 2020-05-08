@@ -93,7 +93,7 @@ const HighlightScreen = (props: any): SafeAreaLayoutElement => {
         </Text>
         <Text
           category='s2'
-          status='success'
+          status='primary'
           style={styles.quote}>
           5 Quotes
         </Text>
