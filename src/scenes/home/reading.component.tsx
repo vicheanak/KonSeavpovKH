@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListRenderItemInfo } from 'react-native';
+import { ListRenderItemInfo, Image, View } from 'react-native';
 import {
   Input,
   Layout,
@@ -12,7 +12,9 @@ import {
   useStyleSheet,
   IndexPath, 
   Select, 
-  SelectItem
+  SelectItem,
+  Divider,
+  Button
 } from '@ui-kitten/components';
 import { ReadingScreenProps } from '../../navigation/home.navigator';
 import { AppRoute } from '../../navigation/app-routes';
@@ -73,18 +75,30 @@ const ReadingScreen = (props: any): ListElement => {
     <ListItem
       style={styles.item}
       onPress={navigateTodoDetails}>
-      <Text category='s1'>
-        {item.title}
-      </Text>
-      <Text
-        appearance='hint'
-        category='c1'>
-        {item.description}
-      </Text>
-      <ProgressBar
-        style={styles.itemProgressBar}
-        progress={item.progress}
-        text={`${item.progress}%`}
+      <Image
+        style={styles.image}
+        source={item.photo}
+      />
+      <View style={styles.detailsContainer}>
+        <Text category='s1'>
+          {item.title}
+        </Text>
+        <Text
+          appearance='hint'
+          category='c1'>
+          Author Name
+        </Text>
+        <ProgressBar
+          style={styles.itemProgressBar}
+          progress={item.progress}
+          text={`${item.progress}%`}
+        />
+      </View>
+      <Button
+        style={[styles.iconButton, styles.removeButton]}
+        appearance='ghost'
+        status="primary"
+        icon={ArrowIosForwardIcon}
       />
     </ListItem>
   );
@@ -109,6 +123,7 @@ const ReadingScreen = (props: any): ListElement => {
         style={styles.list}
         data={todos}
         renderItem={renderReading}
+        ItemSeparatorComponent={Divider}
       />
     </Layout>
   );
@@ -117,6 +132,12 @@ const ReadingScreen = (props: any): ListElement => {
 const themedStyles = StyleService.create({
   container: {
     flex: 1,
+  },
+  detailsContainer: {
+    flex: 1,
+    height: '100%',
+    // height: 500,
+    padding: 16,
   },
   filterInput: {
     marginTop: 16,
@@ -127,13 +148,26 @@ const themedStyles = StyleService.create({
     backgroundColor: 'background-basic-color-1',
   },
   item: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    // flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
     paddingHorizontal: 12,
   },
   itemProgressBar: {
     width: '50%',
     marginVertical: 12,
+  },
+  image: {
+    width: 70,
+    height: 70,
+    padding: 16,
+  },
+  removeButton: {
+    position: 'absolute',
+    right: 0,
+  },
+  iconButton: {
+    paddingHorizontal: 0,
   },
 });
 
