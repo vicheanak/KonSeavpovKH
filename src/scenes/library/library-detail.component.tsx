@@ -30,14 +30,11 @@ const initialLibraryBooks: LibraryBook[] = [
 
 export const LibraryDetailScreen = (props: LibraryDetailScreenProps): SafeAreaLayoutElement => {
   const library = props.route.params;
-  console.log('Library Detail', library);
   const [libraryBook] = React.useState<LibraryBook[]>(initialLibraryBooks);
 
   const onGoDetail = (id: number) => {
     const {[id]: book} = libraryBook;
-    console.log('category', book);
     props.navigation.navigate(AppRoute.LIBRARY_DETAIL, {book});
-    console.log('onGoDetail => empty function');
   }
 
   const renderLibraryLibraryComponent = (info: ListRenderItemInfo<LibraryBook>): ListItemElement => (

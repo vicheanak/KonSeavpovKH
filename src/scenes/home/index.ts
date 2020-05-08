@@ -1,6 +1,6 @@
 import HomeTabBar from './home-tab-bar.component';
 import BookScreen from './book.component';
-export { TodoDetailsScreen, TodoDetailsRouteParams } from './todo-details.component';
+export { BookDetailScreen, BookDetailRouteParams } from './book-detail.component';
 export { BookScreen };
 import ReadingScreen from './reading.component';
 export { ReadingScreen };

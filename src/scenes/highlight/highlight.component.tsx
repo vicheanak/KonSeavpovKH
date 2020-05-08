@@ -60,7 +60,6 @@ const HighlightScreen = (props: any): SafeAreaLayoutElement => {
   const [selectedOption, setSelectedOption] = React.useState(defaultOptions);
 
   const onSelect = (option) => {
-    console.log('Option', option);
     setSelectedOption(option);
   };
 
@@ -73,7 +72,7 @@ const HighlightScreen = (props: any): SafeAreaLayoutElement => {
     setQuery(query);
   };
 
-  const navigateTodoDetails = (todoIndex: number): void => {
+  const navigateBookDetail = (todoIndex: number): void => {
     const { [todoIndex]: todo } = todos;
     // props.navigation.navigate(AppRoute.TODO_DETAILS, { todo });
     props.navigation.navigate(AppRoute.HIGHLIGHT_DETAIL, {id: 1, title: 'One'});
@@ -82,7 +81,7 @@ const HighlightScreen = (props: any): SafeAreaLayoutElement => {
   const renderSaved = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => (
     <ListItem
       style={styles.item}
-      onPress={navigateTodoDetails}>
+      onPress={navigateBookDetail}>
       <Image
         style={styles.image}
         source={item.photo}

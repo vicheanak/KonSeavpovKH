@@ -9,8 +9,8 @@ import {
 import { HomeTabNavigationProp } from './menu.navigator';
 import { AppRoute } from './app-routes';
 import {
-  TodoDetailsRouteParams,
-  TodoDetailsScreen,
+  BookDetailRouteParams,
+  BookDetailScreen,
   ReadingScreen,
   BookScreen,
   HomeTabBar,
@@ -22,7 +22,7 @@ import HighlightNavigator from './highlight.navigator';
 
 type HomeNavigatorParams = {
   [AppRoute.HOME]: undefined;
-  [AppRoute.TODO_DETAILS]: TodoDetailsRouteParams;
+  [AppRoute.BOOK_DETAIL]: BookDetailRouteParams;
 }
 
 type HomeTabsNavigatorParams = {
@@ -48,9 +48,9 @@ export interface ReadingScreenProps {
   route: RouteProp<HomeTabsNavigatorParams, AppRoute.READING>;
 }
 
-export interface TodoDetailsScreenProps {
-  navigation: StackNavigationProp<HomeNavigatorParams, AppRoute.TODO_DETAILS>;
-  route: RouteProp<HomeNavigatorParams, AppRoute.TODO_DETAILS>;
+export interface BookDetailScreenProps {
+  navigation: StackNavigationProp<HomeNavigatorParams, AppRoute.BOOK_DETAIL>;
+  route: RouteProp<HomeNavigatorParams, AppRoute.BOOK_DETAIL>;
 }
 
 const Stack = createStackNavigator<HomeNavigatorParams>();
@@ -59,7 +59,7 @@ const TopTab = createMaterialTopTabNavigator<HomeTabsNavigatorParams>();
 export const HomeNavigator = (): React.ReactElement => (
   <Stack.Navigator headerMode='none'>
     <Stack.Screen name={AppRoute.HOME} component={HomeTabsNavigator}/>
-    <Stack.Screen name={AppRoute.TODO_DETAILS} component={TodoDetailsScreen}/>
+    <Stack.Screen name={AppRoute.BOOK_DETAIL} component={BookDetailScreen}/>
     <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightNavigator}/>
     <Stack.Screen name={AppRoute.SAVED} component={SavedScreen}/>
   </Stack.Navigator>

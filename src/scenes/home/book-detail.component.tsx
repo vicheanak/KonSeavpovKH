@@ -2,17 +2,17 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Layout, LayoutElement, Text } from '@ui-kitten/components';
 import { EdgeInsets, useSafeArea } from 'react-native-safe-area-context';
-import { TodoDetailsScreenProps } from '../../navigation/home.navigator';
+import { BookDetailScreenProps } from '../../navigation/home.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import { ImageOverlay } from '../../components/image-overlay.component';
 import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 
-export type TodoDetailsRouteParams = {
+export type BookDetailRouteParams = {
   todo: Todo;
 }
 
-export const TodoDetailsScreen = (props: TodoDetailsScreenProps): LayoutElement => {
+export const BookDetailScreen = (props: BookDetailScreenProps): LayoutElement => {
 
   const { todo } = props.route.params;
   const insets: EdgeInsets = useSafeArea();

@@ -53,7 +53,6 @@ const ReadingScreen = (props: any): ListElement => {
   const [selectedOption, setSelectedOption] = React.useState(defaultOptions);
 
   const onSelect = (option) => {
-    console.log('Option', option);
     setSelectedOption(option);
   };
 
@@ -66,15 +65,15 @@ const ReadingScreen = (props: any): ListElement => {
     setQuery(query);
   };
 
-  const navigateTodoDetails = (todoIndex: number): void => {
+  const navigateBookDetail = (todoIndex: number): void => {
     const { [todoIndex]: todo } = todos;
-    props.navigation.navigate(AppRoute.TODO_DETAILS, { todo });
+    props.navigation.navigate(AppRoute.BOOK_DETAIL, { todo });
   };
 
   const renderReading = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => (
     <ListItem
       style={styles.item}
-      onPress={navigateTodoDetails}>
+      onPress={navigateBookDetail}>
       <Image
         style={styles.image}
         source={item.photo}

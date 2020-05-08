@@ -7,7 +7,7 @@ export enum AppRoute {
   TODO = 'ToDo',
   BOOK = 'Book',
   READING = 'Reading',
-  TODO_DETAILS = 'ToDo Details',
+  BOOK_DETAIL = 'Book Detail',
   LIBRARY = 'Library',
   ABOUT = 'About',
   PURCHASE = 'Purchase',

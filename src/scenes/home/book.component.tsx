@@ -54,9 +54,9 @@ const BookScreen = (props: any): ListElement => {
     setQuery(query);
   };
 
-  const navigateTodoDetails = (todoIndex: number): void => {
+  const navigateBookDetail = (todoIndex: number): void => {
     const {[todoIndex]: todo} = todos;
-    props.navigation.navigate(AppRoute.TODO_DETAILS, {todo});
+    props.navigation.navigate(AppRoute.BOOK_DETAIL, {todo});
   };
 
   const renderItemHeader = ({
@@ -68,11 +68,11 @@ const BookScreen = (props: any): ListElement => {
     </View>
   );
 
-  const renderTodo = (item: ListRenderItemInfo<Todo>): ListItemElement => (
+  const renderBookList = (item: ListRenderItemInfo<Todo>): ListItemElement => (
     <Card
       style={styles.productItem}
       header={() => renderItemHeader(item)}
-      onPress={() => navigateTodoDetails(item.index)}>
+      onPress={() => navigateBookDetail(item.index)}>
       <View style={styles.itemTitle}>
         <Text
           category="s1"
@@ -104,7 +104,7 @@ const BookScreen = (props: any): ListElement => {
         showsHorizontalScrollIndicator={false}
         style={styles.list}
         data={todos}
-        renderItem={renderTodo}
+        renderItem={renderBookList}
         {...listProps}
       />
       <Text style={styles.hint} category="h6">
@@ -115,7 +115,7 @@ const BookScreen = (props: any): ListElement => {
         showsHorizontalScrollIndicator={false}
         style={styles.list}
         data={todos}
-        renderItem={renderTodo}
+        renderItem={renderBookList}
         {...listProps}
       />
       <Text style={styles.hint} category="h6">
@@ -126,7 +126,7 @@ const BookScreen = (props: any): ListElement => {
         showsHorizontalScrollIndicator={false}
         style={styles.list}
         data={todos}
-        renderItem={renderTodo}
+        renderItem={renderBookList}
         {...listProps}
       />
     </ScrollView>
