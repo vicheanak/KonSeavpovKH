@@ -14,6 +14,7 @@ import {
   ReadingScreen,
   BookScreen,
   HomeTabBar,
+  SavedScreen
 } from '../scenes/home';
 import { DoneAllIcon, GridIcon } from '../assets/icons';
 import HomeTabsNavigator from './home.tabs.navigator';
@@ -60,5 +61,6 @@ export const HomeNavigator = (): React.ReactElement => (
     <Stack.Screen name={AppRoute.HOME} component={HomeTabsNavigator}/>
     <Stack.Screen name={AppRoute.TODO_DETAILS} component={TodoDetailsScreen}/>
     <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightNavigator}/>
+    <Stack.Screen name={AppRoute.SAVED} component={SavedScreen}/>
   </Stack.Navigator>
 );

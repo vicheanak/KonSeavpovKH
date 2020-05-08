@@ -13,15 +13,6 @@ type HighlightNavigatorParams = {
   [AppRoute.HIGHLIGHT_DETAIL]: any;
 }
 
-
-// export interface HighlightScreenProps {
-//   navigation: CompositeNavigationProp<
-//     ProfileTabNavigationProp,
-//     StackNavigationProp<HighlightNavigatorParams, AppRoute.HIGHLIGHT>>;
-//   route: RouteProp<HighlightNavigatorParams, AppRoute.HIGHLIGHT>;
-// }
-
-
 export interface HighlightScreenProps {
   navigation: StackNavigationProp<HighlightNavigatorParams, AppRoute.HIGHLIGHT>;
   route: RouteProp<HighlightNavigatorParams, AppRoute.HIGHLIGHT>;

@@ -5,3 +5,5 @@ export { BookScreen };
 import ReadingScreen from './reading.component';
 export { ReadingScreen };
 export { HomeTabBar };
+import SavedScreen from './saved.component';
+export { SavedScreen }
