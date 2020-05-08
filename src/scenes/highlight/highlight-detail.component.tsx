@@ -24,10 +24,10 @@ import {
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 import { AppRoute } from '../../navigation/app-routes';
-import { SearchIcon, StarIcon, ArrowIosForwardIcon } from '../../assets/icons';
+import { SearchIcon, StarIcon, ArrowIosForwardIcon, FacebookIcon, BookmarkIcon, MoreVerticalIcon, CopyIcon,
+  TrashIcon } from '../../assets/icons';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
-import { BookmarkIcon, MoreVerticalIcon } from './../../assets/icons';
 import { HighlightModel } from '../../data/highlight.model';
 
 
@@ -35,12 +35,7 @@ const allTodos: Todo[] = [
   Todo.mocked0(),
   Todo.mocked1(),
   Todo.mocked2(),
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
+  Todo.mocked3(),
 ];
 
 export type HighlightDetailRouteParams = {
@@ -55,8 +50,8 @@ const HighlightDetailScreen = (props: any): SafeAreaLayoutElement => {
 
   const [visible, setVisible] = React.useState<boolean>(false);
 
-  const toggleModal = (): void => {
-    console.log('Toggle Modal');
+  const toggleModal = (index): void => {
+    console.log('Toggle Modal', index);
     setVisible(!visible);
   };
 
@@ -107,7 +102,7 @@ const HighlightDetailScreen = (props: any): SafeAreaLayoutElement => {
         appearance='ghost'
         status="basic"
         icon={MoreVerticalIcon}
-        onPress={toggleModal}
+        onPress={() => {toggleModal(item.id)}}
       />
     </ListItem>
   );
@@ -134,11 +129,30 @@ const HighlightDetailScreen = (props: any): SafeAreaLayoutElement => {
       visible={visible}
       onBackdropPress={toggleModal}
       backdropStyle={styles.backdrop}>
-      <Text>Hi! I'm Modal!</Text>
-      <Button
-        onPress={toggleModal}>
-        TOGGLE MODAL
-      </Button>
+      <Layout>
+        <Button
+          icon={FacebookIcon}
+          style={styles.button}
+          status="info"
+          onPress={toggleModal}>
+          Share Facebook
+        </Button>
+        <Button
+         icon={CopyIcon}
+         style={styles.button}
+          status="info"
+          onPress={toggleModal}>
+          Copy
+        </Button>
+        <Button
+         icon={TrashIcon}
+         style={styles.button}
+          status='danger'
+          onPress={toggleModal}>
+          Delete
+        </Button>
+      </Layout>
+      
     </Modal>
   </SafeAreaLayout>
    
@@ -146,6 +160,10 @@ const HighlightDetailScreen = (props: any): SafeAreaLayoutElement => {
 };
 
 const themedStyles = StyleService.create({
+  button: {
+    margin: 2,
+    textAlign: 'left',
+  },
   quote: {
     fontStyle: 'italic'
   },

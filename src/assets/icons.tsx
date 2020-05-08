@@ -403,6 +403,10 @@ export const TermsOfServicesIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='file-text-outline'  fill='#e1aa0f'/>
 );
 
+export const CopyIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='file-text-outline' />
+);
+
 export const PrivacyPolicyIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='alert-triangle-outline'  fill='#e1aa0f'/>
 );
@@ -414,6 +418,12 @@ export const FeedbackIcon = (style: ImageStyle): IconElement => (
 export const FollowUsFacebookIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='facebook-outline'  fill='#e1aa0f'/>
 );
+
+
+export const FacebookIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='facebook-outline'/>
+);
+
 
 export const AboutUsIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='info-outline'  fill='#e1aa0f'/>
