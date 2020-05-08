@@ -21,8 +21,6 @@ import { fetchData, updateLanguage, addUser } from '../../redux/actions';
 const HomeTabBar = (props: any): SafeAreaLayoutElement => {
   
   const themeContext = React.useContext(ThemeContext);
-
-  console.log('props.intlData', props.intlData);
     
   const menu: ToolbarMenu = [
     { title: props.intlData.messages['highlight'], icon: HighlightIcon},
