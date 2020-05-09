@@ -9,7 +9,7 @@ import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
-import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
+import {updateBookmarkBookDetail, updateBookTextSizeVisibility, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
 
@@ -26,6 +26,8 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   
   props.setBookCurrentChapter({currentChapter: 1});
   props.setBookTotalChapters({totalChapters: 3});
+  props.setBookTextSizeVisibility({textSizeVisibility: false})
+
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
@@ -97,7 +99,8 @@ const mapDispatchToProps = dispatch => {
   return {
     setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked)),
     setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
-    setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters))
+    setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters)),
+    setBookTextSizeVisibility: (textSizeVisibility) => dispatch(updateBookTextSizeVisibility(textSizeVisibility))
   };
 };
 

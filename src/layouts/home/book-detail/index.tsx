@@ -6,7 +6,7 @@ import {
   ListRenderItemInfo,
   ScrollView,
   View,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import {
   ButtonGroup,
@@ -18,48 +18,54 @@ import {
   Text,
   useStyleSheet,
   IconElement,
-  Divider
+  Divider,
 } from '@ui-kitten/components';
 import {ImageOverlay} from './extra/image-overlay.component';
 import {Product, ProductOption} from './extra/data';
-import { AppRoute } from '../../../navigation/app-routes';
+import {AppRoute} from '../../../navigation/app-routes';
 
 const product: Product = Product.centralParkApartment();
 
 const ReadingIcon = (style): IconElement => (
-  <Icon {...style} name='file-text-outline'/>
+  <Icon {...style} name="file-text-outline" />
 );
 
 const ListeningIcon = (style): IconElement => (
-  <Icon {...style} name='volume-up-outline'/>
+  <Icon {...style} name="volume-up-outline" />
 );
 
 const ClockIcon = (style): IconElement => (
-  <Icon {...style} name='clock-outline'/>
+  <Icon {...style} name="clock-outline" />
 );
 
 const ListIcon = (style): IconElement => (
-  <Icon {...style} name='list-outline'/>
+  <Icon {...style} name="list-outline" />
 );
 
 export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
 
   const onReadingButtonPress = (): void => {
-    let todo = {description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-    id: 0,
-    photo: 3,
-    progress: 33,
-    title: "Learn React Navigation 5"};
+    let todo = {
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      id: 0,
+      photo: 3,
+      progress: 33,
+      title: 'Learn React Navigation 5',
+    };
     props.navigation.navigate(AppRoute.BOOK_READING, {todo});
   };
 
   const onListeningButtonPress = (): void => {
-    let todo = {description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-    id: 0,
-    photo: 3,
-    progress: 33,
-    title: "Learn React Navigation 5"};
+    let todo = {
+      description:
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+      id: 0,
+      photo: 3,
+      progress: 33,
+      title: 'Learn React Navigation 5',
+    };
     props.navigation.navigate(AppRoute.BOOK_LISTENING, {todo});
   };
 
@@ -92,11 +98,7 @@ export default (props: any): React.ReactElement => {
     detail: string,
     index: number,
   ): React.ReactElement => (
-    <Button
-      key={index}
-      style={styles.detailItem}
-      status="basic"
-      size="tiny">
+    <Button key={index} style={styles.detailItem} status="basic" size="tiny">
       {detail}
     </Button>
   );
@@ -117,62 +119,57 @@ export default (props: any): React.ReactElement => {
     <ScrollView style={styles.container}>
       <ImageOverlay style={styles.image} source={product.primaryImage} />
       <View style={styles.headerContainer}>
-          <Text style={styles.title} category="h4">
-            {product.title}
-          </Text>
-          <Text style={styles.authorLabel} category="s2">
-            Author Name
-          </Text>
-        </View>
+        <Text style={styles.title} category="h4">
+          {product.title}
+        </Text>
+        <Text style={styles.authorLabel} category="s2">
+          Author Name
+        </Text>
+      </View>
       <Card
         style={styles.bookingCard}
         appearance="filled"
         disabled={true}
         footer={renderBookingFooter}>
-       
-       <ButtonGroup style={styles.buttonContainer} status='basic'>
-           <Button status="basic" icon={ReadingIcon} style={styles.bookButton} onPress={onReadingButtonPress}>
+        <ButtonGroup style={styles.buttonContainer} status="basic">
+          <Button
+            status="basic"
+            icon={ReadingIcon}
+            style={styles.bookButton}
+            onPress={onReadingButtonPress}>
             READING
           </Button>
-          <Button status="basic" icon={ListeningIcon} style={styles.bookButton} onPress={onListeningButtonPress}>
+          <Button
+            status="basic"
+            icon={ListeningIcon}
+            style={styles.bookButton}
+            onPress={onListeningButtonPress}>
             LISTENING
           </Button>
-      </ButtonGroup>
-       
-        
+        </ButtonGroup>
       </Card>
       <Text style={styles.sectionLabel} category="h6">
         About
       </Text>
-      <Text style={styles.description}>
-        {product.description}
-      </Text>
+      <Text style={styles.description}>{product.description}</Text>
       <Text style={styles.sectionLabel} category="h6">
         Who's it for?
       </Text>
       <View style={styles.description} appearance="hint">
         <View style={styles.whoText}>
-          <Text>
-            Anyone feeling stressed or overburdened
-          </Text>
+          <Text>Anyone feeling stressed or overburdened</Text>
         </View>
         <View style={styles.whoText}>
-          <Text>
-            Psychology buffs looking for fresh insights
-          </Text>
+          <Text>Psychology buffs looking for fresh insights</Text>
         </View>
         <View style={styles.whoText}>
-          <Text>
-            Mindfulness enthusiasts seeking a new angle
-          </Text>
+          <Text>Mindfulness enthusiasts seeking a new angle</Text>
         </View>
       </View>
       <Text style={styles.sectionLabel} category="h6">
         About Author
       </Text>
-      <Text style={styles.description}>
-        {product.description}
-      </Text>
+      <Text style={styles.description}>{product.description}</Text>
     </ScrollView>
   );
 };
@@ -189,17 +186,17 @@ const themedStyles = StyleService.create({
     margin: 16,
   },
   whoText: {
-    marginVertical: 10
+    marginVertical: 10,
   },
   title: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   rentLabel: {
     marginTop: 24,
   },
   authorLabel: {
     marginTop: 8,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   bookButton: {
     width: 150,
@@ -215,7 +212,7 @@ const themedStyles = StyleService.create({
     width: 300,
     borderRadius: 30,
     justifyContent: 'center',
-    marginLeft: 15
+    marginLeft: 15,
   },
   detailsList: {
     flexDirection: 'row',
@@ -238,12 +235,12 @@ const themedStyles = StyleService.create({
   description: {
     marginHorizontal: 16,
     marginVertical: 8,
-    lineHeight: 25
+    lineHeight: 25,
   },
   sectionLabel: {
     marginHorizontal: 16,
     marginVertical: 8,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   imagesList: {
     padding: 8,

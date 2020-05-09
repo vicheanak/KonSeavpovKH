@@ -8,7 +8,9 @@ import {
   UPDATE_LANGUAGE, 
   POST_USER, 
   POST_USER_SUCCESS, 
-  POST_USER_FAILURE } from './constants'
+  POST_USER_FAILURE,
+  UPDATE_BOOK_TEXT_SIZE,
+  UPDATE_BOOK_TEXT_SIZE_VISIBILITY } from './constants'
 import { getPeople, addPeople } from './api'
 
 export function getData() {
@@ -106,6 +108,24 @@ export const updateBookTotalChapters = (totalChapters) => {
     dispatch({
       type: UPDATE_BOOK_TOTOAL_CHAPTERS,
       totalChapters
+    })
+  }
+}
+
+export const updateBookTextSize = (textSize) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_BOOK_TEXT_SIZE,
+      textSize
+    })
+  }
+}
+
+export const updateBookTextSizeVisibility = (textSizeVisibility) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_BOOK_TEXT_SIZE_VISIBILITY,
+      textSizeVisibility
     })
   }
 }
