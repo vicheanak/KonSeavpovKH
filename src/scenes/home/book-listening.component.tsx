@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Layout, LayoutElement, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { EdgeInsets, useSafeArea } from 'react-native-safe-area-context';
-import { BookDetailScreenProps } from '../../navigation/home.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import { ImageOverlay } from '../../components/image-overlay.component';
 import { ProgressBar } from '../../components/progress-bar.component';
@@ -11,22 +10,23 @@ import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
 import {updateBookmarkBookDetail} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
-import ContentView from '../../layouts/home/book-detail';
+import ContentView from '../../layouts/home/book-listening';
 
-export type BookDetailRouteParams = {
-  todo: Todo;
-}
+export type BookListeningRouteParams = {
+    todo: Todo;
+}  
 
-export const BookDetailScreen = (props: any): LayoutElement => {
+export const BookListeningScreen = (props: any): LayoutElement => {
 
   const { todo } = props.route.params;
-  console.log('prop bookmark', props);
   const insets: EdgeInsets = useSafeArea();
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
   const onBookmarkActionPress = (): void => {
     setBookmarked(!bookmarked);
+    console.log('onBOokmark', bookmarked);
+    console.log('props.bookmarkedBookDetail', props.bookmarkedBookDetail.bookmarked);
     props.setBookmarkBookDetail(bookmarked);
   };
 
@@ -51,7 +51,7 @@ export const BookDetailScreen = (props: any): LayoutElement => {
           leftControl={renderBackAction()}
           rightControls={[renderBookmarkAction()]}
         />
-        <ContentView {...props} />
+        <ContentView />
     </React.Fragment>
   );
 };
@@ -96,4 +96,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(BookDetailScreen);
+)(BookListeningScreen);

@@ -8,6 +8,8 @@ export enum AppRoute {
   BOOK = 'Book',
   READING = 'Reading',
   BOOK_DETAIL = 'Book Detail',
+  BOOK_READING = 'Book Reading',
+  BOOK_LISTENING = 'Book Listening',
   LIBRARY = 'Library',
   ABOUT = 'About',
   PURCHASE = 'Purchase',

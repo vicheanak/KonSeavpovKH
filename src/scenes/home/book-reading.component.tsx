@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Layout, LayoutElement, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { EdgeInsets, useSafeArea } from 'react-native-safe-area-context';
-import { BookDetailScreenProps } from '../../navigation/home.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import { ImageOverlay } from '../../components/image-overlay.component';
 import { ProgressBar } from '../../components/progress-bar.component';
@@ -11,28 +10,44 @@ import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
 import {updateBookmarkBookDetail} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
-import ContentView from '../../layouts/home/book-detail';
+import ContentView from '../../layouts/home/book-reading';
+import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
 
-export type BookDetailRouteParams = {
-  todo: Todo;
-}
+export type BookReadingRouteParams = {
+    todo: Todo;
+}  
 
-export const BookDetailScreen = (props: any): LayoutElement => {
+export const BookReadingScreen = (props: any): LayoutElement => {
 
   const { todo } = props.route.params;
-  console.log('prop bookmark', props);
   const insets: EdgeInsets = useSafeArea();
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
   const onBookmarkActionPress = (): void => {
     setBookmarked(!bookmarked);
+    console.log('onBOokmark', bookmarked);
+    console.log('props.bookmarkedBookDetail', props.bookmarkedBookDetail.bookmarked);
     props.setBookmarkBookDetail(bookmarked);
   };
 
-  const renderBookmarkAction = (): React.ReactElement => (
+  const renderChapterAction = (): React.ReactElement => (
     <TopNavigationAction
-      icon={props.bookmarkedBookDetail.bookmarked ? BookmarkIcon : BookmarkOutlineIcon}
+      icon={ListIcon}
+      onPress={onBookmarkActionPress}
+    />
+  );
+
+  const renderTextSizeAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={ColorPaletteIcon}
+      onPress={onBookmarkActionPress}
+    />
+  );
+
+  const renderListeningAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={ListeningIcon}
       onPress={onBookmarkActionPress}
     />
   );
@@ -49,9 +64,9 @@ export const BookDetailScreen = (props: any): LayoutElement => {
       <TopNavigation
           title='Product Details'
           leftControl={renderBackAction()}
-          rightControls={[renderBookmarkAction()]}
+          rightControls={[renderChapterAction(), renderTextSizeAction(), renderListeningAction()]}
         />
-        <ContentView {...props} />
+        <ContentView />
     </React.Fragment>
   );
 };
@@ -96,4 +111,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(BookDetailScreen);
+)(BookReadingScreen);

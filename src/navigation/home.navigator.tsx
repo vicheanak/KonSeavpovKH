@@ -14,7 +14,11 @@ import {
   ReadingScreen,
   BookScreen,
   HomeTabBar,
-  SavedScreen
+  SavedScreen,
+  BookReadingScreen,
+  BookListeningScreen,
+  BookReadingRouteParams,
+  BookListeningRouteParams
 } from '../scenes/home';
 import { DoneAllIcon, GridIcon } from '../assets/icons';
 import HomeTabsNavigator from './home.tabs.navigator';
@@ -23,6 +27,8 @@ import HighlightNavigator from './highlight.navigator';
 type HomeNavigatorParams = {
   [AppRoute.HOME]: undefined;
   [AppRoute.BOOK_DETAIL]: BookDetailRouteParams;
+  [AppRoute.BOOK_READING]: BookReadingRouteParams;
+  [AppRoute.BOOK_LISTENING]: BookListeningRouteParams;
 }
 
 type HomeTabsNavigatorParams = {
@@ -36,14 +42,14 @@ export type HomeScreenProps = MaterialTopTabBarProps & {
 
 export interface BookScreenProps {
   navigation: CompositeNavigationProp<
-    HomeTabNavigationProp & StackNavigationProp<HomeNavigatorParams, AppRoute.TODO_DETAILS>,
+    HomeTabNavigationProp & StackNavigationProp<HomeNavigatorParams, AppRoute.BOOK_DETAIL>,
     MaterialTopTabNavigationProp<HomeTabsNavigatorParams, AppRoute.BOOK>>;
   route: RouteProp<HomeTabsNavigatorParams, AppRoute.BOOK>;
 }
 
 export interface ReadingScreenProps {
   navigation: CompositeNavigationProp<
-    HomeTabNavigationProp & StackNavigationProp<HomeNavigatorParams, AppRoute.TODO_DETAILS>,
+    HomeTabNavigationProp & StackNavigationProp<HomeNavigatorParams, AppRoute.BOOK_DETAIL>,
     MaterialTopTabNavigationProp<HomeTabsNavigatorParams, AppRoute.READING>>;
   route: RouteProp<HomeTabsNavigatorParams, AppRoute.READING>;
 }
@@ -51,6 +57,16 @@ export interface ReadingScreenProps {
 export interface BookDetailScreenProps {
   navigation: StackNavigationProp<HomeNavigatorParams, AppRoute.BOOK_DETAIL>;
   route: RouteProp<HomeNavigatorParams, AppRoute.BOOK_DETAIL>;
+}
+
+export interface BookReadingScreenProps {
+  navigation: StackNavigationProp<HomeNavigatorParams, AppRoute.BOOK_READING>;
+  route: RouteProp<HomeNavigatorParams, AppRoute.BOOK_READING>;
+}
+
+export interface BookListeningScreenProps {
+  navigation: StackNavigationProp<HomeNavigatorParams, AppRoute.BOOK_LISTENING>;
+  route: RouteProp<HomeNavigatorParams, AppRoute.BOOK_LISTENING>;
 }
 
 const Stack = createStackNavigator<HomeNavigatorParams>();
@@ -62,5 +78,7 @@ export const HomeNavigator = (): React.ReactElement => (
     <Stack.Screen name={AppRoute.BOOK_DETAIL} component={BookDetailScreen}/>
     <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightNavigator}/>
     <Stack.Screen name={AppRoute.SAVED} component={SavedScreen}/>
+    <Stack.Screen name={AppRoute.BOOK_READING} component={BookReadingScreen}/>
+    <Stack.Screen name={AppRoute.BOOK_LISTENING} component={BookListeningScreen}/>
   </Stack.Navigator>
 );

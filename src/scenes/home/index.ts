@@ -8,4 +8,10 @@ import ReadingScreen from './reading.component';
 export { ReadingScreen };
 export { HomeTabBar };
 import SavedScreen from './saved.component';
-export { SavedScreen }
+export { SavedScreen };
+import BookReadingScreen from './book-reading.component';
+export { BookReadingScreen };
+export { BookReadingRouteParams } from './book-reading.component';
+import BookListeningScreen from './book-listening.component';
+export { BookListeningScreen };
+export { BookListeningRouteParams } from './book-listening.component';

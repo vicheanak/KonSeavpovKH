@@ -441,3 +441,7 @@ export const HomeOrangeIcon = (style): IconElement => (
 export const LibrarySaveIcon = (style): IconElement => (
   <Icon style={{height: 25, width: 25}}  fill='#e1aa0f'  name='bookmark-outline' />
 );
+
+export const ListeningIcon = (style): IconElement => (
+  <Icon {...style} name='volume-up-outline'/>
+);

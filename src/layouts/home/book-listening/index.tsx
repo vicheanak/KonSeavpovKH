@@ -22,7 +22,6 @@ import {
 } from '@ui-kitten/components';
 import {ImageOverlay} from './extra/image-overlay.component';
 import {Product, ProductOption} from './extra/data';
-import { AppRoute } from '../../../navigation/app-routes';
 
 const product: Product = Product.centralParkApartment();
 
@@ -42,26 +41,10 @@ const ListIcon = (style): IconElement => (
   <Icon {...style} name='list-outline'/>
 );
 
-export default (props: any): React.ReactElement => {
+export default (): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
 
-  const onReadingButtonPress = (): void => {
-    let todo = {description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-    id: 0,
-    photo: 3,
-    progress: 33,
-    title: "Learn React Navigation 5"};
-    props.navigation.navigate(AppRoute.BOOK_READING, {todo});
-  };
-
-  const onListeningButtonPress = (): void => {
-    let todo = {description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-    id: 0,
-    photo: 3,
-    progress: 33,
-    title: "Learn React Navigation 5"};
-    props.navigation.navigate(AppRoute.BOOK_LISTENING, {todo});
-  };
+  const onBookButtonPress = (): void => {};
 
   const renderImageItem = (
     info: ListRenderItemInfo<ImageSourcePropType>,
@@ -131,10 +114,10 @@ export default (props: any): React.ReactElement => {
         footer={renderBookingFooter}>
        
        <ButtonGroup style={styles.buttonContainer} status='basic'>
-           <Button status="basic" icon={ReadingIcon} style={styles.bookButton} onPress={onReadingButtonPress}>
+           <Button status="basic" icon={ReadingIcon} style={styles.bookButton} onPress={onBookButtonPress}>
             READING
           </Button>
-          <Button status="basic" icon={ListeningIcon} style={styles.bookButton} onPress={onListeningButtonPress}>
+          <Button status="basic" icon={ListeningIcon} style={styles.bookButton} onPress={onBookButtonPress}>
             LISTENING
           </Button>
       </ButtonGroup>
