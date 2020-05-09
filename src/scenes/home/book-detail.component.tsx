@@ -20,7 +20,6 @@ export type BookDetailRouteParams = {
 export const BookDetailScreen = (props: any): LayoutElement => {
 
   const { todo } = props.route.params;
-  console.log('prop bookmark', props);
   const insets: EdgeInsets = useSafeArea();
 
   

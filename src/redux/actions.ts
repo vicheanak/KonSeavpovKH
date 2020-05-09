@@ -94,7 +94,6 @@ export const updateBookmarkBookDetail = (bookmarked) => {
 }
 
 export const updateBookCurrentChapter = (currentChapter) => {
-  console.log('Current Chapter', currentChapter);
   return (dispatch) => {
     dispatch({
       type: UPDATE_BOOK_CURRENT_CHAPTER,

@@ -18,6 +18,8 @@ import ContentView from '../../layouts/home/book-reading';
 import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
 import {AppRoute} from '../../navigation/app-routes';
 import { ThemeContext } from '../../services/theme.service';
+import Slider from '@react-native-community/slider';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 export type BookReadingRouteParams = {
     todo: Todo;
@@ -132,7 +134,23 @@ export const BookReadingScreen = (props: any): LayoutElement => {
       </Button>
     </View>
   );
+  const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
+  const [sliderOneValue, setSliderOneValue] = React.useState([5]);
+  
+  const sliderOneValuesChangeStart = () => {
+    console.log('change start');
+    setSliderOneChanging(true);
+  }
 
+  const sliderOneValuesChange = values => {
+    console.log('value', values);
+    setSliderOneValue(values)
+  };
+
+  const sliderOneValuesChangeFinish = () => {
+    console.log('finish');
+    setSliderOneChanging(false)
+  };
 
   return (
     <React.Fragment>
@@ -148,7 +166,13 @@ export const BookReadingScreen = (props: any): LayoutElement => {
           disabled={true}
           footer={renderBookingFooter}>
             <View>
-              <Text category="s1">Short description goes to very here</Text>
+            <MultiSlider
+              values={sliderOneValue}
+              sliderLength={310}
+              onValuesChangeStart={sliderOneValuesChangeStart}
+              onValuesChange={sliderOneValuesChange}
+              onValuesChangeFinish={sliderOneValuesChangeFinish}
+            />
             </View>
         </Card>}
         <Divider />
