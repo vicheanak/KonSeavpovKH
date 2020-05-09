@@ -9,6 +9,7 @@ import {
   Dimensions
 } from 'react-native';
 import {
+  ButtonGroup,
   Button,
   Card,
   Icon,
@@ -98,27 +99,29 @@ export default (): React.ReactElement => {
   return (
     <ScrollView style={styles.container}>
       <ImageOverlay style={styles.image} source={product.primaryImage} />
+      <View style={styles.headerContainer}>
+          <Text style={styles.title} category="h4">
+            {product.title}
+          </Text>
+          <Text style={styles.authorLabel} category="s2">
+            Author Name
+          </Text>
+        </View>
       <Card
         style={styles.bookingCard}
         appearance="filled"
         disabled={true}
         footer={renderBookingFooter}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.title} category="h6">
-            {product.title}
-          </Text>
-          <Text style={styles.priceLabel} category="s2">
-            Author Name
-          </Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button status="basic" icon={ReadingIcon} style={styles.bookButton} onPress={onBookButtonPress}>
+       
+       <ButtonGroup style={styles.buttonContainer} status='basic'>
+           <Button status="basic" icon={ReadingIcon} style={styles.bookButton} onPress={onBookButtonPress}>
             READING
           </Button>
           <Button status="basic" icon={ListeningIcon} style={styles.bookButton} onPress={onBookButtonPress}>
             LISTENING
           </Button>
-        </View>
+      </ButtonGroup>
+       
         
       </Card>
       <Text style={styles.sectionLabel} category="h6">
@@ -172,30 +175,30 @@ const themedStyles = StyleService.create({
     marginVertical: 10
   },
   title: {
-    // width: '65%',
+    fontWeight: 'bold'
   },
   rentLabel: {
     marginTop: 24,
   },
-  priceLabel: {
+  authorLabel: {
     marginTop: 8,
+    fontWeight: 'bold'
   },
   bookButton: {
-    borderRadius: 30,
-    justifyContent: 'center',
-    aspectRatio: 3.0,
-    margin: 8,
-    maxWidth: Dimensions.get('window').width / 2 - 12,
+    width: 150,
   },
   headerContainer: {
     flexDirection: 'column',
-    marginHorizontal: 8,
+    marginHorizontal: 20,
     marginVertical: 8,
+    position: 'absolute',
+    top: Dimensions.get('window').height / 5,
   },
   buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: 300,
+    borderRadius: 30,
+    justifyContent: 'center',
+    marginLeft: 15
   },
   detailsList: {
     flexDirection: 'row',
