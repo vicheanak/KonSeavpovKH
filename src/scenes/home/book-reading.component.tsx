@@ -12,6 +12,7 @@ import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapt
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-reading';
 import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
+import { AppRoute } from 'src/navigation/app-routes';
 
 export type BookReadingRouteParams = {
     todo: Todo;
@@ -32,24 +33,36 @@ export const BookReadingScreen = (props: any): LayoutElement => {
     props.setBookmarkBookDetail(bookmarked);
   };
 
-  const renderChapterAction = (): React.ReactElement => (
+  const onChapterListActionPress = (): void => {
+    // props.navigation.navigate(AppRoute.CHAPTER_LIST);
+  }
+
+  const onTextSizeActionPress = (): void => {
+    // Show textSize card
+  }
+
+  const onListeningActionPress = (): void => {
+    // props.navigation.navigate(AppRoute.LISTENING);
+  }
+
+  const renderChapterListAction = (): React.ReactElement => (
     <TopNavigationAction
       icon={ListIcon}
-      onPress={onBookmarkActionPress}
+      onPress={onChapterListActionPress}
     />
   );
 
   const renderTextSizeAction = (): React.ReactElement => (
     <TopNavigationAction
       icon={ColorPaletteIcon}
-      onPress={onBookmarkActionPress}
+      onPress={onTextSizeActionPress}
     />
   );
 
   const renderListeningAction = (): React.ReactElement => (
     <TopNavigationAction
       icon={ListeningIcon}
-      onPress={onBookmarkActionPress}
+      onPress={onListeningActionPress}
     />
   );
 
@@ -70,7 +83,7 @@ export const BookReadingScreen = (props: any): LayoutElement => {
       <TopNavigation
           title='Product Details'
           leftControl={renderBackAction()}
-          rightControls={[renderChapterAction(), renderTextSizeAction(), renderListeningAction()]}
+          rightControls={[renderChapterListAction(), renderTextSizeAction(), renderListeningAction()]}
         />
         <ContentView {...props}/>
     </React.Fragment>

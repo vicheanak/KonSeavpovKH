@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage; // <-- Add to ReactNativeI18n to the imports
 import com.reactnativerestart.RestartPackage;
+import com.astrocoders.selectabletext.RNSelectableTextPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
