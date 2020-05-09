@@ -8,7 +8,7 @@ import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
-import {updateBookmarkBookDetail} from '../../redux/actions';
+import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-reading';
 import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
@@ -19,6 +19,7 @@ export type BookReadingRouteParams = {
 
 export const BookReadingScreen = (props: any): LayoutElement => {
 
+  console.log('Book Reading Screen', props);
   const { todo } = props.route.params;
   const insets: EdgeInsets = useSafeArea();
 
@@ -59,6 +60,11 @@ export const BookReadingScreen = (props: any): LayoutElement => {
     />
   );
 
+  
+  // props.setBookCurrentChapter({currentChapter: 2});
+  // props.setBookTotalChapters({totalChapters: 10});
+  // console.log('props', props);
+
   return (
     <React.Fragment>
       <TopNavigation
@@ -66,7 +72,7 @@ export const BookReadingScreen = (props: any): LayoutElement => {
           leftControl={renderBackAction()}
           rightControls={[renderChapterAction(), renderTextSizeAction(), renderListeningAction()]}
         />
-        <ContentView />
+        <ContentView {...props}/>
     </React.Fragment>
   );
 };
@@ -88,25 +94,27 @@ const styles = StyleSheet.create({
   },
   title: {
     marginVertical: 4,
-  },
-  progressBar: {
-    width: '50%',
-    marginVertical: 16,
-  },
+  }
 });
 
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     bookmarkedBookDetail: state.bookmarkedBookDetail,
+    currentChapter: state.bookReading.currentChapter,
+    totalChapters: state.bookReading.totalChapters
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked))
+    setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked)),
+    setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
+    setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters))
   };
 };
+
 
 export default connect(
   mapStateToProps,

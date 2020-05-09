@@ -9,7 +9,7 @@ import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
-import {updateBookmarkBookDetail} from '../../redux/actions';
+import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
 
@@ -22,6 +22,10 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   const { todo } = props.route.params;
   console.log('prop bookmark', props);
   const insets: EdgeInsets = useSafeArea();
+
+  
+  props.setBookCurrentChapter({currentChapter: 1});
+  props.setBookTotalChapters({totalChapters: 3});
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
@@ -84,12 +88,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     bookmarkedBookDetail: state.bookmarkedBookDetail,
+    currentChapter: state.currentChapter,
+    totalChapters: state.totalChapters
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked))
+    setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked)),
+    setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
+    setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters))
   };
 };
 

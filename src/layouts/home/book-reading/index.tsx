@@ -6,7 +6,7 @@ import {
   ListRenderItemInfo,
   ScrollView,
   View,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import {
   ButtonGroup,
@@ -20,30 +20,34 @@ import {
   IconElement,
   Divider,
   ViewPager,
-  Layout
+  Layout,
 } from '@ui-kitten/components';
 import {Product, ProductOption} from './extra/data';
+import {ProgressBar} from '../../../components/progress-bar.component';
 
 const product: Product = Product.centralParkApartment();
 
 const ReadingIcon = (style): IconElement => (
-  <Icon {...style} name='file-text-outline'/>
+  <Icon {...style} name="file-text-outline" />
 );
 
 const ListeningIcon = (style): IconElement => (
-  <Icon {...style} name='volume-up-outline'/>
+  <Icon {...style} name="volume-up-outline" />
 );
 
 const ClockIcon = (style): IconElement => (
-  <Icon {...style} name='clock-outline'/>
+  <Icon {...style} name="clock-outline" />
 );
 
 const ListIcon = (style): IconElement => (
-  <Icon {...style} name='list-outline'/>
+  <Icon {...style} name="list-outline" />
 );
 
 export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
+
+
+  console.log('BOOK_READING Layout', {props});
 
   const onBookButtonPress = (): void => {};
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -77,11 +81,7 @@ export default (props: any): React.ReactElement => {
     detail: string,
     index: number,
   ): React.ReactElement => (
-    <Button
-      key={index}
-      style={styles.detailItem}
-      status="basic"
-      size="tiny">
+    <Button key={index} style={styles.detailItem} status="basic" size="tiny">
       {detail}
     </Button>
   );
@@ -98,20 +98,37 @@ export default (props: any): React.ReactElement => {
     </View>
   );
 
+  const totalChapterBars = (props.totalChapters.totalChapters * 100) / 100;
+  let currentBar = (props.currentChapter.currentChapter * 100) / totalChapterBars;
+  console.log({currentBar, totalChapterBars});
+  let currentChapter = props.currentChapter.currentChapter;
+
   return (
-    <ViewPager
-      selectedIndex={selectedIndex}
-      onSelect={index => setSelectedIndex(index)}>
-      {/* <Layout
-      style={styles.tab}
-      level='2'>
-      <Text category='h5'>USERS</Text>
-    </Layout> */}
-      <Layout level="2">
-        <ScrollView style={styles.container}>
+      <View>
+    <ScrollView style={styles.container}>
+      <ViewPager
+        selectedIndex={selectedIndex}
+        onSelect={(index) => {
+            console.log('index viewpager', index);
+            console.log('selectedIndex', selectedIndex);
+            if (index > selectedIndex){
+                //nextChapter
+                currentBar = currentBar + currentBar;
+                currentChapter++;
+            }
+            if (index < selectedIndex){
+                //previousChapter
+                currentBar = currentBar - currentBar;
+                currentChapter--;
+            }
+            props.setBookCurrentChapter({'currentChapter': currentChapter});
+            setSelectedIndex(index);
+        }}>
+        <Layout level="2">
+          {/* <ScrollView style={styles.container}> */}
           <View style={styles.headerContainer}>
             <Text style={styles.title} category="h4">
-                Chapter 1
+              Chapter 1
             </Text>
             <Text style={styles.authorLabel} category="s2">
               Author Name
@@ -140,13 +157,13 @@ export default (props: any): React.ReactElement => {
             About Author
           </Text>
           <Text style={styles.description}>{product.description}</Text>
-        </ScrollView>
-      </Layout>
-      <Layout level="2">
-        <ScrollView style={styles.container}>
+          {/* </ScrollView> */}
+        </Layout>
+        <Layout level="2">
+          {/* <ScrollView style={styles.container}> */}
           <View style={styles.headerContainer}>
             <Text style={styles.title} category="h4">
-                Chapter 2
+              Chapter 2
             </Text>
             <Text style={styles.authorLabel} category="s2">
               Author Name
@@ -175,13 +192,13 @@ export default (props: any): React.ReactElement => {
             About Author
           </Text>
           <Text style={styles.description}>{product.description}</Text>
-        </ScrollView>
-      </Layout>
-      <Layout level="2">
-        <ScrollView style={styles.container}>
+          {/* </ScrollView> */}
+        </Layout>
+        <Layout level="2">
+          {/* <ScrollView style={styles.container}> */}
           <View style={styles.headerContainer}>
             <Text style={styles.title} category="h4">
-                Chapter 3
+              Chapter 3
             </Text>
             <Text style={styles.authorLabel} category="s2">
               Author Name
@@ -210,58 +227,26 @@ export default (props: any): React.ReactElement => {
             About Author
           </Text>
           <Text style={styles.description}>{product.description}</Text>
-        </ScrollView>
-      </Layout>
-    </ViewPager>
-    // <ScrollView style={styles.container}>
-    //   <View style={styles.headerContainer}>
-    //       <Text style={styles.title} category="h4">
-    //         {product.title}
-    //       </Text>
-    //       <Text style={styles.authorLabel} category="s2">
-    //         Author Name
-    //       </Text>
-    //     </View>
-
-    //   <Text style={styles.sectionLabel} category="h6">
-    //     About
-    //   </Text>
-    //   <Text style={styles.description}>
-    //     {product.description}
-    //   </Text>
-    //   <Text style={styles.sectionLabel} category="h6">
-    //     Who's it for?
-    //   </Text>
-    //   <View style={styles.description} appearance="hint">
-    //     <View style={styles.whoText}>
-    //       <Text>
-    //         Anyone feeling stressed or overburdened
-    //       </Text>
-    //     </View>
-    //     <View style={styles.whoText}>
-    //       <Text>
-    //         Psychology buffs looking for fresh insights
-    //       </Text>
-    //     </View>
-    //     <View style={styles.whoText}>
-    //       <Text>
-    //         Mindfulness enthusiasts seeking a new angle
-    //       </Text>
-    //     </View>
-    //   </View>
-    //   <Text style={styles.sectionLabel} category="h6">
-    //     About Author
-    //   </Text>
-    //   <Text style={styles.description}>
-    //     {product.description}
-    //   </Text>
-    // </ScrollView>
+          {/* </ScrollView> */}
+        </Layout>
+      </ViewPager>
+    </ScrollView>
+    <ProgressBar style={styles.itemProgressBar}  
+     progress={currentBar}
+     text={`${3}%`}/>
+    </View>
   );
 };
 
 const themedStyles = StyleService.create({
   container: {
     backgroundColor: 'background-basic-color-2',
+  },
+  itemProgressBar: {
+    position: 'absolute',
+    bottom: 60,
+    width: '100%',
+    marginVertical: 12,
   },
   image: {
     height: 360,
@@ -271,17 +256,17 @@ const themedStyles = StyleService.create({
     margin: 16,
   },
   whoText: {
-    marginVertical: 10
+    marginVertical: 10,
   },
   title: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   rentLabel: {
     marginTop: 24,
   },
   authorLabel: {
     marginTop: 8,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   bookButton: {
     width: 150,
@@ -297,7 +282,7 @@ const themedStyles = StyleService.create({
     width: 300,
     borderRadius: 30,
     justifyContent: 'center',
-    marginLeft: 15
+    marginLeft: 15,
   },
   detailsList: {
     flexDirection: 'row',
@@ -320,12 +305,12 @@ const themedStyles = StyleService.create({
   description: {
     marginHorizontal: 16,
     marginVertical: 8,
-    lineHeight: 25
+    lineHeight: 25,
   },
   sectionLabel: {
     marginHorizontal: 16,
     marginVertical: 8,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   imagesList: {
     padding: 8,

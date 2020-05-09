@@ -8,7 +8,7 @@ import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
-import {updateBookmarkBookDetail} from '../../redux/actions';
+import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
 
@@ -51,7 +51,7 @@ export const BookListeningScreen = (props: any): LayoutElement => {
           leftControl={renderBackAction()}
           rightControls={[renderBookmarkAction()]}
         />
-        <ContentView />
+         <ContentView {...props}/>
     </React.Fragment>
   );
 };
@@ -81,17 +81,23 @@ const styles = StyleSheet.create({
 });
 
 
+
 const mapStateToProps = state => {
   return {
     bookmarkedBookDetail: state.bookmarkedBookDetail,
+    currentChapter: state.currentChapter,
+    totalChapters: state.totalChapters
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked))
+    setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked)),
+    setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
+    setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters))
   };
 };
+
 
 export default connect(
   mapStateToProps,

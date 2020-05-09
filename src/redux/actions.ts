@@ -1,5 +1,15 @@
-import { UPDATE_BOOKMARK_BOOK_DETAIL, FETCHING_DATA, FETCHING_DATA_SUCCESS, FETCHING_DATA_FAILURE, UPDATE_LANGUAGE, POST_USER, POST_USER_SUCCESS, POST_USER_FAILURE } from './constants'
-import {getPeople, addPeople} from './api'
+import { 
+  UPDATE_BOOK_CURRENT_CHAPTER, 
+  UPDATE_BOOK_TOTOAL_CHAPTERS,
+  UPDATE_BOOKMARK_BOOK_DETAIL, 
+  FETCHING_DATA, 
+  FETCHING_DATA_SUCCESS, 
+  FETCHING_DATA_FAILURE, 
+  UPDATE_LANGUAGE, 
+  POST_USER, 
+  POST_USER_SUCCESS, 
+  POST_USER_FAILURE } from './constants'
+import { getPeople, addPeople } from './api'
 
 export function getData() {
   return {
@@ -55,10 +65,10 @@ export function addUser(params) {
   return (dispatch) => {
     dispatch(postUser());
     addPeople(params)
-    .then((data) => {
-      dispatch(postUserSuccess(data))
-    })
-    .catch((err) => dispatch(postUserFailure()))
+      .then((data) => {
+        dispatch(postUserSuccess(data))
+      })
+      .catch((err) => dispatch(postUserFailure()))
   };
 };
 
@@ -79,4 +89,23 @@ export const updateBookmarkBookDetail = (bookmarked) => {
       bookmarked
     });
   };
+}
+
+export const updateBookCurrentChapter = (currentChapter) => {
+  console.log('Current Chapter', currentChapter);
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_BOOK_CURRENT_CHAPTER,
+      currentChapter
+    })
+  }
+}
+
+export const updateBookTotalChapters = (totalChapters) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_BOOK_TOTOAL_CHAPTERS,
+      totalChapters
+    })
+  }
 }
