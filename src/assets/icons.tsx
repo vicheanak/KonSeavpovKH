@@ -58,8 +58,8 @@ export const SearchIcon = (style): IconElement => (
   <Icon {...style} name='search-outline'/>
 );
 
-export const BookmarkIcon = (style): IconElement => (
-  <Icon {...style} name='bookmark-outline'/>
+export const BookmarkIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='bookmark'/>
 );
 
 

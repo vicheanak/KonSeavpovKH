@@ -1,4 +1,4 @@
-import { FETCHING_DATA, FETCHING_DATA_SUCCESS, FETCHING_DATA_FAILURE, UPDATE_LANGUAGE, POST_USER, POST_USER_SUCCESS, POST_USER_FAILURE } from './constants'
+import { UPDATE_BOOKMARK_BOOK_DETAIL, FETCHING_DATA, FETCHING_DATA_SUCCESS, FETCHING_DATA_FAILURE, UPDATE_LANGUAGE, POST_USER, POST_USER_SUCCESS, POST_USER_FAILURE } from './constants'
 import {getPeople, addPeople} from './api'
 
 export function getData() {
@@ -70,3 +70,13 @@ export function updateLanguage(language) {
     });
   };
 };
+
+export const updateBookmarkBookDetail = (bookmarked) => {
+  console.log('Actions', bookmarked);
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_BOOKMARK_BOOK_DETAIL,
+      bookmarked
+    });
+  };
+}
