@@ -54,39 +54,6 @@ export const BookDetailScreen = (props: any): LayoutElement => {
           rightControls={[renderBookmarkAction()]}
         />
         <ContentView />
-      {/* <ImageOverlay
-        style={[styles.appBar, { paddingTop: insets.top }]}
-        source={require('../../assets/image-background.jpeg')}>
-         
-        <Toolbar
-          onMenuItemSelect={onMenuItemSelect}
-          menu={menu}
-          appearance='control'
-          onBackPress={props.navigation.goBack}
-        /> 
-      </ImageOverlay>
-      <Layout style={styles.container}>
-        <View style={styles.detailsContainer}>
-          <Text
-            style={styles.title}
-            category='h4'>
-            {todo.title}
-          </Text>
-          <ProgressBar
-            style={styles.progressBar}
-            progress={todo.progress}
-            text={`${todo.progress}%`}
-          />
-          <Text style={styles.title}>
-            {todo.description}
-          </Text>
-        </View>
-        <Button
-          onPress={props.navigation.goBack}>
-          COMPLETE
-        </Button>
-      </Layout>
-      */}
     </React.Fragment>
   );
 };

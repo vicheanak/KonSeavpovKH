@@ -30,9 +30,8 @@ export class Product {
         '2 Bath',
       ],
       [
-        ProductOption.wifiOption(),
-        ProductOption.tvOption(),
-        ProductOption.parkingOption(),
+        ProductOption.minutesOption(),
+        ProductOption.chaptersOption(),
       ],
     );
   }
@@ -64,16 +63,13 @@ export class ProductOption {
               readonly title: string) {
   }
 
-  static wifiOption(): ProductOption {
-    return new ProductOption('wifi', 'Wi-Fi');
+  static minutesOption(): ProductOption {
+    return new ProductOption('clock', '13 mins');
   }
 
-  static tvOption(): ProductOption {
-    return new ProductOption('tv', 'TV');
+  static chaptersOption(): ProductOption {
+    return new ProductOption('list', '9 Chapters');
   }
 
-  static parkingOption(): ProductOption {
-    return new ProductOption('car', 'Free Parking');
-  }
 }
 
