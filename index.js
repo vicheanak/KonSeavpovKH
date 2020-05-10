@@ -21,7 +21,7 @@ const ReduxApp = () => (
 
 AppRegistry.registerComponent(appName, () => ReduxApp);
 
-module.exports = require('./libs/index.js');
+// module.exports = require('./libs/index.js');
 // export {trackerPlayerLib};
 // AppRegistry.registerHeadlessTask('TrackPlayer', ServiceFactory);
 // AppRegistry.registerComponent(appName, () => App);

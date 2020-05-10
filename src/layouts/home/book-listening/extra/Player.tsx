@@ -25,18 +25,33 @@ import {
   Divider
 } from '@ui-kitten/components';
 
+function secondsToTime(e){
+  var h = Math.floor(e / 3600).toString().padStart(2,'0'),
+      m = Math.floor(e % 3600 / 60).toString().padStart(2,'0'),
+      s = Math.floor(e % 60).toString().padStart(2,'0');
+  
+  return m + ':' + s;
+}
+
 function ProgressBar() {
   const progress = useTrackPlayerProgress();
-
+  let currentTime = secondsToTime(progress.position);
+  let totalDuration = secondsToTime(progress.duration);
+  let remainingTime = secondsToTime(progress.duration - progress.position);
+  
   return (
-    <View style={styles.progress}>
-      <View style={{ flex: progress.position, backgroundColor: "red" }} />
-      <View
-        style={{
-          flex: progress.duration - progress.position,
-          backgroundColor: "grey"
-        }}
-      />
+    <View style={styles.progressContainer}>
+      <Text category="s2" appearance="hint" style={[styles.timeLabel, styles.timeCurrent]}>{currentTime}</Text>
+      <View style={styles.progress}>
+        <View style={{ flex: progress.position, backgroundColor: "red" }} />
+        <View
+          style={{
+            flex: progress.duration - progress.position,
+            backgroundColor: "grey"
+          }}
+        />
+      </View>
+      <Text category="s2" appearance="hint" style={[styles.timeLabel, styles.timeRemaining]}>{remainingTime}</Text>
     </View>
   );
 }
@@ -102,7 +117,7 @@ export default function Player(props) {
     }
   });
 
-  const { style, onNext, onPrevious, onTogglePlayback } = props;
+  const { style, onNext, onPrevious, onTogglePlayback, onSkipNext15, onSkipBack15 } = props;
 
   let playPauseButton = PlayIcon;
 
@@ -117,8 +132,11 @@ export default function Player(props) {
     <View style={[styles.card, style]}>
       <Image style={styles.cover} source={{ uri: trackArtwork }} />
       <ProgressBar />
-      <Text style={styles.title}>{trackTitle}</Text>
-      <Text style={styles.artist}>{trackArtist}</Text>
+      <View style={styles.titleAuthor}>
+        <Text style={styles.title}>{trackTitle}</Text>
+        <Text style={styles.artist}>{trackArtist}</Text>
+      </View>
+    
       <View style={styles.mediaController}>
         <Button
           style={styles.mediaButtonSmall}
@@ -130,6 +148,7 @@ export default function Player(props) {
           style={styles.mediaButtonSmall}
           status='basic'
           icon={ArrowLeftIcon}
+          onPress={onSkipBack15}
         />
         <Button
           style={styles.mediaButtonLarge}
@@ -141,6 +160,7 @@ export default function Player(props) {
           style={styles.mediaButtonSmall}
           status='basic'
           icon={ArrowRightIcon}
+          onPress={onSkipNext15}
         />
         <Button
           style={styles.mediaButtonSmall}
@@ -170,11 +190,33 @@ Player.defaultProps = {
 };
 
 const styles = StyleSheet.create({
+  titleAuthor: {
+    marginTop: -30,
+  },
+  timeLabel: {
+    marginTop: 15,
+  },
+  timeCurrent: {
+    left: 40
+  },
+  timeRemaining: {
+    right: 40
+  },
+  progressContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height: 50,
+    position: 'relative',
+    marginTop: 50,
+    left: 20
+  },
   mediaController: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    height: 100,
+    height: 50,
+    marginTop: 30
   },
   mediaButtonLarge: {
     alignSelf: 'center',
@@ -193,25 +235,28 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   card: {
-    width: "80%",
+    width: "100%",
     alignItems: "center",
+    alignSelf: "center",
   },
   cover: {
-    width: 140,
-    height: 140,
+    width: 250,
+    height: 250,
     marginTop: 20,
-    backgroundColor: "grey"
+    backgroundColor: "grey",
+    borderRadius: 30
   },
   progress: {
-    height: 1,
-    width: "90%",
+    height: 3,
+    width: "100%",
     marginTop: 10,
     flexDirection: "row"
   },
   title: {
-    marginTop: 10
+    textAlign: 'center'
   },
   artist: {
+    textAlign: 'center',
     fontWeight: "bold"
   },
   controls: {

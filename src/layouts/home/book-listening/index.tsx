@@ -106,7 +106,6 @@ export default (props: any): React.ReactElement => {
   };
 
   const playbackState = usePlaybackState();
-  console.log({playbackState});
 
   useEffect(() => {
     setup();
@@ -121,11 +120,13 @@ export default (props: any): React.ReactElement => {
         TrackPlayer.CAPABILITY_PAUSE,
         TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
         TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-        TrackPlayer.CAPABILITY_STOP
+        TrackPlayer.CAPABILITY_STOP,
+        TrackPlayer.CAPABILITY_SEEK_TO
       ],
       compactCapabilities: [
         TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_SEEK_TO
       ]
     });
   }
@@ -154,16 +155,17 @@ export default (props: any): React.ReactElement => {
   }
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}>
+    <View
+      style={styles.container}>
         <Player
           onNext={skipToNext}
           style={styles.player}
           onPrevious={skipToPrevious}
           onTogglePlayback={togglePlayback}
+          onSkipNext15={skipNext15}
+          onSkipBack15={skipBack15}
         />
-        <Text style={styles.state}>{getStateName(playbackState)}</Text>
+        {/* <Text style={styles.state}>{getStateName(playbackState)}</Text> */}
       {/* <ProfileAvatar
         style={styles.photo}
         source={require('./assets/image-product.jpg')}
@@ -222,7 +224,7 @@ export default (props: any): React.ReactElement => {
         />
       </View> */}
       
-    </ScrollView>
+    </View>
   );
   
 };
@@ -252,6 +254,23 @@ async function skipToPrevious() {
   try {
     await TrackPlayer.skipToPrevious();
   } catch (_) {}
+}
+
+async function skipNext15() {
+  const progress = await TrackPlayer.getPosition();
+  const newProgress = Math.floor(progress) + 15;
+  console.log(newProgress);
+  await TrackPlayer.play();
+  await TrackPlayer.seekTo(newProgress);
+}
+
+async function skipBack15() {
+  const progress = await TrackPlayer.getPosition();
+  const newProgress = Math.floor(progress) - 15;
+  console.log(newProgress);
+  await TrackPlayer.play();
+  await TrackPlayer.seekTo(newProgress); 
+  // await TrackPlayer.seekTo(newProgress);
 }
 
 const themedStyles = StyleService.create({
