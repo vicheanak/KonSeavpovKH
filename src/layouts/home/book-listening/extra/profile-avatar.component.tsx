@@ -1,0 +1,35 @@
+import React from 'react';
+import { StyleSheet, View, ViewProps } from 'react-native';
+import { Avatar, AvatarProps, ButtonElement, ButtonProps } from '@ui-kitten/components';
+
+export interface ProfileAvatarProps extends AvatarProps {
+  editButton?: () => ButtonElement;
+}
+
+export const ProfileAvatar = (props: ProfileAvatarProps): React.ReactElement<ViewProps> => {
+
+ 
+
+  const { style, ...restProps } = props;
+
+  return (
+    <View style={style}>
+      <Avatar
+        style={[style, styles.avatar]}
+        {...restProps}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  avatar: {
+    alignSelf: 'center',
+  },
+  editButton: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    bottom: 0,
+  },
+});
+

@@ -6,7 +6,8 @@ import {
   ListRenderItemInfo,
   ScrollView,
   View,
-  Dimensions
+  Dimensions,
+  Animated 
 } from 'react-native';
 import {
   ButtonGroup,
@@ -22,147 +23,195 @@ import {
 } from '@ui-kitten/components';
 import {ImageOverlay} from './extra/image-overlay.component';
 import {Product, ProductOption} from './extra/data';
+import { ProfileAvatar } from './extra/profile-avatar.component';
+import { ProfileSetting } from './extra/profile-setting.component';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import Slider from '@react-native-community/slider';
+import {CustomLabel} from './extra/custom-label.component';
+
+const AnimatedView = Animated.createAnimatedComponent(View);
+
+const width = 50;
+const pointerWidth = width * 0.47;
 
 const product: Product = Product.centralParkApartment();
 
-const ReadingIcon = (style): IconElement => (
-  <Icon {...style} name='file-text-outline'/>
+const BookmarkIcon = (style): IconElement => (
+  <Icon {...style} name='bookmark-outline'/>
 );
 
-const ListeningIcon = (style): IconElement => (
-  <Icon {...style} name='volume-up-outline'/>
+const PauseIcon = (style): IconElement => (
+  <Icon {...style} name='code-outline'/>
 );
 
-const ClockIcon = (style): IconElement => (
-  <Icon {...style} name='clock-outline'/>
+const PlayIcon = (style): IconElement => (
+  <Icon {...style} name='arrow-right-outline'/>
+);
+
+const SkipForwardIcon = (style): IconElement => (
+  <Icon {...style} name='skip-forward-outline'/>
+);
+
+const SkipBackIcon = (style): IconElement => (
+  <Icon {...style} name='skip-back-outline'/>
 );
 
 const ListIcon = (style): IconElement => (
   <Icon {...style} name='list-outline'/>
 );
 
-export default (): React.ReactElement => {
+const ArrowLeftIcon = (style): IconElement => (
+  <Icon {...style} name='arrowhead-left-outline'/>
+)
+
+const ArrowRightIcon = (style): IconElement => (
+  <Icon {...style} name='arrowhead-right-outline'/>
+)
+
+export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
 
-  const onBookButtonPress = (): void => {};
+  const onDoneButtonPress = (): void => {
+    props.navigation && props.navigation.goBack();
+  };
 
-  const renderImageItem = (
-    info: ListRenderItemInfo<ImageSourcePropType>,
-  ): React.ReactElement => (
-    <Image style={styles.imageItem} source={info.item} />
-  );
+  const sliderOneValuesChangeStart = () => {
 
-  const renderOptionItemIcon = (
-    style: ImageStyle,
-    icon: string,
-  ): React.ReactElement => <Icon {...style} name={icon} />;
+  }
 
-  const renderOptionItem = (
-    option: ProductOption,
-    index: number,
-  ): React.ReactElement => (
-    <Button
-      key={index}
-      style={styles.optionItem}
-      appearance="ghost"
-      status="basic"
-      icon={(style: ImageStyle) => renderOptionItemIcon(style, option.icon)}>
-      {option.title}
-    </Button>
-  );
+  const sliderOneValuesChange = values => {
 
-  const renderDetailItem = (
-    detail: string,
-    index: number,
-  ): React.ReactElement => (
-    <Button
-      key={index}
-      style={styles.detailItem}
-      status="basic"
-      size="tiny">
-      {detail}
-    </Button>
-  );
+  };
 
-  const renderBookingFooter = (): React.ReactElement => (
-    <View>
-      <Text category="s1">Short description goes to very here</Text>
-      {/* <View style={styles.detailsList}>
-        {product.details.map(renderDetailItem)}
-      </View> */}
-      <View style={styles.optionList}>
-        {product.options.map(renderOptionItem)}
-      </View>
-    </View>
-  );
+  const sliderOneValuesChangeFinish = (value) => {
+ 
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      <ImageOverlay style={styles.image} source={product.primaryImage} />
-      <View style={styles.headerContainer}>
-          <Text style={styles.title} category="h4">
-            {product.title}
-          </Text>
-          <Text style={styles.authorLabel} category="s2">
-            Author Name
-          </Text>
-        </View>
-      <Card
-        style={styles.bookingCard}
-        appearance="filled"
-        disabled={true}
-        footer={renderBookingFooter}>
-       
-       <ButtonGroup style={styles.buttonContainer} status='basic'>
-           <Button status="basic" icon={ReadingIcon} style={styles.bookButton} onPress={onBookButtonPress}>
-            READING
-          </Button>
-          <Button status="basic" icon={ListeningIcon} style={styles.bookButton} onPress={onBookButtonPress}>
-            LISTENING
-          </Button>
-      </ButtonGroup>
-       
-        
-      </Card>
-      <Text style={styles.sectionLabel} category="h6">
-        About
-      </Text>
-      <Text style={styles.description}>
-        {product.description}
-      </Text>
-      <Text style={styles.sectionLabel} category="h6">
-        Who's it for?
-      </Text>
-      <View style={styles.description} appearance="hint">
-        <View style={styles.whoText}>
-          <Text>
-            Anyone feeling stressed or overburdened
-          </Text>
-        </View>
-        <View style={styles.whoText}>
-          <Text>
-            Psychology buffs looking for fresh insights
-          </Text>
-        </View>
-        <View style={styles.whoText}>
-          <Text>
-            Mindfulness enthusiasts seeking a new angle
-          </Text>
-        </View>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}>
+      <ProfileAvatar
+        style={styles.photo}
+        source={require('./assets/image-product.jpg')}
+      />
+      <View style={styles.titleAuthor}>
+        <Text
+          style={styles.title}
+          category='h6'>
+          Chapter 1 of 10 - Lady in Waiting
+        </Text>
+        <Text
+          style={styles.title}
+          appearance='hint'>
+          by Anne Glenconner
+        </Text>
       </View>
-      <Text style={styles.sectionLabel} category="h6">
-        About Author
-      </Text>
-      <Text style={styles.description}>
-        {product.description}
-      </Text>
+     
+      <View style={styles.sliderContainer}>
+        <Text category="c1" style={styles.minuteLabel}>00:10</Text>
+        <MultiSlider
+          min={14}
+          max={22}
+          values={[0]}
+          sliderLength={Dimensions.get('window').width - 80}
+          onValuesChangeStart={sliderOneValuesChangeStart}
+          onValuesChange={sliderOneValuesChange}
+          onValuesChangeFinish={sliderOneValuesChangeFinish}
+        />
+        <Text category="c1" style={styles.minuteLabel}>-02:37</Text>
+      </View>
+      <View style={styles.mediaController}>
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={SkipBackIcon}
+        />
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={ArrowLeftIcon}
+        />
+        <Button
+          style={styles.mediaButtonLarge}
+          status='basic'
+          icon={PauseIcon}
+        />
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={ArrowRightIcon}
+        />
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={SkipForwardIcon}
+        />
+      </View>
     </ScrollView>
   );
+  
 };
 
 const themedStyles = StyleService.create({
   container: {
     backgroundColor: 'background-basic-color-2',
+  },
+  mediaController: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height: 100,
+  },
+  contentContainer: {
+    paddingVertical: 24,
+    backgroundColor: 'background-basic-color-2',
+  },
+  minuteLabel: {
+    marginTop: 40,
+    marginHorizontal: -30
+  },
+  sliderContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 30
+  },
+  photo: {
+    alignSelf: 'center',
+    width: 300,
+    height: 300,
+    borderRadius: 16,
+  },
+  mediaButtonLarge: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 25,
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+  },
+  mediaButtonSmall: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 10,
+    width: 20,
+    height: 20,
+    borderRadius: 24,
+  },
+  description: {
+    padding: 24,
+    backgroundColor: 'background-basic-color-1',
+  },
+  setting: {
+    padding: 16,
+  },
+  section: {
+    marginTop: 24,
+  },
+  doneButton: {
+    marginHorizontal: 24,
+    marginTop: 24,
   },
   image: {
     height: 360,
@@ -174,8 +223,17 @@ const themedStyles = StyleService.create({
   whoText: {
     marginVertical: 10
   },
+  titleAuthor: {
+    justifyContent: 'center',
+    flex: 1,
+    flexDirection: 'column',
+    marginVertical: 10,
+  },
   title: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginVertical: 5,
+    // width: Dimensions.get('window').width,
+    textAlign: 'center'
   },
   rentLabel: {
     marginTop: 24,
@@ -217,11 +275,6 @@ const themedStyles = StyleService.create({
   optionItem: {
     marginHorizontal: 4,
     paddingHorizontal: 0,
-  },
-  description: {
-    marginHorizontal: 16,
-    marginVertical: 8,
-    lineHeight: 25
   },
   sectionLabel: {
     marginHorizontal: 16,
