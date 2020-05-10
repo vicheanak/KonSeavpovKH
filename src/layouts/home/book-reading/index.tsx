@@ -6,7 +6,7 @@ import {
   ListRenderItemInfo,
   ScrollView,
   View,
-  Dimensions,
+  Dimensions
 } from 'react-native';
 import {
   ButtonGroup,
@@ -45,9 +45,10 @@ const ListIcon = (style): IconElement => (
 );
 
 export default (props: any): React.ReactElement => {
+  const {hideTextSizeCard} = props;
   const styles = useStyleSheet(themedStyles);
 
-  console.log('BOOK_READING Layout', {props});
+ 
 
   const onBookButtonPress = (): void => {};
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -101,7 +102,7 @@ export default (props: any): React.ReactElement => {
   const totalChapterBars = (props.totalChapters.totalChapters * 100) / 100;
   let currentBar =
     (props.currentChapter.currentChapter * 100) / totalChapterBars;
-  console.log({currentBar, totalChapterBars});
+
   let currentChapter = props.currentChapter.currentChapter;
 
   return (
@@ -121,6 +122,7 @@ export default (props: any): React.ReactElement => {
               currentBar = currentBar - currentBar;
               currentChapter--;
             }
+            hideTextSizeCard();
             props.setBookCurrentChapter({currentChapter: currentChapter});
             setSelectedIndex(index);
           }}>
@@ -165,7 +167,7 @@ export default (props: any): React.ReactElement => {
                     selectionEnd,
                   });
                 }}
-                style={styles.descriptionText}
+                style={[styles.descriptionText, {'fontSize': props.textSize.textSize}]}
                 value={product.description}
               />
             </View>
@@ -286,7 +288,7 @@ const themedStyles = StyleService.create({
   },
   descriptionText: {
     fontSize: 15,
-    lineHeight: 25,
+    lineHeight: 30,
     color: 'text-basic-color',
   },
   image: {

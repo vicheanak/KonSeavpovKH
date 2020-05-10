@@ -84,7 +84,6 @@ export function updateLanguage(language) {
 };
 
 export const updateBookmarkBookDetail = (bookmarked) => {
-  console.log('Actions', bookmarked);
   return (dispatch) => {
     dispatch({
       type: UPDATE_BOOKMARK_BOOK_DETAIL,

@@ -122,65 +122,92 @@ export const BookReadingScreen = (props: any): LayoutElement => {
       <Button
         status="basic"
         appearance="outline"
-        style={styles.bookButton}
+        style={[styles.bookButton, styles.darkButton]}
         onPress={() => {setTheme('dark')}}>
         DARK
       </Button>
       <Button
         status="basic"
-        style={styles.bookButton}
+        style={[styles.bookButton, styles.lightButton]}
         onPress={() => {setTheme('light')}}>
         LIGHT
       </Button>
     </View>
   );
   const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
-  const [sliderOneValue, setSliderOneValue] = React.useState([5]);
+  const [sliderOneValue, setSliderOneValue] = React.useState([props.textSize.textSize]);
   
   const sliderOneValuesChangeStart = () => {
-    console.log('change start');
+    // console.log('change start');
     setSliderOneChanging(true);
   }
 
   const sliderOneValuesChange = values => {
-    console.log('value', values);
-    setSliderOneValue(values)
+    // console.log('value', values);
+    // setSliderOneValue(values)
   };
 
-  const sliderOneValuesChangeFinish = () => {
-    console.log('finish');
-    setSliderOneChanging(false)
+  const sliderOneValuesChangeFinish = (value) => {
+    console.log('value', value[0]);
+    props.setBookTextSize({textSize: value[0]});
+    console.log(props.textSize);
+
+    setSliderOneChanging(false);
   };
+
+  const hideTextSizeCard = () => {
+    props.setBookTextSizeVisibility({textSizeVisibility: false});
+  }
 
   return (
     <React.Fragment>
       <TopNavigation
-          title='Product Details'
-          leftControl={renderBackAction()}
-          rightControls={[renderChapterListAction(), renderTextSizeAction(), renderListeningAction()]}
-        />
-        <ContentView {...props}/>
-        {props.textSizeVisibility.textSizeVisibility && <Card
+        title="Product Details"
+        leftControl={renderBackAction()}
+        rightControls={[
+          renderChapterListAction(),
+          renderTextSizeAction(),
+          renderListeningAction(),
+        ]}
+      />
+      <ContentView hideTextSizeCard={hideTextSizeCard} {...props} />
+      {props.textSizeVisibility.textSizeVisibility && (
+        <Card
           style={styles.bookingCard}
           appearance="filled"
           disabled={true}
           footer={renderBookingFooter}>
-            <View>
+          <View style={styles.sliderContainer}>
+            <Text style={styles.smallText}>ក</Text>
             <MultiSlider
+              min={14}
+              max={22}
               values={sliderOneValue}
-              sliderLength={310}
+              sliderLength={Dimensions.get('window').width - 80}
               onValuesChangeStart={sliderOneValuesChangeStart}
               onValuesChange={sliderOneValuesChange}
               onValuesChangeFinish={sliderOneValuesChangeFinish}
             />
-            </View>
-        </Card>}
-        <Divider />
+            <Text style={styles.largeText}>ក</Text>
+          </View>
+        </Card>
+      )}
+      <Divider />
     </React.Fragment>
   );
 };
 
 const styles = StyleSheet.create({
+  smallText: {
+    fontSize: 14
+  },
+  largeText: {
+    fontSize: 20
+  },
+  sliderContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
   bookingCard: {
     position: 'absolute',
     top: 55,
@@ -192,6 +219,12 @@ const styles = StyleSheet.create({
   },
   bookButton: {
     width: 150,
+  },
+  darkButton: {
+    backgroundColor: 'black'
+  },
+  lightButton: {
+    backgroundColor: 'white'
   },
   safeArea: {
     flex: 1,
