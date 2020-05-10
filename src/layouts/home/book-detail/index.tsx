@@ -190,6 +190,7 @@ const themedStyles = StyleService.create({
   },
   title: {
     fontWeight: 'bold',
+    color: 'white'
   },
   rentLabel: {
     marginTop: 24,
@@ -197,6 +198,7 @@ const themedStyles = StyleService.create({
   authorLabel: {
     marginTop: 8,
     fontWeight: 'bold',
+    color: 'white'
   },
   bookButton: {
     width: 150,

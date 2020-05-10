@@ -42,7 +42,7 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   };
 
   const onChapterListActionPress = (): void => {
-    // props.navigation.navigate(AppRoute.CHAPTER_LIST);
+    props.navigation.navigate(AppRoute.BOOK_CHAPTER);
   }
   
   const onTextSizeActionPress = (): void => {

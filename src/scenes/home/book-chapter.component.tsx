@@ -41,8 +41,11 @@ const allTodos: Todo[] = [
   Todo.mocked2(),
 ];
 
+export type BookDetailRouteParams = {
+    todo: Todo;
+}
 
-const SavedScreen = (props: any): SafeAreaLayoutElement => {
+const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
 
   const [todos, setTodos] = React.useState<Todo[]>(allTodos);
   const [query, setQuery] = React.useState<string>('');
@@ -80,31 +83,12 @@ const SavedScreen = (props: any): SafeAreaLayoutElement => {
     <ListItem
       style={styles.item}
       onPress={navigateBookDetail}>
-      <Image
-        style={styles.image}
-        source={item.photo}
-      />
+      <Text style={styles.chapterLabel} status="primary">{item.id}</Text>
       <View style={styles.detailsContainer}>
         <Text category='s1'>
           {item.title}
         </Text>
-        <Text
-          appearance='hint'
-          category='c1'>
-          Author Name
-        </Text>
-        <ProgressBar
-          style={styles.itemProgressBar}
-          progress={item.progress}
-          text={`${item.progress}%`}
-        />
       </View>
-      <Button
-        style={[styles.iconButton, styles.removeButton]}
-        appearance='ghost'
-        status="primary"
-        icon={BookmarkIcon}
-      />
     </ListItem>
   );
 
@@ -172,6 +156,12 @@ const themedStyles = StyleService.create({
   iconButton: {
     paddingHorizontal: 0,
   },
+  chapterLabel: {
+      fontSize: 30,
+    //   fontWeight: 'bold',
+      lineHeight: 40,
+      marginHorizontal: 10
+  }
 });
 
 
@@ -190,4 +180,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SavedScreen);
+)(BookChapterScreen);

@@ -13,7 +13,7 @@ import {updateBookmarkBookDetail, updateBookTextSizeVisibility, updateBookCurren
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
 
-export type BookDetailRouteParams = {
+export type BookChapterRouteParams = {
   todo: Todo;
 }
 

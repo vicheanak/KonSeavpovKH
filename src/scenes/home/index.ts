@@ -15,3 +15,6 @@ export { BookReadingRouteParams } from './book-reading.component';
 import BookListeningScreen from './book-listening.component';
 export { BookListeningScreen };
 export { BookListeningRouteParams } from './book-listening.component';
+import BookChapterScreen from './book-chapter.component';
+export { BookChapterScreen };
+export { BookChapterRouteParams } from './book-chapter.component';

@@ -10,6 +10,7 @@ export enum AppRoute {
   BOOK_DETAIL = 'Book Detail',
   BOOK_READING = 'Book Reading',
   BOOK_LISTENING = 'Book Listening',
+  BOOK_CHAPTER = 'Book Chapter',
   LIBRARY = 'Library',
   ABOUT = 'About',
   PURCHASE = 'Purchase',
