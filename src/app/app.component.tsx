@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {dark, mapping} from '@eva-design/eva';
@@ -55,6 +55,10 @@ const App = ({ currentTheme, currentLang }): React.ReactElement => {
     setTheme(nextTheme);
   };
 
+
+  const [count, setCount] = React.useState(0);
+ 
+  
   return (
     <React.Fragment>
       <IconRegistry icons={[EvaIconsPack, AppIconsPack]} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -7,7 +7,12 @@ import {
   ScrollView,
   View,
   Dimensions,
-  Animated 
+  Animated,
+  AppRegistry,
+  Platform,
+  DeviceEventEmitter, 
+  NativeEventEmitter, 
+  NativeModules
 } from 'react-native';
 import {
   ButtonGroup,
@@ -27,7 +32,20 @@ import { ProfileAvatar } from './extra/profile-avatar.component';
 import { ProfileSetting } from './extra/profile-setting.component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Slider from '@react-native-community/slider';
-import {CustomLabel} from './extra/custom-label.component';
+import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+
+import Player from "./extra/Player";
+import playlistData from "./extra/playlist.json";
+
+const localTrack = require("./extra/pure.m4a");
+
+// import TrackPlayer from "react-native-track-player";
+// import playlistData from "./extra/playlist.json";
+// import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+
+// import Player from "../components/Player";
+// import playlistData from "../data/playlist.json";
+// import localTrack from "../resources/pure.m4a";
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -86,6 +104,53 @@ export default (props: any): React.ReactElement => {
   const sliderOneValuesChangeFinish = (value) => {
  
   };
+
+  const playbackState = usePlaybackState();
+
+  useEffect(() => {
+    setup();
+  }, []);
+
+  async function setup() {
+    await TrackPlayer.setupPlayer({});
+    await TrackPlayer.updateOptions({
+      stopWithApp: true,
+      capabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+        TrackPlayer.CAPABILITY_STOP
+      ],
+      compactCapabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE
+      ]
+    });
+  }
+
+  async function togglePlayback() {
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+    if (currentTrack == null) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add(playlistData);
+      await TrackPlayer.add({
+        id: "local-track",
+        url: localTrack,
+        title: "Pure (Demo)",
+        artist: "David Chavez",
+        artwork: "https://i.picsum.photos/id/500/200/200.jpg",
+        duration: 28
+      });
+      await TrackPlayer.play();
+    } else {
+      if (playbackState === TrackPlayer.STATE_PAUSED) {
+        await TrackPlayer.play();
+      } else {
+        await TrackPlayer.pause();
+      }
+    }
+  }
 
   return (
     <ScrollView
@@ -148,14 +213,54 @@ export default (props: any): React.ReactElement => {
           icon={SkipForwardIcon}
         />
       </View>
+      <Player
+        onNext={skipToNext}
+        style={styles.player}
+        onPrevious={skipToPrevious}
+        onTogglePlayback={togglePlayback}
+      />
+      <Text style={styles.state}>{getStateName(playbackState)}</Text>
     </ScrollView>
   );
   
 };
 
+function getStateName(state) {
+  switch (state) {
+    case TrackPlayer.STATE_NONE:
+      return "None";
+    case TrackPlayer.STATE_PLAYING:
+      return "Playing";
+    case TrackPlayer.STATE_PAUSED:
+      return "Paused";
+    case TrackPlayer.STATE_STOPPED:
+      return "Stopped";
+    case TrackPlayer.STATE_BUFFERING:
+      return "Buffering";
+  }
+}
+
+async function skipToNext() {
+  try {
+    await TrackPlayer.skipToNext();
+  } catch (_) {}
+}
+
+async function skipToPrevious() {
+  try {
+    await TrackPlayer.skipToPrevious();
+  } catch (_) {}
+}
+
 const themedStyles = StyleService.create({
   container: {
     backgroundColor: 'background-basic-color-2',
+  },
+  player: {
+    marginTop: 40
+  },
+  state: {
+    marginTop: 20
   },
   mediaController: {
     flex: 1,
