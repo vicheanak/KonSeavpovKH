@@ -79,5 +79,7 @@ export const AppIconsPack = {
     'top-navigation-dark': IconProvider(require('../assets/images/icon-top-navigation-dark.png')),
     'english': IconProvider(require('../assets/images/english.png')),
     'khmer': IconProvider(require('../assets/images/khmer.png')),
+    'pause': IconProvider(require('../assets/images/pause.png')),
+    'play': IconProvider(require('../assets/images/play.png')),
   },
 };

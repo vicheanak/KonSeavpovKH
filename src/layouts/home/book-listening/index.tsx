@@ -106,6 +106,7 @@ export default (props: any): React.ReactElement => {
   };
 
   const playbackState = usePlaybackState();
+  console.log({playbackState});
 
   useEffect(() => {
     setup();
@@ -156,7 +157,14 @@ export default (props: any): React.ReactElement => {
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
-      <ProfileAvatar
+        <Player
+          onNext={skipToNext}
+          style={styles.player}
+          onPrevious={skipToPrevious}
+          onTogglePlayback={togglePlayback}
+        />
+        <Text style={styles.state}>{getStateName(playbackState)}</Text>
+      {/* <ProfileAvatar
         style={styles.photo}
         source={require('./assets/image-product.jpg')}
       />
@@ -212,14 +220,8 @@ export default (props: any): React.ReactElement => {
           status='basic'
           icon={SkipForwardIcon}
         />
-      </View>
-      <Player
-        onNext={skipToNext}
-        style={styles.player}
-        onPrevious={skipToPrevious}
-        onTogglePlayback={togglePlayback}
-      />
-      <Text style={styles.state}>{getStateName(playbackState)}</Text>
+      </View> */}
+      
     </ScrollView>
   );
   
@@ -255,9 +257,19 @@ async function skipToPrevious() {
 const themedStyles = StyleService.create({
   container: {
     backgroundColor: 'background-basic-color-2',
+    flex: 1,
+    flexDirection: 'column',
+  },
+  contentContainer: {
+    backgroundColor: 'background-basic-color-2',
+    justifyContent: 'center',
   },
   player: {
-    marginTop: 40
+    alignSelf: 'center',
+    flex: 1,
+    marginTop: 40,
+    justifyContent: 'center',
+    width: Dimensions.get('window').width - 100
   },
   state: {
     marginTop: 20
@@ -267,10 +279,6 @@ const themedStyles = StyleService.create({
     flexDirection: 'row',
     justifyContent: 'center',
     height: 100,
-  },
-  contentContainer: {
-    paddingVertical: 24,
-    backgroundColor: 'background-basic-color-2',
   },
   minuteLabel: {
     marginTop: 40,

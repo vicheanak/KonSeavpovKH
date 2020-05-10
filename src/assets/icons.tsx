@@ -364,6 +364,14 @@ export const AssetTopNavigationDarkIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} pack='app' name='top-navigation-dark'/>
 );
 
+export const PlayIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} pack='app' name='play'/>
+);
+
+export const PauseIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} pack='app' name='pause'/>
+);
+
 export const Khmer = (style: ImageStyle): IconElement => (
   <Icon style={{height: 5, width: 5}} pack='app' name='khmer'/>
 );

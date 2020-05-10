@@ -8,11 +8,22 @@ import TrackPlayer, {
 import {
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   ViewPropTypes
 } from "react-native";
+import {
+  ButtonGroup,
+  Button,
+  Card,
+  Icon,
+  List,
+  StyleService,
+  Text,
+  useStyleSheet,
+  IconElement,
+  Divider
+} from '@ui-kitten/components';
 
 function ProgressBar() {
   const progress = useTrackPlayerProgress();
@@ -43,6 +54,39 @@ ControlButton.propTypes = {
   onPress: PropTypes.func.isRequired
 };
 
+
+const BookmarkIcon = (style): IconElement => (
+  <Icon {...style} name='bookmark-outline'/>
+);
+
+const PauseIcon = (style): IconElement => (
+  <Icon {...style} pack='app' name='pause'/>
+)
+
+const PlayIcon = (style): IconElement => (
+  <Icon {...style} pack='app' name='play'/>
+);
+
+const SkipForwardIcon = (style): IconElement => (
+  <Icon {...style} name='skip-forward-outline'/>
+);
+
+const SkipBackIcon = (style): IconElement => (
+  <Icon {...style} name='skip-back-outline'/>
+);
+
+const ListIcon = (style): IconElement => (
+  <Icon {...style} name='list-outline'/>
+);
+
+const ArrowLeftIcon = (style): IconElement => (
+  <Icon {...style} name='arrowhead-left-outline'/>
+)
+
+const ArrowRightIcon = (style): IconElement => (
+  <Icon {...style} name='arrowhead-right-outline'/>
+)
+
 export default function Player(props) {
   const playbackState = usePlaybackState();
   const [trackTitle, setTrackTitle] = useState("");
@@ -60,13 +104,13 @@ export default function Player(props) {
 
   const { style, onNext, onPrevious, onTogglePlayback } = props;
 
-  var middleButtonText = "Play";
+  let playPauseButton = PlayIcon;
 
   if (
     playbackState === TrackPlayer.STATE_PLAYING ||
     playbackState === TrackPlayer.STATE_BUFFERING
   ) {
-    middleButtonText = "Pause";
+    playPauseButton = PauseIcon;
   }
 
   return (
@@ -75,11 +119,41 @@ export default function Player(props) {
       <ProgressBar />
       <Text style={styles.title}>{trackTitle}</Text>
       <Text style={styles.artist}>{trackArtist}</Text>
-      <View style={styles.controls}>
+      <View style={styles.mediaController}>
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={SkipBackIcon}
+          onPress={onPrevious}
+        />
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={ArrowLeftIcon}
+        />
+        <Button
+          style={styles.mediaButtonLarge}
+          status='basic'
+          icon={playPauseButton}
+          onPress={onTogglePlayback}
+        />
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={ArrowRightIcon}
+        />
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={SkipForwardIcon}
+          onPress={onNext}
+        />
+      </View>
+      {/* <View style={styles.controls}>
         <ControlButton title={"<<"} onPress={onPrevious} />
         <ControlButton title={middleButtonText} onPress={onTogglePlayback} />
         <ControlButton title={">>"} onPress={onNext} />
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -96,16 +170,31 @@ Player.defaultProps = {
 };
 
 const styles = StyleSheet.create({
+  mediaController: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height: 100,
+  },
+  mediaButtonLarge: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 25,
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+  },
+  mediaButtonSmall: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 10,
+    width: 20,
+    height: 20,
+    borderRadius: 24,
+  },
   card: {
     width: "80%",
-    elevation: 1,
-    borderRadius: 4,
-    shadowRadius: 2,
-    shadowOpacity: 0.1,
     alignItems: "center",
-    shadowColor: "black",
-    backgroundColor: "white",
-    shadowOffset: { width: 0, height: 1 }
   },
   cover: {
     width: 140,
