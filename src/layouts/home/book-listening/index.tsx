@@ -46,6 +46,7 @@ const localTrack = require("./extra/pure.m4a");
 // import Player from "../components/Player";
 // import playlistData from "../data/playlist.json";
 // import localTrack from "../resources/pure.m4a";
+import { getCurrentTrack } from './../../../../index.d';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -108,7 +109,15 @@ export default (props: any): React.ReactElement => {
   const playbackState = usePlaybackState();
 
   useEffect(() => {
-    setup();
+    (async function f() {
+      const currentTrack = await TrackPlayer.getCurrentTrack();
+      console.log('currentTrac ssk', currentTrack);
+      if (!currentTrack){
+        setup();
+        togglePlayback();
+      }
+    })();
+    // setup();
   }, []);
 
   async function setup() {
@@ -133,6 +142,7 @@ export default (props: any): React.ReactElement => {
 
   async function togglePlayback() {
     const currentTrack = await TrackPlayer.getCurrentTrack();
+    console.log({currentTrack});
     if (currentTrack == null) {
       await TrackPlayer.reset();
       await TrackPlayer.add(playlistData);

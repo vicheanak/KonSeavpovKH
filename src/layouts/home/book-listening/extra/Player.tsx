@@ -107,6 +107,21 @@ export default function Player(props) {
   const [trackTitle, setTrackTitle] = useState("");
   const [trackArtwork, setTrackArtwork] = useState();
   const [trackArtist, setTrackArtist] = useState("");
+ 
+
+  (async function f() {
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+    const track = await TrackPlayer.getTrack(currentTrack);
+    console.log('Player ==> ', currentTrack);
+    console.log('Track ==> ', track);
+    if (currentTrack){
+      const { title, artist, artwork } = track || {};
+      setTrackTitle(title);
+      setTrackArtist(artist);
+      setTrackArtwork(artwork);
+    }
+  })();
+
   useTrackPlayerEvents(["playback-track-changed"], async event => {
     if (event.type === TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {
       const track = await TrackPlayer.getTrack(event.nextTrack);
@@ -116,6 +131,7 @@ export default function Player(props) {
       setTrackArtwork(artwork);
     }
   });
+  
 
   const { style, onNext, onPrevious, onTogglePlayback, onSkipNext15, onSkipBack15 } = props;
 
@@ -169,11 +185,6 @@ export default function Player(props) {
           onPress={onNext}
         />
       </View>
-      {/* <View style={styles.controls}>
-        <ControlButton title={"<<"} onPress={onPrevious} />
-        <ControlButton title={middleButtonText} onPress={onTogglePlayback} />
-        <ControlButton title={">>"} onPress={onNext} />
-      </View> */}
     </View>
   );
 }
