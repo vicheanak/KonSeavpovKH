@@ -7,7 +7,7 @@ import { ImageOverlay } from '../../components/image-overlay.component';
 import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
-import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
+import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon, ArrowDownwardOutline} from '../../assets/icons';
 import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
@@ -19,14 +19,14 @@ export type BookListeningRouteParams = {
 export const BookListeningScreen = (props: any): LayoutElement => {
 
   const { todo } = props.route.params;
+  console.log('Book Listening Route Params', props.route.params);
   const insets: EdgeInsets = useSafeArea();
+
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
   const onBookmarkActionPress = (): void => {
     setBookmarked(!bookmarked);
-    console.log('onBOokmark', bookmarked);
-    console.log('props.bookmarkedBookDetail', props.bookmarkedBookDetail.bookmarked);
     props.setBookmarkBookDetail(bookmarked);
   };
 
@@ -37,17 +37,22 @@ export const BookListeningScreen = (props: any): LayoutElement => {
     />
   );
 
+  const onGoBack = (): void => {
+    props.route.params.onGoBack();
+    props.navigation && props.navigation.goBack();
+  };
+
+
   const renderBackAction = (): React.ReactElement => (
     <TopNavigationAction
-      icon={ArrowIosBackIcon}
-      onPress={props.navigation.goBack}
+      icon={ArrowDownwardOutline}
+      onPress={onGoBack}
     />
   );
 
   return (
     <React.Fragment>
       <TopNavigation
-          title='Product Details'
           leftControl={renderBackAction()}
           rightControls={[renderBookmarkAction()]}
         />

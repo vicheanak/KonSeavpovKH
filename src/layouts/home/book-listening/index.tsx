@@ -46,7 +46,7 @@ const localTrack = require("./extra/pure.m4a");
 // import Player from "../components/Player";
 // import playlistData from "../data/playlist.json";
 // import localTrack from "../resources/pure.m4a";
-import { getCurrentTrack } from './../../../../index.d';
+// import { getCurrentTrack } from './../../../../index.d';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -91,6 +91,7 @@ export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
 
   const onDoneButtonPress = (): void => {
+    props.navigation.state.params.onGoBackListening();
     props.navigation && props.navigation.goBack();
   };
 
@@ -111,13 +112,13 @@ export default (props: any): React.ReactElement => {
   useEffect(() => {
     (async function f() {
       const currentTrack = await TrackPlayer.getCurrentTrack();
-      console.log('currentTrac ssk', currentTrack);
+      console.log('useEffect Current Track', currentTrack);
       if (!currentTrack){
+        console.log('Inside Current Track');
         setup();
         togglePlayback();
       }
     })();
-    // setup();
   }, []);
 
   async function setup() {
@@ -142,7 +143,7 @@ export default (props: any): React.ReactElement => {
 
   async function togglePlayback() {
     const currentTrack = await TrackPlayer.getCurrentTrack();
-    console.log({currentTrack});
+    console.log('togglePlayback', {currentTrack});
     if (currentTrack == null) {
       await TrackPlayer.reset();
       await TrackPlayer.add(playlistData);
@@ -154,7 +155,12 @@ export default (props: any): React.ReactElement => {
         artwork: "https://i.picsum.photos/id/500/200/200.jpg",
         duration: 28
       });
-      await TrackPlayer.play();
+      TrackPlayer.play().then(() => {
+        console.log('Toggle Playback Promise ==> ');
+      }).catch(() => {
+        console.log('Toggle Playback Error ==>');
+      })
+      // await TrackPlayer.play();
     } else {
       if (playbackState === TrackPlayer.STATE_PAUSED) {
         await TrackPlayer.play();
@@ -271,7 +277,7 @@ async function skipNext15() {
   const newProgress = Math.floor(progress) + 15;
   console.log(newProgress);
   await TrackPlayer.play();
-  await TrackPlayer.seekTo(newProgress);
+  await TrackPlayer.seekTo(12);
 }
 
 async function skipBack15() {

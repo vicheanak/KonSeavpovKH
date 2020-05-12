@@ -10,7 +10,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  ViewPropTypes
+  ViewPropTypes,
+  ImageStyle
 } from "react-native";
 import {
   ButtonGroup,
@@ -74,11 +75,11 @@ const BookmarkIcon = (style): IconElement => (
   <Icon {...style} name='bookmark-outline'/>
 );
 
-const PauseIcon = (style): IconElement => (
+const PauseIcon = (style): ImageStyle => (
   <Icon {...style} pack='app' name='pause'/>
 )
 
-const PlayIcon = (style): IconElement => (
+const PlayIcon = (style): ImageStyle => (
   <Icon {...style} pack='app' name='play'/>
 );
 
@@ -119,6 +120,7 @@ export default function Player(props) {
       setTrackTitle(title);
       setTrackArtist(artist);
       setTrackArtwork(artwork);
+      await TrackPlayer.play();
     }
   })();
 
@@ -144,6 +146,16 @@ export default function Player(props) {
     playPauseButton = PauseIcon;
   }
 
+  const skipNext15 = async () => {
+    const progress = await TrackPlayer.getPosition();
+    const newProgress = Math.floor(progress) + 15;
+    console.log('skipNext15', newProgress);
+    // await TrackPlayer.play();
+    await TrackPlayer.seekTo(12);
+    await TrackPlayer.play();
+    // onPositionDiscontinuity 
+  }
+
   return (
     <View style={[styles.card, style]}>
       <Image style={styles.cover} source={{ uri: trackArtwork }} />
@@ -160,24 +172,24 @@ export default function Player(props) {
           icon={SkipBackIcon}
           onPress={onPrevious}
         />
-        <Button
+        {/* <Button
           style={styles.mediaButtonSmall}
           status='basic'
           icon={ArrowLeftIcon}
           onPress={onSkipBack15}
-        />
+        /> */}
         <Button
           style={styles.mediaButtonLarge}
           status='basic'
           icon={playPauseButton}
           onPress={onTogglePlayback}
         />
-        <Button
+        {/* <Button
           style={styles.mediaButtonSmall}
           status='basic'
           icon={ArrowRightIcon}
-          onPress={onSkipNext15}
-        />
+          onPress={skipNext15}
+        /> */}
         <Button
           style={styles.mediaButtonSmall}
           status='basic'

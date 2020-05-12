@@ -63,6 +63,9 @@ export const BookmarkIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='bookmark'/>
 );
 
+export const ArrowDownwardOutline = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='arrow-downward-outline'/>
+);
 
 export const ArrowIosBackIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='arrow-ios-back'/>
