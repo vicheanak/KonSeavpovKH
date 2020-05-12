@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TrackPlayer, {
   useTrackPlayerProgress,
@@ -108,21 +108,24 @@ export default function Player(props) {
   const [trackTitle, setTrackTitle] = useState("");
   const [trackArtwork, setTrackArtwork] = useState();
   const [trackArtist, setTrackArtist] = useState("");
- 
 
-  (async function f() {
-    const currentTrack = await TrackPlayer.getCurrentTrack();
-    const track = await TrackPlayer.getTrack(currentTrack);
-    console.log('Player ==> ', currentTrack);
-    console.log('Track ==> ', track);
-    if (currentTrack){
-      const { title, artist, artwork } = track || {};
-      setTrackTitle(title);
-      setTrackArtist(artist);
-      setTrackArtwork(artwork);
-      await TrackPlayer.play();
-    }
-  })();
+  useEffect(() => {
+    (async function f() {
+      const currentTrack = await TrackPlayer.getCurrentTrack();
+      const track = await TrackPlayer.getTrack(currentTrack);
+      if (currentTrack){
+        const { title, artist, artwork } = track || {};
+        setTrackTitle(title);
+        setTrackArtist(artist);
+        setTrackArtwork(artwork);
+        onTogglePlayback();
+      }
+    })();
+  }, []);
+
+  // (async function f() {
+    
+  // })();
 
   useTrackPlayerEvents(["playback-track-changed"], async event => {
     if (event.type === TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {
@@ -153,7 +156,6 @@ export default function Player(props) {
     // await TrackPlayer.play();
     await TrackPlayer.seekTo(12);
     await TrackPlayer.play();
-    // onPositionDiscontinuity 
   }
 
   return (

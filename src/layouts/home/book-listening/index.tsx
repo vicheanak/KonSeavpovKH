@@ -147,14 +147,6 @@ export default (props: any): React.ReactElement => {
     if (currentTrack == null) {
       await TrackPlayer.reset();
       await TrackPlayer.add(playlistData);
-      await TrackPlayer.add({
-        id: "local-track",
-        url: localTrack,
-        title: "Pure (Demo)",
-        artist: "David Chavez",
-        artwork: "https://i.picsum.photos/id/500/200/200.jpg",
-        duration: 28
-      });
       TrackPlayer.play().then(() => {
         console.log('Toggle Playback Promise ==> ');
       }).catch(() => {

@@ -161,14 +161,22 @@ export default (props: any): React.ReactElement => {
   );
 
   const playbackState = usePlaybackState();
+  const [playPauseIcon, setPlayPauseIcon] = React.useState<string>('pause');
+
+  const PlayPauseIcon = (style): ImageStyle => (
+    <Icon {...style} pack='app' name={playPauseIcon}/>
+  );
 
   const onTogglePlayback = async () => {
     console.log({playbackState});
     if (playbackState === TrackPlayer.STATE_PAUSED) {
+      setPlayPauseIcon('pause');
       await TrackPlayer.play();
     } else {
+      setPlayPauseIcon('play');
       await TrackPlayer.pause();
     }
+    console.log({playPauseIcon});
   }
 
   return (
@@ -242,7 +250,7 @@ export default (props: any): React.ReactElement => {
               style={[styles.iconButton]}
               appearance="ghost"
               status="primary"
-              icon={PlayIcon}
+              icon={PlayPauseIcon}
               onPress={onTogglePlayback}
             />
           </View>
