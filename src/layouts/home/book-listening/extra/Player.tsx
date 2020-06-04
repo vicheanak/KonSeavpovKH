@@ -123,9 +123,6 @@ export default function Player(props) {
     })();
   }, []);
 
-  // (async function f() {
-    
-  // })();
 
   useTrackPlayerEvents(["playback-track-changed"], async event => {
     if (event.type === TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {

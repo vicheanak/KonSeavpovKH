@@ -1,17 +1,32 @@
-import { 
-  UPDATE_BOOK_CURRENT_CHAPTER, 
+import {
+  UPDATE_BOOK_CURRENT_CHAPTER,
   UPDATE_BOOK_TOTOAL_CHAPTERS,
-  UPDATE_BOOKMARK_BOOK_DETAIL, 
-  FETCHING_DATA, 
-  FETCHING_DATA_SUCCESS, 
-  FETCHING_DATA_FAILURE, 
-  UPDATE_LANGUAGE, 
-  POST_USER, 
-  POST_USER_SUCCESS, 
+  UPDATE_BOOKMARK_BOOK_DETAIL,
+  FETCHING_DATA,
+  FETCHING_DATA_SUCCESS,
+  FETCHING_DATA_FAILURE,
+  UPDATE_LANGUAGE,
+  POST_USER,
+  POST_USER_SUCCESS,
   POST_USER_FAILURE,
   UPDATE_BOOK_TEXT_SIZE,
-  UPDATE_BOOK_TEXT_SIZE_VISIBILITY } from './constants'
-import { getPeople, addPeople } from './api'
+  UPDATE_BOOK_TEXT_SIZE_VISIBILITY,
+  GET_BOOKS_LIST,
+  GET_FAVORITE_BOOKS_LIST,
+  GET_BOOK_DETAIL,
+  FETCHING_BOOKS_DATA,
+  FETCHING_BOOKS_DATA_SUCCESS,
+  FETCHING_BOOKS_LIST,
+  FETCHING_BOOKS_LIST_SUCCESS,
+  FETCHING_BOOKS_LIST_FAILURE,
+  FETCHING_BOOK_DETAIL_FAILURE,
+  FETCHING_BOOK_DETAIL_SUCCESS,
+  FETCHING_BOOK_DETAIL,
+  FETCHING_FAVORITE_BOOKS_LIST,
+  FETCHING_FAVORITE_BOOKS_LIST_SUCCESS,
+  FETCHING_FAVORITE_BOOKS_LIST_FAILURE
+} from './constants'
+import { getPeople, addPeople, getBooksList, getFavoriteBooksList, getBookDetail } from './api'
 
 export function getData() {
   return {
@@ -32,6 +47,76 @@ export function getDataFailure() {
   }
 }
 
+export function getBooksData() {
+  return {
+    type: FETCHING_BOOKS_DATA
+  }
+}
+
+export function getBooksDataSuccess(data) {
+  return {
+    type: FETCHING_BOOKS_DATA_SUCCESS,
+    data,
+  }
+}
+
+export function getBooksListData() {
+  return {
+    type: FETCHING_BOOKS_LIST
+  }
+}
+
+export function getBooksListSuccess(data) {
+  return {
+    type: FETCHING_BOOKS_LIST_SUCCESS,
+    data,
+  }
+}
+
+export function getBooksListFailure() {
+  return {
+    type: FETCHING_BOOKS_LIST_FAILURE
+  }
+}
+
+export function getFavoriteBooksListData() {
+  return {
+    type: FETCHING_FAVORITE_BOOKS_LIST
+  }
+}
+
+export function getFavoriteBooksListSuccess(data) {
+  return {
+    type: FETCHING_FAVORITE_BOOKS_LIST_SUCCESS,
+    data,
+  }
+}
+
+export function getFavoriteBooksListFailure() {
+  return {
+    type: FETCHING_FAVORITE_BOOKS_LIST_FAILURE
+  }
+}
+
+export function getBookDetailData() {
+  return {
+    type: FETCHING_BOOK_DETAIL
+  }
+}
+
+export function getBookDetailSuccess(data) {
+  return {
+    type: FETCHING_BOOK_DETAIL_SUCCESS,
+    data,
+  }
+}
+
+export function getBookDetailFailure() {
+  return {
+    type: FETCHING_BOOK_DETAIL_FAILURE
+  }
+}
+
 export function postUser() {
   return {
     type: POST_USER
@@ -49,6 +134,17 @@ export function postUserSuccess(data) {
 export function postUserFailure() {
   return {
     type: POST_USER_FAILURE,
+  }
+}
+
+export function fetchBooksData() {
+  return (dispatch) => {
+    dispatch(getBooksData())
+    getBooksList()
+      .then((data) => {
+        dispatch(getBooksDataSuccess(data))
+      })
+      .catch((err) => console.log('err:', err))
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -27,7 +27,7 @@ import {SearchIcon, BookmarkIcon} from '../../assets/icons';
 import {Todo} from '../../data/todo.model';
 import {i18n} from '../../app/i18n';
 import {connect} from 'react-redux';
-import {updateLanguage} from '../../redux/actions';
+import { fetchData, updateLanguage, getBooksData, fetchBooksData } from '../../redux/actions';
 
 const allTodos: Todo[] = [
   Todo.mocked0(),
@@ -40,8 +40,19 @@ const BookScreen = (props: any): ListElement => {
   const [todos, setTodos] = React.useState<Todo[]>(allTodos);
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
+  const [bookId, setBookId] = useState(0);
 
-  const {...listProps} = props;
+  const {fetchBooks, ...listProps} = props;
+
+  //  const [count, setCount] = useState(0);
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // props.fetchPeople();
+    // props.fetchBooks();
+    fetchBooks();
+    console.log('props useEffect', props);
+  }, [bookId]);
+
 
   const onChangeQuery = (query: string): void => {
     const nextTodos: Todo[] = allTodos.filter(
@@ -96,6 +107,11 @@ const BookScreen = (props: any): ListElement => {
 
   return (
     <ScrollView style={styles.container}>
+      <Button
+        onPress={fetchBooks}
+        status="primary"
+        icon={BookmarkIcon}
+      />
       <Text style={styles.hint} category="h6">
         {props.intlData.messages['book_for_you']}
       </Text>
@@ -211,14 +227,19 @@ const themedStyles = StyleService.create({
 });
 
 const mapStateToProps = state => {
+  console.log('mapStateToProps ==> ');
+  console.log({state});
   return {
     intlData: state.intlData,
+    books: state.books
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     updateLanguage: lang => dispatch(updateLanguage(lang)),
+    fetchPeople: () => dispatch(fetchData()),
+    fetchBooks: () => dispatch(fetchBooksData())
   };
 };
 

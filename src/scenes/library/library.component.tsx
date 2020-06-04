@@ -69,7 +69,6 @@ const LibraryScreen = (props: any): SafeAreaLayoutElement => {
     setQuery(query);
   };
 
-  console.log('props.intlData', props.intlData);
 
   const menu: ToolbarMenu = [
     { title: props.intlData.messages['highlight'], icon: HighlightIcon},
