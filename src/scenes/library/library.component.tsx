@@ -51,9 +51,7 @@ const LibraryScreen = (props: any): SafeAreaLayoutElement => {
 
   const onGoDetail = (id: number) => {
     const {[id]: category} = libraryCategory;
-    console.log('category', category);
     props.navigation.navigate(AppRoute.LIBRARY_DETAIL, {category});
-    console.log('onGoDetail => empty function');
   }
 
   const renderLibraryLibraryComponent = (info: ListRenderItemInfo<LibraryCategory>): ListItemElement => (

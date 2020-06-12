@@ -27,7 +27,13 @@ import {SearchIcon, BookmarkIcon} from '../../assets/icons';
 import {Todo} from '../../data/todo.model';
 import {i18n} from '../../app/i18n';
 import {connect} from 'react-redux';
-import { fetchData, updateLanguage, getBooksData, fetchBooksData } from '../../redux/actions';
+import {
+  fetchData,
+  updateLanguage,
+  getBooksData,
+  fetchBooksData,
+} from '../../redux/actions';
+import { SOURCE } from '../../app/app-environment';
 
 const allTodos: Todo[] = [
   Todo.mocked0(),
@@ -42,7 +48,7 @@ const BookScreen = (props: any): ListElement => {
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {fetchBooks, ...listProps} = props;
+  const {books, fetchBooks, ...listProps} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
@@ -50,36 +56,28 @@ const BookScreen = (props: any): ListElement => {
     // props.fetchPeople();
     // props.fetchBooks();
     fetchBooks();
-    console.log('props useEffect', props);
   }, [bookId]);
 
-
-  const onChangeQuery = (query: string): void => {
-    const nextTodos: Todo[] = allTodos.filter(
-      (todo: Todo): boolean => {
-        return todo.title.toLowerCase().includes(query.toLowerCase());
-      },
-    );
-
-    setTodos(nextTodos);
-    setQuery(query);
-  };
-
-  const navigateBookDetail = (todoIndex: number): void => {
-    const {[todoIndex]: todo} = todos;
-    props.navigation.navigate(AppRoute.BOOK_DETAIL, {todo});
+  const navigateBookDetail = (bookIndex: number): void => {
+    const {[bookIndex]: book} = books;
+    props.navigation.navigate(AppRoute.BOOK_DETAIL, {book});
   };
 
   const renderItemHeader = ({
     item,
-  }: ListRenderItemInfo<Todo>): React.ReactElement => (
-    <View>
-      <ImageBackground style={styles.itemHeader} source={item.photo} />
-      <Text numberOfLines={1} style={styles.authorName}>Author Name is Very Long so Be Careful</Text>
-    </View>
-  );
+  }: ListRenderItemInfo<any>): React.ReactElement => {
+    let photo = SOURCE + item.imageUrl;
+    return (
+      <View>
+        <ImageBackground style={styles.itemHeader} source={{uri: photo}} />
+        <Text numberOfLines={1} style={styles.authorName}>
+          {item.authorname}
+        </Text>
+      </View>
+    );
+  };
 
-  const renderBookList = (item: ListRenderItemInfo<Todo>): ListItemElement => (
+  const renderBookList = (item: ListRenderItemInfo<any>): ListItemElement => (
     <Card
       style={styles.productItem}
       header={() => renderItemHeader(item)}
@@ -100,18 +98,13 @@ const BookScreen = (props: any): ListElement => {
         />
       </View>
       <Text category="c1" style={styles.productShortDescription}>
-        {item.item.description}
+        {item.item.shortDescription}
       </Text>
     </Card>
   );
 
   return (
     <ScrollView style={styles.container}>
-      <Button
-        onPress={fetchBooks}
-        status="primary"
-        icon={BookmarkIcon}
-      />
       <Text style={styles.hint} category="h6">
         {props.intlData.messages['book_for_you']}
       </Text>
@@ -119,7 +112,7 @@ const BookScreen = (props: any): ListElement => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         style={styles.list}
-        data={todos}
+        data={books}
         renderItem={renderBookList}
         {...listProps}
       />
@@ -130,7 +123,7 @@ const BookScreen = (props: any): ListElement => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         style={styles.list}
-        data={todos}
+        data={books}
         renderItem={renderBookList}
         {...listProps}
       />
@@ -141,7 +134,7 @@ const BookScreen = (props: any): ListElement => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         style={styles.list}
-        data={todos}
+        data={books}
         renderItem={renderBookList}
         {...listProps}
       />
@@ -227,11 +220,9 @@ const themedStyles = StyleService.create({
 });
 
 const mapStateToProps = state => {
-  console.log('mapStateToProps ==> ');
-  console.log({state});
   return {
     intlData: state.intlData,
-    books: state.books
+    books: state.books.data,
   };
 };
 
@@ -239,7 +230,7 @@ const mapDispatchToProps = dispatch => {
   return {
     updateLanguage: lang => dispatch(updateLanguage(lang)),
     fetchPeople: () => dispatch(fetchData()),
-    fetchBooks: () => dispatch(fetchBooksData())
+    fetchBooks: () => dispatch(fetchBooksData()),
   };
 };
 

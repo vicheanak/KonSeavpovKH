@@ -26,6 +26,8 @@ import {Product, ProductOption} from './extra/data';
 import {AppRoute} from '../../../navigation/app-routes';
 import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
 import {CloseIcon} from './../../../assets/icons';
+import { SOURCE } from '../../../app/app-environment';
+import { connect } from 'react-redux';
 
 const product: Product = Product.centralParkApartment();
 
@@ -59,19 +61,13 @@ const SkipForwardIcon = (style): IconElement => (
   <Icon {...style} name='skip-forward-outline'/>
 );
 
-export default (props: any): React.ReactElement => {
+const BookDetailLayout = (props: any): React.ReactElement => {
+// export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
+  const { book } = props.route.params;
 
   const onReadingButtonPress = (): void => {
-    let todo = {
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
-      id: 0,
-      photo: 3,
-      progress: 33,
-      title: 'Learn React Navigation 5',
-    };
-    props.navigation.navigate(AppRoute.BOOK_READING, {todo});
+    props.navigation.navigate(AppRoute.BOOK_READING, {book});
   };
 
   const [title, setTitle] = React.useState<string>('');
@@ -94,16 +90,8 @@ export default (props: any): React.ReactElement => {
   };
 
   const onListeningButtonPress = (): void => {
-    let todo = {
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
-      id: 0,
-      photo: 3,
-      progress: 33,
-      title: 'Learn React Navigation 5',
-    };
     props.navigation.navigate(AppRoute.BOOK_LISTENING, {
-      todo,
+      book,
       onGoBack: () => onGoBackListener(),
     });
   };
@@ -138,27 +126,47 @@ export default (props: any): React.ReactElement => {
 
   const renderBookingFooter = (): React.ReactElement => (
     <View>
-      <Text category="s1">Short description goes to very here</Text>
+      <Text category="s1">{book.shortDescription}</Text>
       {/* <View style={styles.detailsList}>
         {product.details.map(renderDetailItem)}
       </View> */}
       <View style={styles.optionList}>
-        {product.options.map(renderOptionItem)}
+        <Button
+          key='duration'
+          style={styles.optionItem}
+          appearance="ghost"
+          status="basic"
+          icon={(style: ImageStyle) => renderOptionItemIcon(style, 'clock')}>
+            {book.durationMinutes.toString()} {props.intlData.messages['minutes']}
+        </Button>
+        <Button
+          key='chapters'
+          style={styles.optionItem}
+          appearance="ghost"
+          status="basic"
+          icon={(style: ImageStyle) => renderOptionItemIcon(style, 'list')}>
+        
+            {book.totalChapters.toString()} {props.intlData.messages['chapters']}
+        </Button>
+        {/* {product.options.map(renderOptionItem)} */}
       </View>
     </View>
   );
 
-  const renderItemHeader = product => (
-    <View>
-      <ImageBackground
-        style={styles.itemHeader}
-        source={product.primaryImage}
-      />
-      <Text numberOfLines={1} style={styles.authorName}>
-        Author Name is Very Long so Be Careful
-      </Text>
-    </View>
-  );
+  const renderItemHeader = product => {
+    let photo = SOURCE + book.imageUrl;
+    return (
+      <View>
+        <ImageBackground
+          style={styles.itemHeader}
+          source={{uri: photo}}
+        />
+        <Text numberOfLines={1} style={styles.authorName}>
+          Author Name is Very Long so Be Careful
+        </Text>
+      </View>
+    )
+  };
 
   const playbackState = usePlaybackState();
   const [playPauseIcon, setPlayPauseIcon] = React.useState<string>('pause');
@@ -179,16 +187,18 @@ export default (props: any): React.ReactElement => {
     console.log({playPauseIcon});
   }
 
+  let imageUrl = SOURCE + book.imageUrl;
+
   return (
     <View style={styles.container}>
       <ScrollView style={[styles.scrollViewContainer && bottomVisibility ? {marginBottom: 70} : {marginBottom: 0}]}>
-        <ImageOverlay style={styles.image} source={product.primaryImage} />
+        <ImageOverlay style={styles.image} source={{uri: imageUrl}} />
         <View style={styles.headerContainer}>
           <Text style={styles.title} category="h4">
-            {product.title}
+            {book.title}
           </Text>
           <Text style={styles.authorLabel} category="s2">
-            Author Name
+            {book.authorname}
           </Text>
         </View>
         <Card
@@ -423,3 +433,19 @@ const themedStyles = StyleService.create({
     marginHorizontal: 8,
   },
 });
+
+const mapStateToProps = state => {
+  return {
+    intlData: state.intlData,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BookDetailLayout);

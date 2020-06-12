@@ -1,4 +1,3 @@
-//kh
 {
     "email": "អុីម៉ែល",
     "password": "លេខសំងាត់",
@@ -40,11 +39,11 @@
     "psychology": "ចិត្តសាស្ត្រ",
     "productivity": "ផលិតភាព",
     "communication": "ទំនាក់ទំនង",
-    "mindfulness_happiness": "សមាធិ​ & សុភមង្គល",
+    "mindfulness_happiness": "សុភមង្គល",
     "parenting": "អប់រំកូនចៅ",
-    "marketing_sales": "ទីផ្សារ & លក់",
+    "marketing_sales": "លក់",
     "history": "ប្រវត្តសាស្ត្រ",
-    "personal_development": "អភិវឌ្ឍផ្ទាល់ខ្លួន",
+    "personal_development": "អភិវឌ្ឍខ្លួនឯង",
     "philosophy": "ទស្សនវិជ្ជា",
     "motivation_inspiration": "ជំរុញទឹកចិត្ត",
     "health_nutrition": "អាហារូបត្ថម្ភសុខភាព",
@@ -53,13 +52,15 @@
     "corporate_culture": "វប្ប​ធ​ម៍​របស់​ក្រុមហ៊ុន",
     "education": "ការអប់រំ",
     "religion_spirituality": "សាសនា",
-    "career_success": "ការងារ​ & ជោគជ័យ",
-    "management_leadership": "ការគ្រប់គ្រង & ភាពដឹកនាំ",
+    "career_success": "ជោគជ័យ",
+    "management_leadership": "ភាពដឹកនាំ",
     "science": "វិទ្យាសាស្ត្រ",
-    "technology_future": "បច្ចេកវិទ្យា & អនាគត",
-    "sex_relationship": "ទំនាក់ទំនងផ្លូវភេទ",
+    "technology_future": "បច្ចេកវិទ្យា",
+    "sex_relationship": "ផ្លូវភេទ",
     "society_culture": "វប្បធម៌សង្គម",
-    "nature_environment": "ធម្មជាតិ & បរិស្ថាន",
+    "nature_environment": "ធម្មជាតិ",
     "politics": "នយោបាយ",
-    "money_investments": "ប្រាក់ & ការវិនិយោគ"
+    "money_investments": "ប្រាក់",
+    "chapters": "ជំពូក",
+    "minutes": "នាទី"
 }

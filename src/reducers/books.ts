@@ -7,8 +7,6 @@ const initialState = {
 }
 
 export default function books (state = initialState, action) {
-  console.log('action.type', action.type);
-  console.log('action.data', action);
   switch (action.type) {
     case FETCHING_BOOKS_DATA:
       return {

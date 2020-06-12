@@ -9,11 +9,8 @@ const LibraryCategoryComponent = (props: any): React.ReactElement => {
 
   const { style, libraryCategory, index, onDetailPress, intlData, ...listItemProps } = props;
 
-  console.log('intlData ', intlData);
 
   const onRowSelected = (index:number, id: any): void => {
-    console.log('index', index);
-    console.log('id', id);
     onDetailPress();
   };
 
@@ -53,7 +50,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   amountButton: {
-    borderRadius: 16,
+    borderRadius: 20,
   },
   amount: {
     textAlign: 'center',
@@ -70,8 +67,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     aspectRatio: 1.0,
-    margin: 8,
-    maxWidth: Dimensions.get('window').width / 2 - 12,
+    margin: 20,
+    maxWidth: Dimensions.get('window').width / 2 - 30,
   },
   itemTitle: {
     alignSelf: 'center',

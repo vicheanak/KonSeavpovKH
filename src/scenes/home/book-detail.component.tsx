@@ -11,15 +11,17 @@ import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
 import {updateBookmarkBookDetail, updateBookTextSizeVisibility, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
-import ContentView from '../../layouts/home/book-detail';
+import BookDetailLayout from '../../layouts/home/book-detail';
 
 export type BookChapterRouteParams = {
-  todo: Todo;
+  book: any;
 }
 
 export const BookDetailScreen = (props: any): LayoutElement => {
 
-  const { todo } = props.route.params;
+  const { book } = props.route.params;
+  console.log('Book Detail =====> ');
+  console.log({book});
   const insets: EdgeInsets = useSafeArea();
 
   
@@ -52,11 +54,11 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   return (
     <React.Fragment>
       <TopNavigation
-          title='Product Details'
+          title={book.title}
           leftControl={renderBackAction()}
           rightControls={[renderBookmarkAction()]}
         />
-        <ContentView {...props} />
+        <BookDetailLayout {...props} />
     </React.Fragment>
   );
 };
