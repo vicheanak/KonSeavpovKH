@@ -162,7 +162,7 @@ export default (props: any): React.ReactElement => {
               }}
               style={[
                 styles.descriptionText,
-                {fontSize: props.textSize.textSize},
+                {fontSize: props.textSize},
               ]}
               value={chapter.content}
             />
