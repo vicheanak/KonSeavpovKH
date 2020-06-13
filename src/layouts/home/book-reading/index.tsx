@@ -52,7 +52,6 @@ export default (props: any): React.ReactElement => {
   console.log('PROPS book-reading ==> ', bookReading);
 
   const onBookButtonPress = (): void => {};
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const renderImageItem = (
     info: ListRenderItemInfo<ImageSourcePropType>,
@@ -98,30 +97,30 @@ export default (props: any): React.ReactElement => {
   );
 
   const totalChapterBars = (bookDetail.chapters.length * 100) / 100;
-  console.log({totalChapterBars});
   let currentBar =
     (bookDetail.currentChapter.currentChapter * 100) / totalChapterBars;
 
   let currentChapter = bookDetail.currentChapter.currentChapter;
+  let chapterIndex = currentChapter - 1;
+  const [selectedIndex, setSelectedIndex] = React.useState(chapterIndex);
 
   return (
     <View>
       <ViewPager
-        selectedIndex={selectedIndex}
+        selectedIndex={chapterIndex}
         onSelect={index => {
-          if (index > selectedIndex) {
+          if (index > chapterIndex) {
             //nextChapter
             currentBar = currentBar + currentBar;
             currentChapter++;
           }
-          if (index < selectedIndex) {
+          if (index < chapterIndex) {
             //previousChapter
             currentBar = currentBar - currentBar;
             currentChapter--;
           }
           hideTextSizeCard();
           setBookCurrentChapter({currentChapter: currentChapter});
-          setSelectedIndex(index);
         }}>
           {bookDetail.chapters.map((chapter) => {
             return (

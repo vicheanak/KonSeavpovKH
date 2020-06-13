@@ -28,6 +28,7 @@ import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
 import {CloseIcon} from './../../../assets/icons';
 import {SOURCE} from '../../../app/app-environment';
 import {connect} from 'react-redux';
+import { updateBookCurrentChapter } from './../../../redux/actions';
 
 const product: Product = Product.centralParkApartment();
 
@@ -65,6 +66,7 @@ const BookDetailLayout = (props: any): React.ReactElement => {
   const {book} = props.route.params;
 
   const onReadingButtonPress = (): void => {
+    props.setBookCurrentChapter({currentChapter: 1});
     props.navigation.navigate(AppRoute.BOOK_READING, {book});
   };
 
@@ -433,7 +435,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
+  };
 };
 
 export default connect(
