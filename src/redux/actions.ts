@@ -24,9 +24,12 @@ import {
   FETCHING_BOOK_DETAIL,
   FETCHING_FAVORITE_BOOKS_LIST,
   FETCHING_FAVORITE_BOOKS_LIST_SUCCESS,
-  FETCHING_FAVORITE_BOOKS_LIST_FAILURE
+  FETCHING_FAVORITE_BOOKS_LIST_FAILURE,
+  FETCHING_BOOK_CHAPTERS,
+  FETCHING_BOOK_CHAPTERS_SUCCESS,
+  FETCHING_BOOK_CHAPTERS_FAILURE
 } from './constants'
-import { getPeople, addPeople, getBooksList, getFavoriteBooksList, getBookDetail } from './api'
+import { getPeople, addPeople, getBooksList, getFavoriteBooksList, getBookDetail, getBookChapters } from './api'
 
 export function getData() {
   return {
@@ -56,6 +59,14 @@ export function getBooksData() {
 export function getBooksDataSuccess(data) {
   return {
     type: FETCHING_BOOKS_DATA_SUCCESS,
+    data,
+  }
+}
+
+export function getBookChaptersSuccess(data) {
+  console.log('dispatch getBookChaptersSuccess', data);
+  return {
+    type: FETCHING_BOOK_CHAPTERS_SUCCESS,
     data,
   }
 }
@@ -147,6 +158,17 @@ export function fetchBooksData() {
       .catch((err) => console.log('err:', err))
   }
 }
+
+export function fetchBooksChapters(bookId) {
+  return (dispatch) => {
+    dispatch(postUser());
+    getBookChapters(bookId)
+      .then((data) => {
+        dispatch(getBookChaptersSuccess(data))
+      })
+      .catch((err) => console.log('err fetchBooksChapters ==> ', err))
+  };
+};
 
 export function fetchData() {
   return (dispatch) => {

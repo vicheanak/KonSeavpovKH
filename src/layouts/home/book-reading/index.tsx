@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -6,7 +6,7 @@ import {
   ListRenderItemInfo,
   ScrollView,
   View,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import {
   ButtonGroup,
@@ -45,11 +45,38 @@ const ListIcon = (style): IconElement => (
 );
 
 export default (props: any): React.ReactElement => {
-  const {hideTextSizeCard} = props;
+  const {hideTextSizeCard, bookReading} = props;
   const styles = useStyleSheet(themedStyles);
 
- 
+  console.log('PROPS book-reading ==> ', bookReading);
 
+  let chapters = [];
+
+  for (let i = 0; i < bookReading.length; i++) {
+    chapters.push(
+      <View key = {i}>
+				<View>
+					<TextInput />
+				</View>
+				<View>
+					<TextInput />
+				</View>
+				<View>
+					<TextInput />
+				</View>
+			</View>
+      <ScrollView key={i} style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title} category="h4">
+            Chapter 1
+          </Text>
+          <Text style={styles.authorLabel} category="s2">
+            Author Name
+          </Text>
+        </View>
+      </ScrollView>,
+    );
+  }
   const onBookButtonPress = (): void => {};
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -90,9 +117,6 @@ export default (props: any): React.ReactElement => {
   const renderBookingFooter = (): React.ReactElement => (
     <View>
       <Text category="s1">Short description goes to very here</Text>
-      {/* <View style={styles.detailsList}>
-        {product.details.map(renderDetailItem)}
-      </View> */}
       <View style={styles.optionList}>
         {product.options.map(renderOptionItem)}
       </View>
@@ -106,163 +130,160 @@ export default (props: any): React.ReactElement => {
   let currentChapter = props.currentChapter.currentChapter;
 
   return (
-    // <View style={styles.mainContainer}>
     <View>
-      {/* <ScrollView style={styles.container}> */}
-        <ViewPager
-          selectedIndex={selectedIndex}
-          onSelect={index => {
-            if (index > selectedIndex) {
-              //nextChapter
-              currentBar = currentBar + currentBar;
-              currentChapter++;
-            }
-            if (index < selectedIndex) {
-              //previousChapter
-              currentBar = currentBar - currentBar;
-              currentChapter--;
-            }
-            hideTextSizeCard();
-            props.setBookCurrentChapter({currentChapter: currentChapter});
-            setSelectedIndex(index);
-          }}>
-          {/* <Layout level="2"> */}
-            <ScrollView style={styles.container}>
-            <View style={styles.headerContainer}>
-              <Text style={styles.title} category="h4">
-                Chapter 1
-              </Text>
-              <Text style={styles.authorLabel} category="s2">
-                Author Name
-              </Text>
-            </View>
-
-            <Text style={styles.sectionLabel} category="h6">
-              About
+      <ViewPager
+        selectedIndex={selectedIndex}
+        onSelect={index => {
+          if (index > selectedIndex) {
+            //nextChapter
+            currentBar = currentBar + currentBar;
+            currentChapter++;
+          }
+          if (index < selectedIndex) {
+            //previousChapter
+            currentBar = currentBar - currentBar;
+            currentChapter--;
+          }
+          hideTextSizeCard();
+          props.setBookCurrentChapter({currentChapter: currentChapter});
+          setSelectedIndex(index);
+        }}>
+        <ScrollView style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.title} category="h4">
+              Chapter 1
             </Text>
+            <Text style={styles.authorLabel} category="s2">
+              Author Name
+            </Text>
+          </View>
 
-            <View style={styles.description}>
-              <SelectableText
-                selectable={true}
-                menuItems={['Highlight', 'Copy', 'Share']}
-                onSelection={({
+          <Text style={styles.sectionLabel} category="h6">
+            About
+          </Text>
+
+          <View style={styles.description}>
+            <SelectableText
+              selectable={true}
+              menuItems={['Highlight', 'Copy', 'Share']}
+              onSelection={({
+                eventType,
+                content,
+                selectionStart,
+                selectionEnd,
+              }) => {
+                if (eventType == 'Highlight') {
+                  console.log('highlight', content);
+                }
+                if (eventType == 'Copy') {
+                  console.log('copy', content);
+                }
+                if (eventType == 'Share') {
+                  console.log('share', content);
+                }
+                console.log({
                   eventType,
                   content,
                   selectionStart,
                   selectionEnd,
-                }) => {
-                  if (eventType == 'Highlight') {
-                    console.log('highlight', content);
-                  }
-                  if (eventType == 'Copy') {
-                    console.log('copy', content);
-                  }
-                  if (eventType == 'Share') {
-                    console.log('share', content);
-                  }
-                  console.log({
-                    eventType,
-                    content,
-                    selectionStart,
-                    selectionEnd,
-                  });
-                }}
-                style={[styles.descriptionText, {'fontSize': props.textSize.textSize}]}
-                value={product.description}
-              />
+                });
+              }}
+              style={[
+                styles.descriptionText,
+                {fontSize: props.textSize.textSize},
+              ]}
+              value={product.description}
+            />
+          </View>
+          <Text style={styles.sectionLabel} category="h6">
+            Who's it for?
+          </Text>
+          <View style={styles.description} appearance="hint">
+            <View style={styles.whoText}>
+              <Text>Anyone feeling stressed or overburdened</Text>
             </View>
-            <Text style={styles.sectionLabel} category="h6">
-              Who's it for?
+            <View style={styles.whoText}>
+              <Text>Psychology buffs looking for fresh insights</Text>
+            </View>
+            <View style={styles.whoText}>
+              <Text>Mindfulness enthusiasts seeking a new angle</Text>
+            </View>
+          </View>
+          <Text style={styles.sectionLabel} category="h6">
+            About Author
+          </Text>
+          <Text style={styles.description}>{product.description}</Text>
+        </ScrollView>
+        <ScrollView style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.title} category="h4">
+              Chapter 2
             </Text>
-            <View style={styles.description} appearance="hint">
-              <View style={styles.whoText}>
-                <Text>Anyone feeling stressed or overburdened</Text>
-              </View>
-              <View style={styles.whoText}>
-                <Text>Psychology buffs looking for fresh insights</Text>
-              </View>
-              <View style={styles.whoText}>
-                <Text>Mindfulness enthusiasts seeking a new angle</Text>
-              </View>
-            </View>
-            <Text style={styles.sectionLabel} category="h6">
-              About Author
+            <Text style={styles.authorLabel} category="s2">
+              Author Name
             </Text>
-            <Text style={styles.description}>{product.description}</Text>
-            </ScrollView>
-          {/* </Layout> */}
-          {/* <Layout level="2"> */}
-            <ScrollView style={styles.container}>
-            <View style={styles.headerContainer}>
-              <Text style={styles.title} category="h4">
-                Chapter 2
-              </Text>
-              <Text style={styles.authorLabel} category="s2">
-                Author Name
-              </Text>
-            </View>
+          </View>
 
-            <Text style={styles.sectionLabel} category="h6">
-              About
-            </Text>
-            <Text style={styles.description}>{product.description}</Text>
-            <Text style={styles.sectionLabel} category="h6">
-              Who's it for?
-            </Text>
-            <View style={styles.description} appearance="hint">
-              <View style={styles.whoText}>
-                <Text>Anyone feeling stressed or overburdened</Text>
-              </View>
-              <View style={styles.whoText}>
-                <Text>Psychology buffs looking for fresh insights</Text>
-              </View>
-              <View style={styles.whoText}>
-                <Text>Mindfulness enthusiasts seeking a new angle</Text>
-              </View>
+          <Text style={styles.sectionLabel} category="h6">
+            About
+          </Text>
+          <Text style={styles.description}>{product.description}</Text>
+          <Text style={styles.sectionLabel} category="h6">
+            Who's it for?
+          </Text>
+          <View style={styles.description} appearance="hint">
+            <View style={styles.whoText}>
+              <Text>Anyone feeling stressed or overburdened</Text>
             </View>
-            <Text style={styles.sectionLabel} category="h6">
-              About Author
-            </Text>
-            <Text style={styles.description}>{product.description}</Text>
-            </ScrollView>
-          {/* </Layout> */}
-          {/* <Layout level="2"> */}
-            <ScrollView style={styles.container}>
-            <View style={styles.headerContainer}>
-              <Text style={styles.title} category="h4">
-                Chapter 3
-              </Text>
-              <Text style={styles.authorLabel} category="s2">
-                Author Name
-              </Text>
+            <View style={styles.whoText}>
+              <Text>Psychology buffs looking for fresh insights</Text>
             </View>
+            <View style={styles.whoText}>
+              <Text>Mindfulness enthusiasts seeking a new angle</Text>
+            </View>
+          </View>
+          <Text style={styles.sectionLabel} category="h6">
+            About Author
+          </Text>
+          <Text style={styles.description}>{product.description}</Text>
+        </ScrollView>
+        {/* </Layout> */}
+        {/* <Layout level="2"> */}
+        <ScrollView style={styles.container}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.title} category="h4">
+              Chapter 3
+            </Text>
+            <Text style={styles.authorLabel} category="s2">
+              Author Name
+            </Text>
+          </View>
 
-            <Text style={styles.sectionLabel} category="h6">
-              About
-            </Text>
-            <Text style={styles.description}>{product.description}</Text>
-            <Text style={styles.sectionLabel} category="h6">
-              Who's it for?
-            </Text>
-            <View style={styles.description} appearance="hint">
-              <View style={styles.whoText}>
-                <Text>Anyone feeling stressed or overburdened</Text>
-              </View>
-              <View style={styles.whoText}>
-                <Text>Psychology buffs looking for fresh insights</Text>
-              </View>
-              <View style={styles.whoText}>
-                <Text>Mindfulness enthusiasts seeking a new angle</Text>
-              </View>
+          <Text style={styles.sectionLabel} category="h6">
+            About
+          </Text>
+          <Text style={styles.description}>{product.description}</Text>
+          <Text style={styles.sectionLabel} category="h6">
+            Who's it for?
+          </Text>
+          <View style={styles.description} appearance="hint">
+            <View style={styles.whoText}>
+              <Text>Anyone feeling stressed or overburdened</Text>
             </View>
-            <Text style={styles.sectionLabel} category="h6">
-              About Author
-            </Text>
-            <Text style={styles.description}>{product.description}</Text>
-            </ScrollView>
-          {/* </Layout> */}
-        </ViewPager>
-      {/* </ScrollView> */}
+            <View style={styles.whoText}>
+              <Text>Psychology buffs looking for fresh insights</Text>
+            </View>
+            <View style={styles.whoText}>
+              <Text>Mindfulness enthusiasts seeking a new angle</Text>
+            </View>
+          </View>
+          <Text style={styles.sectionLabel} category="h6">
+            About Author
+          </Text>
+          <Text style={styles.description}>{product.description}</Text>
+        </ScrollView>
+        {/* </Layout> */}
+      </ViewPager>
       <ProgressBar
         style={styles.itemProgressBar}
         progress={currentBar}
@@ -274,11 +295,11 @@ export default (props: any): React.ReactElement => {
 
 const themedStyles = StyleService.create({
   mainContainer: {
-    height: Dimensions.get('window').height - 70
+    height: Dimensions.get('window').height - 70,
   },
   container: {
     backgroundColor: 'background-basic-color-2',
-    height: Dimensions.get('window').height - 135
+    height: Dimensions.get('window').height - 135,
   },
   itemProgressBar: {
     position: 'absolute',

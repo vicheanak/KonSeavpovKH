@@ -26,8 +26,8 @@ import {Product, ProductOption} from './extra/data';
 import {AppRoute} from '../../../navigation/app-routes';
 import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
 import {CloseIcon} from './../../../assets/icons';
-import { SOURCE } from '../../../app/app-environment';
-import { connect } from 'react-redux';
+import {SOURCE} from '../../../app/app-environment';
+import {connect} from 'react-redux';
 
 const product: Product = Product.centralParkApartment();
 
@@ -39,15 +39,13 @@ const ListeningIcon = (style): IconElement => (
   <Icon {...style} name="volume-up-outline" />
 );
 
-
 const PauseIcon = (style): ImageStyle => (
-  <Icon {...style} pack='app' name='pause'/>
-)
-
-const PlayIcon = (style): ImageStyle => (
-  <Icon {...style} pack='app' name='play'/>
+  <Icon {...style} pack="app" name="pause" />
 );
 
+const PlayIcon = (style): ImageStyle => (
+  <Icon {...style} pack="app" name="play" />
+);
 
 const ClockIcon = (style): IconElement => (
   <Icon {...style} name="clock-outline" />
@@ -58,13 +56,13 @@ const ListIcon = (style): IconElement => (
 );
 
 const SkipForwardIcon = (style): IconElement => (
-  <Icon {...style} name='skip-forward-outline'/>
+  <Icon {...style} name="skip-forward-outline" />
 );
 
 const BookDetailLayout = (props: any): React.ReactElement => {
-// export default (props: any): React.ReactElement => {
+  // export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
-  const { book } = props.route.params;
+  const {book} = props.route.params;
 
   const onReadingButtonPress = (): void => {
     props.navigation.navigate(AppRoute.BOOK_READING, {book});
@@ -73,7 +71,9 @@ const BookDetailLayout = (props: any): React.ReactElement => {
   const [title, setTitle] = React.useState<string>('');
   const [artist, setArtist] = React.useState<string>('');
   const [artwork, setArtwork] = React.useState<string>('');
-  const [bottomVisibility,setToolbarVisibility] = React.useState<boolean>(false);
+  const [bottomVisibility, setToolbarVisibility] = React.useState<boolean>(
+    false,
+  );
 
   const onGoBackListener = async () => {
     console.log('Back to Book Detail Screen');
@@ -132,21 +132,20 @@ const BookDetailLayout = (props: any): React.ReactElement => {
       </View> */}
       <View style={styles.optionList}>
         <Button
-          key='duration'
+          key="duration"
           style={styles.optionItem}
           appearance="ghost"
           status="basic"
           icon={(style: ImageStyle) => renderOptionItemIcon(style, 'clock')}>
-            {book.durationMinutes.toString()} {props.intlData.messages['minutes']}
+          {book.durationMinutes.toString()} {props.intlData.messages['minutes']}
         </Button>
         <Button
-          key='chapters'
+          key="chapters"
           style={styles.optionItem}
           appearance="ghost"
           status="basic"
           icon={(style: ImageStyle) => renderOptionItemIcon(style, 'list')}>
-        
-            {book.totalChapters.toString()} {props.intlData.messages['chapters']}
+          {book.totalChapters.toString()} {props.intlData.messages['chapters']}
         </Button>
         {/* {product.options.map(renderOptionItem)} */}
       </View>
@@ -157,22 +156,19 @@ const BookDetailLayout = (props: any): React.ReactElement => {
     let photo = SOURCE + book.imageUrl;
     return (
       <View>
-        <ImageBackground
-          style={styles.itemHeader}
-          source={{uri: photo}}
-        />
+        <ImageBackground style={styles.itemHeader} source={{uri: photo}} />
         <Text numberOfLines={1} style={styles.authorName}>
           Author Name is Very Long so Be Careful
         </Text>
       </View>
-    )
+    );
   };
 
   const playbackState = usePlaybackState();
   const [playPauseIcon, setPlayPauseIcon] = React.useState<string>('pause');
 
   const PlayPauseIcon = (style): ImageStyle => (
-    <Icon {...style} pack='app' name={playPauseIcon}/>
+    <Icon {...style} pack="app" name={playPauseIcon} />
   );
 
   const onTogglePlayback = async () => {
@@ -185,13 +181,18 @@ const BookDetailLayout = (props: any): React.ReactElement => {
       await TrackPlayer.pause();
     }
     console.log({playPauseIcon});
-  }
+  };
 
   let imageUrl = SOURCE + book.imageUrl;
 
   return (
     <View style={styles.container}>
-      <ScrollView style={[styles.scrollViewContainer && bottomVisibility ? {marginBottom: 70} : {marginBottom: 0}]}>
+      <ScrollView
+        style={[
+          styles.scrollViewContainer && bottomVisibility
+            ? {marginBottom: 70}
+            : {marginBottom: 0},
+        ]}>
         <ImageOverlay style={styles.image} source={{uri: imageUrl}} />
         <View style={styles.headerContainer}>
           <Text style={styles.title} category="h4">
@@ -212,42 +213,32 @@ const BookDetailLayout = (props: any): React.ReactElement => {
               icon={ReadingIcon}
               style={styles.bookButton}
               onPress={onReadingButtonPress}>
-              READING
+                {props.intlData.messages['reading']}
             </Button>
             <Button
               status="basic"
               icon={ListeningIcon}
               style={styles.bookButton}
               onPress={onListeningButtonPress}>
-              LISTENING
+                {props.intlData.messages['listening']}
             </Button>
           </ButtonGroup>
         </Card>
         <Text style={styles.sectionLabel} category="h6">
-          About
+          {props.intlData.messages['about']}
         </Text>
-        <Text style={styles.description}>{product.description}</Text>
+        <Text style={styles.description}>{book.aboutBook}</Text>
         <Text style={styles.sectionLabel} category="h6">
-          Who's it for?
+          {props.intlData.messages['who_for']}
         </Text>
-        <View style={styles.description} appearance="hint">
-          <View style={styles.whoText}>
-            <Text>Anyone feeling stressed or overburdened</Text>
-          </View>
-          <View style={styles.whoText}>
-            <Text>Psychology buffs looking for fresh insights</Text>
-          </View>
-          <View style={styles.whoText}>
-            <Text>Mindfulness enthusiasts seeking a new angle</Text>
-          </View>
-        </View>
+        <Text style={styles.description}>{book.whoFor}</Text>
         <Text style={styles.sectionLabel} category="h6">
-          About Author
+          {props.intlData.messages['about_author']}
         </Text>
-        <Text style={styles.description}>{product.description}</Text>
+        <Text style={styles.description}>{book.aboutAuthor}</Text>
       </ScrollView>
-      {bottomVisibility && <View
-        style={styles.cardContainer}>
+      {bottomVisibility && (
+        <View style={styles.cardContainer}>
           <Image style={styles.imageCard} source={{uri: artwork}} />
           <View style={styles.labelContainer}>
             <Text category="s1">{title}</Text>
@@ -264,7 +255,8 @@ const BookDetailLayout = (props: any): React.ReactElement => {
               onPress={onTogglePlayback}
             />
           </View>
-      </View>}
+        </View>
+      )}
     </View>
   );
 };
@@ -276,24 +268,24 @@ const themedStyles = StyleService.create({
   },
   scrollViewContainer: {
     backgroundColor: 'background-basic-color-2',
-    marginBottom: 80
+    marginBottom: 80,
   },
   labelContainer: {
     flex: 1,
     height: '100%',
     padding: 16,
-    width: Dimensions.get('window').width - 10
+    width: Dimensions.get('window').width - 10,
   },
   mediaController: {
     flex: 1,
     flexDirection: 'row',
     alignSelf: 'center',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   iconButton: {
     paddingHorizontal: 0,
     // justifyContent: 'flex-end',
-    width: 50
+    width: 50,
   },
   cardContainer: {
     flex: 1,
@@ -305,7 +297,7 @@ const themedStyles = StyleService.create({
     left: 0,
     right: 0,
     backgroundColor: 'background-basic-color-2',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 6,
@@ -353,7 +345,7 @@ const themedStyles = StyleService.create({
     width: Dimensions.get('window').width / 2 - 80,
   },
   image: {
-    height: 360
+    height: 360,
   },
   imageCard: {
     width: 70,
@@ -418,8 +410,8 @@ const themedStyles = StyleService.create({
     lineHeight: 25,
   },
   sectionLabel: {
-    marginHorizontal: 16,
-    marginVertical: 8,
+    marginHorizontal: 30,
+    marginVertical: 15,
     fontWeight: 'bold',
   },
   imagesList: {
@@ -441,8 +433,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-  };
+  return {};
 };
 
 export default connect(

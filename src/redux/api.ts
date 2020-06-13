@@ -38,6 +38,18 @@ export const getBooksList = () => {
   })
 }
 
+export const getBookChapters = (bookId) => {
+  console.log('getBookChapters_Api bookId ==>', bookId);
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${API_SOURCE}/books/${bookId}/chapters`)
+      .then(res => {
+        console.log('bookChapters request result ==> ', res);
+        return resolve(res.data);
+      });
+  })
+}
+
 export const getFavoriteBooksList = () => {
   let params = {
     pagination: { page: 1, perPage: 5 },

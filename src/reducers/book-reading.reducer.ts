@@ -2,14 +2,21 @@ import {
     UPDATE_BOOK_CURRENT_CHAPTER, 
     UPDATE_BOOK_TOTOAL_CHAPTERS,
     UPDATE_BOOK_TEXT_SIZE,
-    UPDATE_BOOK_TEXT_SIZE_VISIBILITY
+    UPDATE_BOOK_TEXT_SIZE_VISIBILITY,
+    FETCHING_BOOK_CHAPTERS,
+    FETCHING_BOOK_CHAPTERS_SUCCESS,
+    FETCHING_BOOK_CHAPTERS_FAILURE
  } from '../redux/constants'
 
 const initialState = {
     currentChapter: 1,
     totalChapters: 1,
     textSize: 15,
-    textSizeVisibility: false
+    textSizeVisibility: false,
+    data: [],
+    dataFetched: false,
+    isFetching: false,
+    error: false
 };
 
 export const bookReading = (state = initialState, action) => {
@@ -35,6 +42,24 @@ export const bookReading = (state = initialState, action) => {
                 ...state,
                 textSizeVisibility: action.textSizeVisibility
             };
+        case FETCHING_BOOK_CHAPTERS:
+            return {
+                ...state,
+                data: [],
+                isFetching: true
+            }
+        case FETCHING_BOOK_CHAPTERS_SUCCESS:
+            return {
+                ...state,
+                data: action.data,
+                isFetching: false
+            }
+        case FETCHING_BOOK_CHAPTERS_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+                error: true
+            }
         default:
             return state;
     }

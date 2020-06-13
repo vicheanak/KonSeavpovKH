@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import { Button, Layout, LayoutElement, Text, Divider, TopNavigation, TopNavigationAction, Card, ButtonGroup } from '@ui-kitten/components';
 import { EdgeInsets, useSafeArea } from 'react-native-safe-area-context';
@@ -12,7 +12,8 @@ import {updateBookmarkBookDetail,
   updateBookCurrentChapter, 
   updateBookTotalChapters, 
   updateBookTextSize,
-  updateBookTextSizeVisibility} from '../../redux/actions';
+  updateBookTextSizeVisibility,
+  fetchBooksChapters} from '../../redux/actions';
 import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-reading';
 import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
@@ -28,11 +29,16 @@ export type BookReadingRouteParams = {
 export const BookReadingScreen = (props: any): LayoutElement => {
 
   const { todo } = props.route.params;
+  const { book } = props.route.params;
+  console.log({book});
   const insets: EdgeInsets = useSafeArea();
+
+
 
   const themeContext = React.useContext(ThemeContext);
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
+
 
   const onBookmarkActionPress = (): void => {
     setBookmarked(!bookmarked);
@@ -247,12 +253,14 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
+  console.log('Map State to Prop book-reading.component ==> ', state);
   return {
     bookmarkedBookDetail: state.bookmarkedBookDetail,
     currentChapter: state.bookReading.currentChapter,
     totalChapters: state.bookReading.totalChapters,
     textSize: state.bookReading.textSize,
-    textSizeVisibility: state.bookReading.textSizeVisibility
+    textSizeVisibility: state.bookReading.textSizeVisibility,
+    bookReading: state.bookReading.data
   };
 };
 
@@ -262,7 +270,8 @@ const mapDispatchToProps = dispatch => {
     setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
     setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters)),
     setBookTextSize: (textSize) => dispatch(updateBookTextSize(textSize)),
-    setBookTextSizeVisibility: (textSizeVisibility) => dispatch(updateBookTextSizeVisibility(textSizeVisibility))
+    setBookTextSizeVisibility: (textSizeVisibility) => dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
+    fetchChapters: (bookId) => dispatch(fetchBooksChapters(bookId))
   };
 };
 
