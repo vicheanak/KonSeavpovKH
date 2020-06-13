@@ -26,6 +26,8 @@ import { SearchIcon, StarIcon, ArrowIosForwardIcon } from '../../assets/icons';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import { BookmarkIcon } from './../../assets/icons';
+import { bookDetail } from './../../reducers/book-detail.reducer';
+import { updateBookCurrentChapter } from './../../redux/actions';
 
 
 
@@ -59,6 +61,8 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
     { id: 4, text: props.intlData.messages['not_yet_read'] },
   ];
 
+  const { bookDetail, setBookCurrentChapter } = props;
+
   const [selectedOption, setSelectedOption] = React.useState(defaultOptions);
 
   const onSelect = (option) => {
@@ -74,16 +78,19 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
     setQuery(query);
   };
 
-  const navigateBookDetail = (todoIndex: number): void => {
-    const { [todoIndex]: todo } = todos;
-    props.navigation.navigate(AppRoute.BOOK_DETAIL, { todo });
+  const navigateBookChapter = (chapterIndex: number): void => {
+    const { [chapterIndex]: chapter } = bookDetail.chapters;
+    console.log({chapter});
+    setBookCurrentChapter({currentChapter: chapter.chapterNumber});
+    props.navigation.navigate(AppRoute.BOOK_READING, bookDetail.book);
+    // props.navigation.navigate(AppRoute.BOOK_DETAIL, { todo });
   };
 
-  const renderSaved = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => (
+  const renderChapters = ({ item }: ListRenderItemInfo<any>): ListItemElement => (
     <ListItem
       style={styles.item}
-      onPress={navigateBookDetail}>
-      <Text style={styles.chapterLabel} status="primary">{item.id}</Text>
+      onPress={navigateBookChapter}>
+      <Text style={styles.chapterLabel} status="primary">{item.chapterNumber}</Text>
       <View style={styles.detailsContainer}>
         <Text category='s1'>
           {item.title}
@@ -104,8 +111,8 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
     <Layout style={styles.container} level='1'>
       <List
         style={styles.list}
-        data={todos}
-        renderItem={renderSaved}
+        data={bookDetail.chapters}
+        renderItem={renderChapters}
         ItemSeparatorComponent={Divider}
       />
     </Layout>
@@ -169,11 +176,13 @@ const themedStyles = StyleService.create({
 const mapStateToProps = state => {
   return {
     intlData: state.intlData,
+    bookDetail: state.bookDetail
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
   };
 };
 

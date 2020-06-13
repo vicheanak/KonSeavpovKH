@@ -10,11 +10,10 @@ import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
 import {updateBookmarkBookDetail, 
   updateBookCurrentChapter, 
-  updateBookTotalChapters, 
   updateBookTextSize,
   updateBookTextSizeVisibility,
   fetchBooksChapters} from '../../redux/actions';
-import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
+import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-reading';
 import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
 import {AppRoute} from '../../navigation/app-routes';
@@ -30,10 +29,16 @@ export const BookReadingScreen = (props: any): LayoutElement => {
 
   const { todo } = props.route.params;
   const { book } = props.route.params;
-  console.log({book});
   const insets: EdgeInsets = useSafeArea();
 
 
+  const [bookId, setBookId] = useState(0);
+
+  const {bookDetail, ...listProps} = props;
+
+  useEffect(() => {
+
+  }, [bookId]);
 
   const themeContext = React.useContext(ThemeContext);
 
@@ -144,19 +149,15 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   const [sliderOneValue, setSliderOneValue] = React.useState([props.textSize.textSize]);
   
   const sliderOneValuesChangeStart = () => {
-    // console.log('change start');
     setSliderOneChanging(true);
   }
 
   const sliderOneValuesChange = values => {
-    // console.log('value', values);
     // setSliderOneValue(values)
   };
 
   const sliderOneValuesChangeFinish = (value) => {
-    console.log('value', value[0]);
     props.setBookTextSize({textSize: value[0]});
-    console.log(props.textSize);
 
     setSliderOneChanging(false);
   };
@@ -253,11 +254,9 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
-  console.log('Map State to Prop book-reading.component ==> ', state);
+  console.log({state});
   return {
-    bookmarkedBookDetail: state.bookmarkedBookDetail,
-    currentChapter: state.bookReading.currentChapter,
-    totalChapters: state.bookReading.totalChapters,
+    bookDetail: state.bookDetail,
     textSize: state.bookReading.textSize,
     textSizeVisibility: state.bookReading.textSizeVisibility,
     bookReading: state.bookReading.data
@@ -268,7 +267,6 @@ const mapDispatchToProps = dispatch => {
   return {
     setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked)),
     setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
-    setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters)),
     setBookTextSize: (textSize) => dispatch(updateBookTextSize(textSize)),
     setBookTextSizeVisibility: (textSizeVisibility) => dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
     fetchChapters: (bookId) => dispatch(fetchBooksChapters(bookId))

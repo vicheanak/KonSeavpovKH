@@ -9,7 +9,7 @@ import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon, ArrowDownwardOutline} from '../../assets/icons';
 import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
-import { bookmarkedBookDetail } from './../../reducers/book-detail.reducer';
+import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
 
 export type BookListeningRouteParams = {

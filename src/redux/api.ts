@@ -27,7 +27,6 @@ export const getPeople = () => {
 }
 
 export const getBooksList = () => {
-  console.log('getBooksList');
   return new Promise((resolve, reject) => {
     axios
       .get(`${API_SOURCE}/books`)
@@ -39,7 +38,6 @@ export const getBooksList = () => {
 }
 
 export const getBookChapters = (bookId) => {
-  console.log('getBookChapters_Api bookId ==>', bookId);
   return new Promise((resolve, reject) => {
     axios
       .get(`${API_SOURCE}/books/${bookId}/chapters`)

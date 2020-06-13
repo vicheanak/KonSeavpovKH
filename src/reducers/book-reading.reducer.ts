@@ -22,11 +22,6 @@ const initialState = {
 export const bookReading = (state = initialState, action) => {
     if (action === undefined) return state;
     switch (action.type) {
-        case UPDATE_BOOK_CURRENT_CHAPTER:
-            return {
-                ...state,
-                currentChapter: action.currentChapter
-            };
         case UPDATE_BOOK_TOTOAL_CHAPTERS:
             return {
                 ...state,
@@ -42,24 +37,6 @@ export const bookReading = (state = initialState, action) => {
                 ...state,
                 textSizeVisibility: action.textSizeVisibility
             };
-        case FETCHING_BOOK_CHAPTERS:
-            return {
-                ...state,
-                data: [],
-                isFetching: true
-            }
-        case FETCHING_BOOK_CHAPTERS_SUCCESS:
-            return {
-                ...state,
-                data: action.data,
-                isFetching: false
-            }
-        case FETCHING_BOOK_CHAPTERS_FAILURE:
-            return {
-                ...state,
-                isFetching: false,
-                error: true
-            }
         default:
             return state;
     }

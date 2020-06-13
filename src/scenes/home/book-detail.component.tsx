@@ -28,7 +28,7 @@ import {
   updateBookTotalChapters,
   fetchBooksChapters
 } from '../../redux/actions';
-import {bookmarkedBookDetail} from './../../reducers/book-detail.reducer';
+import {bookDetail} from './../../reducers/book-detail.reducer';
 import BookDetailLayout from '../../layouts/home/book-detail';
 
 export type BookChapterRouteParams = {
@@ -37,21 +37,18 @@ export type BookChapterRouteParams = {
 
 export const BookDetailScreen = (props: any): LayoutElement => {
   const {book} = props.route.params;
-  console.log('Book Detail =====> ');
-  console.log({book});
   const insets: EdgeInsets = useSafeArea();
 
   const [bookId, setBookId] = useState(0);
 
-  const {fetchChapters, ...listProps} = props;
+  const {setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
 
   useEffect(() => {
     fetchChapters(book.id);
+    setBookCurrentChapter({currentChapter: 1});
+    setBookTextSizeVisibility({textSizeVisibility: false});
   }, [bookId]);
 
-  props.setBookCurrentChapter({currentChapter: 1});
-  props.setBookTotalChapters({totalChapters: 3});
-  props.setBookTextSizeVisibility({textSizeVisibility: false});
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
@@ -63,7 +60,7 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   const renderBookmarkAction = (): React.ReactElement => (
     <TopNavigationAction
       icon={
-        props.bookmarkedBookDetail.bookmarked
+        props.bookDetail.bookmarked
           ? BookmarkIcon
           : BookmarkOutlineIcon
       }
@@ -115,10 +112,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log('book-detail.component.tsx');
-  console.log({state});
   return {
-    bookmarkedBookDetail: state.bookmarkedBookDetail,
+    bookDetail: state.bookDetail,
     currentChapter: state.currentChapter,
     totalChapters: state.totalChapters,
   };

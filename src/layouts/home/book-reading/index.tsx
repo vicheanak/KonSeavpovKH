@@ -44,39 +44,13 @@ const ListIcon = (style): IconElement => (
   <Icon {...style} name="list-outline" />
 );
 
+
 export default (props: any): React.ReactElement => {
-  const {hideTextSizeCard, bookReading} = props;
+  const {setBookCurrentChapter, bookDetail, hideTextSizeCard, bookReading} = props;
   const styles = useStyleSheet(themedStyles);
 
   console.log('PROPS book-reading ==> ', bookReading);
 
-  let chapters = [];
-
-  for (let i = 0; i < bookReading.length; i++) {
-    chapters.push(
-      <View key = {i}>
-				<View>
-					<TextInput />
-				</View>
-				<View>
-					<TextInput />
-				</View>
-				<View>
-					<TextInput />
-				</View>
-			</View>
-      <ScrollView key={i} style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.title} category="h4">
-            Chapter 1
-          </Text>
-          <Text style={styles.authorLabel} category="s2">
-            Author Name
-          </Text>
-        </View>
-      </ScrollView>,
-    );
-  }
   const onBookButtonPress = (): void => {};
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -123,11 +97,12 @@ export default (props: any): React.ReactElement => {
     </View>
   );
 
-  const totalChapterBars = (props.totalChapters.totalChapters * 100) / 100;
+  const totalChapterBars = (bookDetail.chapters.length * 100) / 100;
+  console.log({totalChapterBars});
   let currentBar =
-    (props.currentChapter.currentChapter * 100) / totalChapterBars;
+    (bookDetail.currentChapter.currentChapter * 100) / totalChapterBars;
 
-  let currentChapter = props.currentChapter.currentChapter;
+  let currentChapter = bookDetail.currentChapter.currentChapter;
 
   return (
     <View>
@@ -145,22 +120,20 @@ export default (props: any): React.ReactElement => {
             currentChapter--;
           }
           hideTextSizeCard();
-          props.setBookCurrentChapter({currentChapter: currentChapter});
+          setBookCurrentChapter({currentChapter: currentChapter});
           setSelectedIndex(index);
         }}>
-        <ScrollView style={styles.container}>
+          {bookDetail.chapters.map((chapter) => {
+            return (
+        <ScrollView key={chapter.id} style={styles.container}>
           <View style={styles.headerContainer}>
             <Text style={styles.title} category="h4">
-              Chapter 1
+              {chapter.title}
             </Text>
             <Text style={styles.authorLabel} category="s2">
-              Author Name
+              {bookDetail.book.authorname}
             </Text>
           </View>
-
-          <Text style={styles.sectionLabel} category="h6">
-            About
-          </Text>
 
           <View style={styles.description}>
             <SelectableText
@@ -192,102 +165,18 @@ export default (props: any): React.ReactElement => {
                 styles.descriptionText,
                 {fontSize: props.textSize.textSize},
               ]}
-              value={product.description}
+              value={chapter.content}
             />
           </View>
-          <Text style={styles.sectionLabel} category="h6">
-            Who's it for?
-          </Text>
-          <View style={styles.description} appearance="hint">
-            <View style={styles.whoText}>
-              <Text>Anyone feeling stressed or overburdened</Text>
-            </View>
-            <View style={styles.whoText}>
-              <Text>Psychology buffs looking for fresh insights</Text>
-            </View>
-            <View style={styles.whoText}>
-              <Text>Mindfulness enthusiasts seeking a new angle</Text>
-            </View>
-          </View>
-          <Text style={styles.sectionLabel} category="h6">
-            About Author
-          </Text>
-          <Text style={styles.description}>{product.description}</Text>
-        </ScrollView>
-        <ScrollView style={styles.container}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.title} category="h4">
-              Chapter 2
-            </Text>
-            <Text style={styles.authorLabel} category="s2">
-              Author Name
-            </Text>
-          </View>
-
-          <Text style={styles.sectionLabel} category="h6">
-            About
-          </Text>
-          <Text style={styles.description}>{product.description}</Text>
-          <Text style={styles.sectionLabel} category="h6">
-            Who's it for?
-          </Text>
-          <View style={styles.description} appearance="hint">
-            <View style={styles.whoText}>
-              <Text>Anyone feeling stressed or overburdened</Text>
-            </View>
-            <View style={styles.whoText}>
-              <Text>Psychology buffs looking for fresh insights</Text>
-            </View>
-            <View style={styles.whoText}>
-              <Text>Mindfulness enthusiasts seeking a new angle</Text>
-            </View>
-          </View>
-          <Text style={styles.sectionLabel} category="h6">
-            About Author
-          </Text>
-          <Text style={styles.description}>{product.description}</Text>
-        </ScrollView>
-        {/* </Layout> */}
-        {/* <Layout level="2"> */}
-        <ScrollView style={styles.container}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.title} category="h4">
-              Chapter 3
-            </Text>
-            <Text style={styles.authorLabel} category="s2">
-              Author Name
-            </Text>
-          </View>
-
-          <Text style={styles.sectionLabel} category="h6">
-            About
-          </Text>
-          <Text style={styles.description}>{product.description}</Text>
-          <Text style={styles.sectionLabel} category="h6">
-            Who's it for?
-          </Text>
-          <View style={styles.description} appearance="hint">
-            <View style={styles.whoText}>
-              <Text>Anyone feeling stressed or overburdened</Text>
-            </View>
-            <View style={styles.whoText}>
-              <Text>Psychology buffs looking for fresh insights</Text>
-            </View>
-            <View style={styles.whoText}>
-              <Text>Mindfulness enthusiasts seeking a new angle</Text>
-            </View>
-          </View>
-          <Text style={styles.sectionLabel} category="h6">
-            About Author
-          </Text>
-          <Text style={styles.description}>{product.description}</Text>
-        </ScrollView>
-        {/* </Layout> */}
+        </ScrollView> 
+            );
+          })}
       </ViewPager>
       <ProgressBar
         style={styles.itemProgressBar}
         progress={currentBar}
-        text={`${3}%`}
+        // text={`${3}%`}
+        text="11"
       />
     </View>
   );

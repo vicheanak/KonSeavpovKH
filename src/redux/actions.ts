@@ -27,7 +27,8 @@ import {
   FETCHING_FAVORITE_BOOKS_LIST_FAILURE,
   FETCHING_BOOK_CHAPTERS,
   FETCHING_BOOK_CHAPTERS_SUCCESS,
-  FETCHING_BOOK_CHAPTERS_FAILURE
+  FETCHING_BOOK_CHAPTERS_FAILURE,
+  UPDATE_BOOK_DETAIL
 } from './constants'
 import { getPeople, addPeople, getBooksList, getFavoriteBooksList, getBookDetail, getBookChapters } from './api'
 
@@ -64,7 +65,6 @@ export function getBooksDataSuccess(data) {
 }
 
 export function getBookChaptersSuccess(data) {
-  console.log('dispatch getBookChaptersSuccess', data);
   return {
     type: FETCHING_BOOK_CHAPTERS_SUCCESS,
     data,
@@ -192,6 +192,14 @@ export function addUser(params) {
   };
 };
 
+export function updateBookDetail(book) {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_BOOK_DETAIL,
+      book
+    })
+  }
+}
 export function updateLanguage(language) {
   return (dispatch) => {
     dispatch({
