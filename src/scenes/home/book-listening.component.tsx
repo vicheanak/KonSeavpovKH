@@ -18,7 +18,7 @@ export type BookListeningRouteParams = {
 
 export const BookListeningScreen = (props: any): LayoutElement => {
 
-  const { todo } = props.route.params;
+  const { book } = props.route.params;
   console.log('Book Listening Route Params', props.route.params);
   const insets: EdgeInsets = useSafeArea();
 
@@ -32,7 +32,8 @@ export const BookListeningScreen = (props: any): LayoutElement => {
 
   const renderBookmarkAction = (): React.ReactElement => (
     <TopNavigationAction
-      icon={props.bookmarkedBookDetail.bookmarked ? BookmarkIcon : BookmarkOutlineIcon}
+      // icon={props.bookmarkedBookDetail.bookmarked ? BookmarkIcon : BookmarkOutlineIcon}
+      icon={BookmarkIcon}
       onPress={onBookmarkActionPress}
     />
   );
@@ -88,10 +89,13 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
+  console.log('book-listening.component.tsx ==> ');
+  console.log({state});
   return {
     bookmarkedBookDetail: state.bookmarkedBookDetail,
     currentChapter: state.currentChapter,
-    totalChapters: state.totalChapters
+    totalChapters: state.totalChapters,
+    bookDetail: state.bookDetail
   };
 };
 

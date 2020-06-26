@@ -157,8 +157,8 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   };
 
   const sliderOneValuesChangeFinish = (value) => {
-    props.setBookTextSize({textSize: value[0]});
     console.log('textSize', value[0]);
+    props.setBookTextSize(value[0]);
 
     setSliderOneChanging(false);
   };
@@ -189,7 +189,7 @@ export const BookReadingScreen = (props: any): LayoutElement => {
             <Text style={styles.smallText}>A</Text>
             <MultiSlider
               min={14}
-              max={22}
+              max={24}
               values={[textSize]}
               sliderLength={Dimensions.get('window').width - 80}
               onValuesChangeStart={sliderOneValuesChangeStart}
@@ -255,10 +255,11 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
+  console.log('book-reading.component.tsx ==>');
   console.log({state});
   return {
     bookDetail: state.bookDetail,
-    textSize: state.bookReading.textSize.textSize,
+    textSize: state.bookReading.textSize,
     textSizeVisibility: state.bookReading.textSizeVisibility,
     bookReading: state.bookReading.data
   };

@@ -158,7 +158,7 @@ const BookDetailLayout = (props: any): React.ReactElement => {
     let photo = SOURCE + book.imageUrl;
     return (
       <View>
-        <ImageBackground style={styles.itemHeader} source={{uri: photo}} />
+        {/* <ImageBackground style={styles.itemHeader} source={{uri: photo}} /> */}
         <Text numberOfLines={1} style={styles.authorName}>
           Author Name is Very Long so Be Careful
         </Text>

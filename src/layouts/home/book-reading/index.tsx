@@ -53,11 +53,11 @@ export default (props: any): React.ReactElement => {
 
   const onBookButtonPress = (): void => {};
 
-  const renderImageItem = (
-    info: ListRenderItemInfo<ImageSourcePropType>,
-  ): React.ReactElement => (
-    <Image style={styles.imageItem} source={info.item} />
-  );
+  // const renderImageItem = (
+  //   info: ListRenderItemInfo<ImageSourcePropType>,
+  // ): React.ReactElement => (
+  //   <Image style={styles.imageItem} source={info.item} />
+  // );
 
   const renderOptionItemIcon = (
     style: ImageStyle,
@@ -197,7 +197,7 @@ const themedStyles = StyleService.create({
   },
   descriptionText: {
     fontSize: 15,
-    lineHeight: 30,
+    lineHeight: 45,
     color: 'text-basic-color',
   },
   image: {

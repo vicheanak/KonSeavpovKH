@@ -42,7 +42,6 @@ export const getBookChapters = (bookId) => {
     axios
       .get(`${API_SOURCE}/books/${bookId}/chapters`)
       .then(res => {
-        console.log('bookChapters request result ==> ', res);
         return resolve(res.data);
       });
   })

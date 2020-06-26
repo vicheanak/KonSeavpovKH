@@ -32,21 +32,19 @@ import { ProfileAvatar } from './extra/profile-avatar.component';
 import { ProfileSetting } from './extra/profile-setting.component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Slider from '@react-native-community/slider';
-import TrackPlayer, { usePlaybackState } from "react-native-track-player";
+import TrackPlayer, { usePlaybackState, getState } from "react-native-track-player";
 
 import Player from "./extra/Player";
-import playlistData from "./extra/playlist.json";
+// import playlistData from "./extra/playlist.json";
+import { Playlist } from "./extra/Playlist";
 
 const localTrack = require("./extra/pure.m4a");
-
-// import TrackPlayer from "react-native-track-player";
-// import playlistData from "./extra/playlist.json";
-// import TrackPlayer, { usePlaybackState } from "react-native-track-player";
 
 // import Player from "../components/Player";
 // import playlistData from "../data/playlist.json";
 // import localTrack from "../resources/pure.m4a";
 // import { getCurrentTrack } from './../../../../index.d';
+import { bookDetail } from './../../../reducers/book-detail.reducer';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -112,9 +110,10 @@ export default (props: any): React.ReactElement => {
   useEffect(() => {
     (async function f() {
       const currentTrack = await TrackPlayer.getCurrentTrack();
-      console.log('useEffect Current Track', currentTrack);
-      if (!currentTrack){
-        console.log('Inside Current Track');
+      let foundTrack = props.bookDetail.chapters.find((matching) => {
+        return matching.id == currentTrack;
+      });
+      if (!foundTrack){
         setup();
         togglePlayback();
       }
@@ -143,9 +142,9 @@ export default (props: any): React.ReactElement => {
 
   async function togglePlayback() {
     const currentTrack = await TrackPlayer.getCurrentTrack();
-    console.log('togglePlayback', {currentTrack});
     if (currentTrack == null) {
       await TrackPlayer.reset();
+      const playlistData = Playlist.getPlaylist(props.bookDetail);
       await TrackPlayer.add(playlistData);
       TrackPlayer.play().then(() => {
         console.log('Toggle Playback Promise ==> ');
@@ -155,6 +154,8 @@ export default (props: any): React.ReactElement => {
       // await TrackPlayer.play();
     } else {
       if (playbackState === TrackPlayer.STATE_PAUSED) {
+        await TrackPlayer.play();
+      } else if (playbackState === TrackPlayer.STATE_NONE) {
         await TrackPlayer.play();
       } else {
         await TrackPlayer.pause();
@@ -173,65 +174,6 @@ export default (props: any): React.ReactElement => {
           onSkipNext15={skipNext15}
           onSkipBack15={skipBack15}
         />
-        {/* <Text style={styles.state}>{getStateName(playbackState)}</Text> */}
-      {/* <ProfileAvatar
-        style={styles.photo}
-        source={require('./assets/image-product.jpg')}
-      />
-      <View style={styles.titleAuthor}>
-        <Text
-          style={styles.title}
-          category='h6'>
-          Chapter 1 of 10 - Lady in Waiting
-        </Text>
-        <Text
-          style={styles.title}
-          appearance='hint'>
-          by Anne Glenconner
-        </Text>
-      </View>
-     
-      <View style={styles.sliderContainer}>
-        <Text category="c1" style={styles.minuteLabel}>00:10</Text>
-        <MultiSlider
-          min={14}
-          max={22}
-          values={[0]}
-          sliderLength={Dimensions.get('window').width - 80}
-          onValuesChangeStart={sliderOneValuesChangeStart}
-          onValuesChange={sliderOneValuesChange}
-          onValuesChangeFinish={sliderOneValuesChangeFinish}
-        />
-        <Text category="c1" style={styles.minuteLabel}>-02:37</Text>
-      </View>
-      <View style={styles.mediaController}>
-        <Button
-          style={styles.mediaButtonSmall}
-          status='basic'
-          icon={SkipBackIcon}
-        />
-        <Button
-          style={styles.mediaButtonSmall}
-          status='basic'
-          icon={ArrowLeftIcon}
-        />
-        <Button
-          style={styles.mediaButtonLarge}
-          status='basic'
-          icon={PauseIcon}
-        />
-        <Button
-          style={styles.mediaButtonSmall}
-          status='basic'
-          icon={ArrowRightIcon}
-        />
-        <Button
-          style={styles.mediaButtonSmall}
-          status='basic'
-          icon={SkipForwardIcon}
-        />
-      </View> */}
-      
     </View>
   );
   
@@ -267,7 +209,6 @@ async function skipToPrevious() {
 async function skipNext15() {
   const progress = await TrackPlayer.getPosition();
   const newProgress = Math.floor(progress) + 15;
-  console.log(newProgress);
   await TrackPlayer.play();
   await TrackPlayer.seekTo(12);
 }
@@ -275,7 +216,6 @@ async function skipNext15() {
 async function skipBack15() {
   const progress = await TrackPlayer.getPosition();
   const newProgress = Math.floor(progress) - 15;
-  console.log(newProgress);
   await TrackPlayer.play();
   await TrackPlayer.seekTo(newProgress); 
   // await TrackPlayer.seekTo(newProgress);
