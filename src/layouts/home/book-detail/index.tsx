@@ -66,12 +66,9 @@ const BookDetailLayout = (props: any): React.ReactElement => {
   const {book} = props.route.params;
 
   const onReadingButtonPress = (): void => {
-
     let matchingChapter = props.bookDetail.chapters.find((chapter) => {
       return chapter.chapterNumber == 1; 
     });
-    console.log('----------------------');
-    console.log({matchingChapter});
     props.setBookCurrentChapter({currentChapter: matchingChapter});
     props.navigation.navigate(AppRoute.BOOK_READING);
   };
@@ -98,6 +95,10 @@ const BookDetailLayout = (props: any): React.ReactElement => {
   };
 
   const onListeningButtonPress = (): void => {
+    let matchingChapter = props.bookDetail.chapters.find((chapter) => {
+      return chapter.chapterNumber == 1; 
+    });
+    props.setBookCurrentChapter({currentChapter: matchingChapter});
     props.navigation.navigate(AppRoute.BOOK_LISTENING, {
       book,
       onGoBack: () => onGoBackListener(),

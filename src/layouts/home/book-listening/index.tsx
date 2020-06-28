@@ -10,9 +10,9 @@ import {
   Animated,
   AppRegistry,
   Platform,
-  DeviceEventEmitter, 
-  NativeEventEmitter, 
-  NativeModules
+  DeviceEventEmitter,
+  NativeEventEmitter,
+  NativeModules,
 } from 'react-native';
 import {
   ButtonGroup,
@@ -24,27 +24,30 @@ import {
   Text,
   useStyleSheet,
   IconElement,
-  Divider
+  Divider,
 } from '@ui-kitten/components';
 import {ImageOverlay} from './extra/image-overlay.component';
 import {Product, ProductOption} from './extra/data';
-import { ProfileAvatar } from './extra/profile-avatar.component';
-import { ProfileSetting } from './extra/profile-setting.component';
+import {ProfileAvatar} from './extra/profile-avatar.component';
+import {ProfileSetting} from './extra/profile-setting.component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Slider from '@react-native-community/slider';
-import TrackPlayer, { usePlaybackState, getState } from "react-native-track-player";
+import TrackPlayer, {
+  usePlaybackState,
+  getState,
+} from 'react-native-track-player';
 
-import Player from "./extra/Player";
+import Player from './extra/Player';
 // import playlistData from "./extra/playlist.json";
-import { Playlist } from "./extra/Playlist";
+import {Playlist} from './extra/Playlist';
 
-const localTrack = require("./extra/pure.m4a");
+const localTrack = require('./extra/pure.m4a');
 
 // import Player from "../components/Player";
 // import playlistData from "../data/playlist.json";
 // import localTrack from "../resources/pure.m4a";
 // import { getCurrentTrack } from './../../../../index.d';
-import { bookDetail } from './../../../reducers/book-detail.reducer';
+import {bookDetail} from './../../../reducers/book-detail.reducer';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -54,36 +57,36 @@ const pointerWidth = width * 0.47;
 const product: Product = Product.centralParkApartment();
 
 const BookmarkIcon = (style): IconElement => (
-  <Icon {...style} name='bookmark-outline'/>
+  <Icon {...style} name="bookmark-outline" />
 );
 
 const PauseIcon = (style): IconElement => (
-  <Icon {...style} name='code-outline'/>
+  <Icon {...style} name="code-outline" />
 );
 
 const PlayIcon = (style): IconElement => (
-  <Icon {...style} name='arrow-right-outline'/>
+  <Icon {...style} name="arrow-right-outline" />
 );
 
 const SkipForwardIcon = (style): IconElement => (
-  <Icon {...style} name='skip-forward-outline'/>
+  <Icon {...style} name="skip-forward-outline" />
 );
 
 const SkipBackIcon = (style): IconElement => (
-  <Icon {...style} name='skip-back-outline'/>
+  <Icon {...style} name="skip-back-outline" />
 );
 
 const ListIcon = (style): IconElement => (
-  <Icon {...style} name='list-outline'/>
+  <Icon {...style} name="list-outline" />
 );
 
 const ArrowLeftIcon = (style): IconElement => (
-  <Icon {...style} name='arrowhead-left-outline'/>
-)
+  <Icon {...style} name="arrowhead-left-outline" />
+);
 
 const ArrowRightIcon = (style): IconElement => (
-  <Icon {...style} name='arrowhead-right-outline'/>
-)
+  <Icon {...style} name="arrowhead-right-outline" />
+);
 
 export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
@@ -93,35 +96,65 @@ export default (props: any): React.ReactElement => {
     props.navigation && props.navigation.goBack();
   };
 
-  const sliderOneValuesChangeStart = () => {
+  const sliderOneValuesChangeStart = () => {};
 
-  }
+  const sliderOneValuesChange = values => {};
 
-  const sliderOneValuesChange = values => {
-
-  };
-
-  const sliderOneValuesChangeFinish = (value) => {
- 
-  };
+  const sliderOneValuesChangeFinish = value => {};
 
   const playbackState = usePlaybackState();
+
+  const matchNewTrackToChapter = async () => {
+      let newTrack = await TrackPlayer.getCurrentTrack();
+      let matchingChapter = props.bookDetail.chapters.find(chapter => {
+        return chapter.id == newTrack;
+      });
+      props.setBookCurrentChapter({currentChapter: matchingChapter});
+  }
+
+  const skipToNext = async () => {
+    try {
+      await TrackPlayer.skipToNext();
+      matchNewTrackToChapter();
+    } catch (_) {}
+  };
+
+  const skipToPrevious = async () => {
+    try {
+      await TrackPlayer.skipToPrevious();
+      matchNewTrackToChapter();
+    } catch (_) {}
+  }
+
+  const skipNext15 = async () => {
+    const progress = await TrackPlayer.getPosition();
+    const newProgress = Math.floor(progress) + 15;
+    await TrackPlayer.play();
+    await TrackPlayer.seekTo(12);
+  }
+
+  const skipBack15 = async () => {
+    const progress = await TrackPlayer.getPosition();
+    const newProgress = Math.floor(progress) - 15;
+    await TrackPlayer.play();
+    await TrackPlayer.seekTo(newProgress);
+    // await TrackPlayer.seekTo(newProgress);
+  }
 
   useEffect(() => {
     (async function f() {
       const currentTrack = await TrackPlayer.getCurrentTrack();
-      let foundTrack = props.bookDetail.chapters.find((matching) => {
+      let foundTrack = props.bookDetail.chapters.find(matching => {
         return matching.id == currentTrack;
       });
-      let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
-      console.log({currentChapterId, currentTrack});
-      // if (currentChapterId != currentTrack){
-      //   console.log('===> TrackPlayer.skip(currentChapterId)');
-      //   await TrackPlayer.skip(currentChapterId.toString());
-      // }
-      if (!foundTrack){
+      if (!foundTrack) {
         setup();
         togglePlayback();
+      } else {
+        let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
+        if (currentChapterId != currentTrack) {
+          await TrackPlayer.skip(currentChapterId.toString());
+        }
       }
     })();
   }, []);
@@ -136,30 +169,30 @@ export default (props: any): React.ReactElement => {
         TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
         TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
         TrackPlayer.CAPABILITY_STOP,
-        TrackPlayer.CAPABILITY_SEEK_TO
+        TrackPlayer.CAPABILITY_SEEK_TO,
       ],
       compactCapabilities: [
         TrackPlayer.CAPABILITY_PLAY,
         TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SEEK_TO
-      ]
+        TrackPlayer.CAPABILITY_SEEK_TO,
+      ],
     });
   }
 
   async function togglePlayback() {
     const currentTrack = await TrackPlayer.getCurrentTrack();
-    // console.log('CURRENT_TRACK');
-    // console.log({currentTrack});
     if (currentTrack == null) {
       await TrackPlayer.reset();
       const playlistData = Playlist.getPlaylist(props.bookDetail);
       await TrackPlayer.add(playlistData);
       // TrackPlayer.skip();
-      TrackPlayer.play().then(() => {
-        console.log('Toggle Playback Promise ==> ');
-      }).catch(() => {
-        console.log('Toggle Playback Error ==>');
-      })
+      TrackPlayer.play()
+        .then(() => {
+          console.log('Toggle Playback Promise ==> ');
+        })
+        .catch(() => {
+          console.log('Toggle Playback Error ==>');
+        });
       // await TrackPlayer.play();
     } else {
       if (playbackState === TrackPlayer.STATE_PAUSED) {
@@ -173,61 +206,32 @@ export default (props: any): React.ReactElement => {
   }
 
   return (
-    <View
-      style={styles.container}>
-        <Player
-          onNext={skipToNext}
-          style={styles.player}
-          onPrevious={skipToPrevious}
-          onTogglePlayback={togglePlayback}
-          onSkipNext15={skipNext15}
-          onSkipBack15={skipBack15}
-        />
+    <View style={styles.container}>
+      <Player
+        onNext={skipToNext}
+        style={styles.player}
+        onPrevious={skipToPrevious}
+        onTogglePlayback={togglePlayback}
+        onSkipNext={skipNext15}
+        onSkipBack={skipBack15}
+      />
     </View>
   );
-  
 };
 
 function getStateName(state) {
   switch (state) {
     case TrackPlayer.STATE_NONE:
-      return "None";
+      return 'None';
     case TrackPlayer.STATE_PLAYING:
-      return "Playing";
+      return 'Playing';
     case TrackPlayer.STATE_PAUSED:
-      return "Paused";
+      return 'Paused';
     case TrackPlayer.STATE_STOPPED:
-      return "Stopped";
+      return 'Stopped';
     case TrackPlayer.STATE_BUFFERING:
-      return "Buffering";
+      return 'Buffering';
   }
-}
-
-async function skipToNext() {
-  try {
-    await TrackPlayer.skipToNext();
-  } catch (_) {}
-}
-
-async function skipToPrevious() {
-  try {
-    await TrackPlayer.skipToPrevious();
-  } catch (_) {}
-}
-
-async function skipNext15() {
-  const progress = await TrackPlayer.getPosition();
-  const newProgress = Math.floor(progress) + 15;
-  await TrackPlayer.play();
-  await TrackPlayer.seekTo(12);
-}
-
-async function skipBack15() {
-  const progress = await TrackPlayer.getPosition();
-  const newProgress = Math.floor(progress) - 15;
-  await TrackPlayer.play();
-  await TrackPlayer.seekTo(newProgress); 
-  // await TrackPlayer.seekTo(newProgress);
 }
 
 const themedStyles = StyleService.create({
@@ -245,10 +249,10 @@ const themedStyles = StyleService.create({
     flex: 1,
     marginTop: 40,
     justifyContent: 'center',
-    width: Dimensions.get('window').width - 100
+    width: Dimensions.get('window').width - 100,
   },
   state: {
-    marginTop: 20
+    marginTop: 20,
   },
   mediaController: {
     flex: 1,
@@ -258,13 +262,13 @@ const themedStyles = StyleService.create({
   },
   minuteLabel: {
     marginTop: 40,
-    marginHorizontal: -30
+    marginHorizontal: -30,
   },
   sliderContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 30
+    marginTop: 30,
   },
   photo: {
     alignSelf: 'center',
@@ -310,7 +314,7 @@ const themedStyles = StyleService.create({
     margin: 16,
   },
   whoText: {
-    marginVertical: 10
+    marginVertical: 10,
   },
   titleAuthor: {
     justifyContent: 'center',
@@ -322,14 +326,14 @@ const themedStyles = StyleService.create({
     fontWeight: 'bold',
     marginVertical: 5,
     // width: Dimensions.get('window').width,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   rentLabel: {
     marginTop: 24,
   },
   authorLabel: {
     marginTop: 8,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   bookButton: {
     width: 150,
@@ -345,7 +349,7 @@ const themedStyles = StyleService.create({
     width: 300,
     borderRadius: 30,
     justifyContent: 'center',
-    marginLeft: 15
+    marginLeft: 15,
   },
   detailsList: {
     flexDirection: 'row',
@@ -368,7 +372,7 @@ const themedStyles = StyleService.create({
   sectionLabel: {
     marginHorizontal: 16,
     marginVertical: 8,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   imagesList: {
     padding: 8,

@@ -104,7 +104,9 @@ export default (props: any): React.ReactElement => {
   const totalChapterBars = (bookDetail.chapters.length * 100) / 100;
   console.log('bookDetail currentChapter ==>', props);
   let currentBar =
-    (bookDetail.currentChapter.currentChapter.chapterNumber * 100) / totalChapterBars;
+    (bookDetail.currentChapter.currentChapter.chapterNumber * 100) /
+    totalChapterBars;
+  console.log(bookDetail.currentChapter.currentChapter.chapterNumber);
 
   let currentChapter = bookDetail.currentChapter.currentChapter.chapterNumber;
   let chapterIndex = currentChapter - 1;
@@ -115,7 +117,7 @@ export default (props: any): React.ReactElement => {
     <View>
       <ViewPager
         selectedIndex={chapterIndex}
-        onSelect={async (index) => {
+        onSelect={async index => {
           if (index > chapterIndex) {
             //nextChapter
             currentBar = currentBar + currentBar;
@@ -132,10 +134,10 @@ export default (props: any): React.ReactElement => {
           // let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
           // await TrackPlayer.skip(currentChapterId.toString());
           console.log({currentChapter});
-          let matchingChapter = props.bookDetail.chapters.find((chapter) => {
-            return chapter.chapterNumber == currentChapter; 
+          let matchingChapter = props.bookDetail.chapters.find(chapter => {
+            return chapter.chapterNumber == currentChapter;
           });
-          console.log({matchingChapter})
+          console.log({matchingChapter});
           setBookCurrentChapter({currentChapter: matchingChapter});
         }}>
         {bookDetail.chapters.map(chapter => {
