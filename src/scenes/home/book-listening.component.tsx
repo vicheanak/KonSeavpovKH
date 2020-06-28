@@ -7,21 +7,17 @@ import { ImageOverlay } from '../../components/image-overlay.component';
 import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
-import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon, ArrowDownwardOutline} from '../../assets/icons';
+import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon, ArrowDownwardOutline, AssetTextIcon} from '../../assets/icons';
 import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
 import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
+import {AppRoute} from '../../navigation/app-routes';
 
 export type BookListeningRouteParams = {
     todo: Todo;
 }  
 
 export const BookListeningScreen = (props: any): LayoutElement => {
-
-  const { book } = props.route.params;
-  console.log('Book Listening Route Params', props.route.params);
-  const insets: EdgeInsets = useSafeArea();
-
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
@@ -30,16 +26,8 @@ export const BookListeningScreen = (props: any): LayoutElement => {
     props.setBookmarkBookDetail(bookmarked);
   };
 
-  const renderBookmarkAction = (): React.ReactElement => (
-    <TopNavigationAction
-      // icon={props.bookmarkedBookDetail.bookmarked ? BookmarkIcon : BookmarkOutlineIcon}
-      icon={BookmarkIcon}
-      onPress={onBookmarkActionPress}
-    />
-  );
-
   const onGoBack = (): void => {
-    props.route.params.onGoBack();
+    // props.route.params.onGoBack();
     props.navigation && props.navigation.goBack();
   };
 
@@ -51,11 +39,24 @@ export const BookListeningScreen = (props: any): LayoutElement => {
     />
   );
 
+  const onBookReading = (): void => {
+    props.navigation.navigate(AppRoute.BOOK_READING);
+  }
+
+  const renderBookReading = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={
+        AssetTextIcon
+      }
+      onPress={onBookReading}
+    />
+  );
+
   return (
     <React.Fragment>
       <TopNavigation
           leftControl={renderBackAction()}
-          rightControls={[renderBookmarkAction()]}
+          rightControls={[renderBookReading()]}
         />
          <ContentView {...props}/>
     </React.Fragment>

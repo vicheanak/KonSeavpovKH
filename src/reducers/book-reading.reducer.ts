@@ -9,7 +9,7 @@ import {
  } from '../redux/constants'
 
 const initialState = {
-    currentChapter: 1,
+    currentChapter: {},
     totalChapters: 1,
     textSize: 15,
     textSizeVisibility: false,

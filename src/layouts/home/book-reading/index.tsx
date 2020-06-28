@@ -25,6 +25,7 @@ import {
 import {Product, ProductOption} from './extra/data';
 import {ProgressBar} from '../../../components/progress-bar.component';
 import {SelectableText} from '@astrocoders/react-native-selectable-text';
+import TrackPlayer from 'react-native-track-player';
 
 const product: Product = Product.centralParkApartment();
 
@@ -44,9 +45,13 @@ const ListIcon = (style): IconElement => (
   <Icon {...style} name="list-outline" />
 );
 
-
 export default (props: any): React.ReactElement => {
-  const {setBookCurrentChapter, bookDetail, hideTextSizeCard, bookReading} = props;
+  const {
+    setBookCurrentChapter,
+    bookDetail,
+    hideTextSizeCard,
+    bookReading,
+  } = props;
   const styles = useStyleSheet(themedStyles);
 
   console.log('PROPS book-reading ==> ', bookReading);
@@ -97,18 +102,20 @@ export default (props: any): React.ReactElement => {
   );
 
   const totalChapterBars = (bookDetail.chapters.length * 100) / 100;
+  console.log('bookDetail currentChapter ==>', props);
   let currentBar =
-    (bookDetail.currentChapter.currentChapter * 100) / totalChapterBars;
+    (bookDetail.currentChapter.currentChapter.chapterNumber * 100) / totalChapterBars;
 
-  let currentChapter = bookDetail.currentChapter.currentChapter;
+  let currentChapter = bookDetail.currentChapter.currentChapter.chapterNumber;
   let chapterIndex = currentChapter - 1;
+  console.log({chapterIndex});
   const [selectedIndex, setSelectedIndex] = React.useState(chapterIndex);
 
   return (
     <View>
       <ViewPager
         selectedIndex={chapterIndex}
-        onSelect={index => {
+        onSelect={async (index) => {
           if (index > chapterIndex) {
             //nextChapter
             currentBar = currentBar + currentBar;
@@ -120,56 +127,62 @@ export default (props: any): React.ReactElement => {
             currentChapter--;
           }
           hideTextSizeCard();
-          setBookCurrentChapter({currentChapter: currentChapter});
-        }}>
-          {bookDetail.chapters.map((chapter) => {
-            return (
-        <ScrollView key={chapter.id} style={styles.container}>
-          <View style={styles.headerContainer}>
-            <Text style={styles.title} category="h4">
-              {chapter.title}
-            </Text>
-            <Text style={styles.authorLabel} category="s2">
-              {bookDetail.book.authorname}
-            </Text>
-          </View>
 
-          <View style={styles.description}>
-            <SelectableText
-              selectable={true}
-              menuItems={['Highlight', 'Copy', 'Share']}
-              onSelection={({
-                eventType,
-                content,
-                selectionStart,
-                selectionEnd,
-              }) => {
-                if (eventType == 'Highlight') {
-                  console.log('highlight', content);
-                }
-                if (eventType == 'Copy') {
-                  console.log('copy', content);
-                }
-                if (eventType == 'Share') {
-                  console.log('share', content);
-                }
-                console.log({
-                  eventType,
-                  content,
-                  selectionStart,
-                  selectionEnd,
-                });
-              }}
-              style={[
-                styles.descriptionText,
-                {fontSize: props.textSize},
-              ]}
-              value={chapter.content}
-            />
-          </View>
-        </ScrollView> 
-            );
-          })}
+          console.log('Props');
+          // let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
+          // await TrackPlayer.skip(currentChapterId.toString());
+          console.log({currentChapter});
+          let matchingChapter = props.bookDetail.chapters.find((chapter) => {
+            return chapter.chapterNumber == currentChapter; 
+          });
+          console.log({matchingChapter})
+          setBookCurrentChapter({currentChapter: matchingChapter});
+        }}>
+        {bookDetail.chapters.map(chapter => {
+          return (
+            <ScrollView key={chapter.id} style={styles.container}>
+              <View style={styles.headerContainer}>
+                <Text style={styles.title} category="h4">
+                  {chapter.title}
+                </Text>
+                <Text style={styles.authorLabel} category="s2">
+                  {bookDetail.book.authorname}
+                </Text>
+              </View>
+
+              <View style={styles.description}>
+                <SelectableText
+                  selectable={true}
+                  menuItems={['Highlight', 'Copy', 'Share']}
+                  onSelection={({
+                    eventType,
+                    content,
+                    selectionStart,
+                    selectionEnd,
+                  }) => {
+                    if (eventType == 'Highlight') {
+                      console.log('highlight', content);
+                    }
+                    if (eventType == 'Copy') {
+                      console.log('copy', content);
+                    }
+                    if (eventType == 'Share') {
+                      console.log('share', content);
+                    }
+                    console.log({
+                      eventType,
+                      content,
+                      selectionStart,
+                      selectionEnd,
+                    });
+                  }}
+                  style={[styles.descriptionText, {fontSize: props.textSize}]}
+                  value={chapter.content}
+                />
+              </View>
+            </ScrollView>
+          );
+        })}
       </ViewPager>
       <ProgressBar
         style={styles.itemProgressBar}

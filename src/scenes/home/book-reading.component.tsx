@@ -27,8 +27,6 @@ export type BookReadingRouteParams = {
 
 export const BookReadingScreen = (props: any): LayoutElement => {
 
-  const { todo } = props.route.params;
-  const { book } = props.route.params;
   const insets: EdgeInsets = useSafeArea();
 
 
@@ -67,7 +65,7 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   }
 
   const onListeningActionPress = (): void => {
-    // props.navigation.navigate(AppRoute.LISTENING);
+    props.navigation.navigate(AppRoute.BOOK_LISTENING);
   }
 
   const renderChapterListAction = (): React.ReactElement => (

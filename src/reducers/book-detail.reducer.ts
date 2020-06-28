@@ -6,7 +6,9 @@ const initialState = {
 	chapters: [],
 	isFetchingChapters: true,
 	error: false,
-	currentChapter: 1
+	currentChapter: {
+        chapterNumber: 1
+    }
 };
 
 export const bookDetail = (state = initialState, action) => {

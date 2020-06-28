@@ -66,8 +66,14 @@ const BookDetailLayout = (props: any): React.ReactElement => {
   const {book} = props.route.params;
 
   const onReadingButtonPress = (): void => {
-    props.setBookCurrentChapter({currentChapter: 1});
-    props.navigation.navigate(AppRoute.BOOK_READING, {book});
+
+    let matchingChapter = props.bookDetail.chapters.find((chapter) => {
+      return chapter.chapterNumber == 1; 
+    });
+    console.log('----------------------');
+    console.log({matchingChapter});
+    props.setBookCurrentChapter({currentChapter: matchingChapter});
+    props.navigation.navigate(AppRoute.BOOK_READING);
   };
 
   const [title, setTitle] = React.useState<string>('');

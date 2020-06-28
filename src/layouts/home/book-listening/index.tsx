@@ -113,6 +113,12 @@ export default (props: any): React.ReactElement => {
       let foundTrack = props.bookDetail.chapters.find((matching) => {
         return matching.id == currentTrack;
       });
+      let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
+      console.log({currentChapterId, currentTrack});
+      // if (currentChapterId != currentTrack){
+      //   console.log('===> TrackPlayer.skip(currentChapterId)');
+      //   await TrackPlayer.skip(currentChapterId.toString());
+      // }
       if (!foundTrack){
         setup();
         togglePlayback();
@@ -142,10 +148,13 @@ export default (props: any): React.ReactElement => {
 
   async function togglePlayback() {
     const currentTrack = await TrackPlayer.getCurrentTrack();
+    // console.log('CURRENT_TRACK');
+    // console.log({currentTrack});
     if (currentTrack == null) {
       await TrackPlayer.reset();
       const playlistData = Playlist.getPlaylist(props.bookDetail);
       await TrackPlayer.add(playlistData);
+      // TrackPlayer.skip();
       TrackPlayer.play().then(() => {
         console.log('Toggle Playback Promise ==> ');
       }).catch(() => {
