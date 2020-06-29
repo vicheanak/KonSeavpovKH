@@ -147,11 +147,14 @@ export default (props: any): React.ReactElement => {
       let foundTrack = props.bookDetail.chapters.find(matching => {
         return matching.id == currentTrack;
       });
+      let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
       if (!foundTrack) {
         setup();
         togglePlayback();
-      } else {
-        let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
+        setTimeout(async () => {
+          await TrackPlayer.skip(currentChapterId.toString());
+        }, 100);
+      }else{
         if (currentChapterId != currentTrack) {
           await TrackPlayer.skip(currentChapterId.toString());
         }

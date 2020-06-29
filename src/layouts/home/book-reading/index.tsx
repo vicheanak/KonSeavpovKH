@@ -54,7 +54,6 @@ export default (props: any): React.ReactElement => {
   } = props;
   const styles = useStyleSheet(themedStyles);
 
-  console.log('PROPS book-reading ==> ', bookReading);
 
   const onBookButtonPress = (): void => {};
 
@@ -102,15 +101,12 @@ export default (props: any): React.ReactElement => {
   );
 
   const totalChapterBars = (bookDetail.chapters.length * 100) / 100;
-  console.log('bookDetail currentChapter ==>', props);
   let currentBar =
     (bookDetail.currentChapter.currentChapter.chapterNumber * 100) /
     totalChapterBars;
-  console.log(bookDetail.currentChapter.currentChapter.chapterNumber);
 
   let currentChapter = bookDetail.currentChapter.currentChapter.chapterNumber;
   let chapterIndex = currentChapter - 1;
-  console.log({chapterIndex});
   const [selectedIndex, setSelectedIndex] = React.useState(chapterIndex);
 
   return (
@@ -130,15 +126,14 @@ export default (props: any): React.ReactElement => {
           }
           hideTextSizeCard();
 
-          console.log('Props');
-          // let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
-          // await TrackPlayer.skip(currentChapterId.toString());
-          console.log({currentChapter});
           let matchingChapter = props.bookDetail.chapters.find(chapter => {
             return chapter.chapterNumber == currentChapter;
           });
-          console.log({matchingChapter});
           setBookCurrentChapter({currentChapter: matchingChapter});
+          const currentTrack = await TrackPlayer.getCurrentTrack();
+          if (currentTrack){
+            await TrackPlayer.skip(matchingChapter.id.toString());
+          }
         }}>
         {bookDetail.chapters.map(chapter => {
           return (
