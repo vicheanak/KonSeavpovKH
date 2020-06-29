@@ -33,7 +33,8 @@ import {
   getBooksData,
   fetchBooksData,
   updateBookmarkBookDetail,
-  updateBookDetail
+  updateBookDetail,
+  fetchBooksChapters
 } from '../../redux/actions';
 import { SOURCE } from '../../app/app-environment';
 
@@ -50,7 +51,7 @@ const BookScreen = (props: any): ListElement => {
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {setBookDetail, books, fetchBooks, ...listProps} = props;
+  const {fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
@@ -63,7 +64,9 @@ const BookScreen = (props: any): ListElement => {
   const navigateBookDetail = (bookIndex: number): void => {
     const {[bookIndex]: book} = books;
     setBookDetail(book);
-    props.navigation.navigate(AppRoute.BOOK_DETAIL, {book});
+    fetchChapters(book.id);
+    // setBookCurrentChapter({currentChapter: props.bookDetail.chapters[0]});
+    props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
   const renderItemHeader = ({
@@ -234,7 +237,9 @@ const mapDispatchToProps = dispatch => {
     updateLanguage: lang => dispatch(updateLanguage(lang)),
     fetchPeople: () => dispatch(fetchData()),
     fetchBooks: () => dispatch(fetchBooksData()),
-    setBookDetail: (book) => dispatch(updateBookDetail(book))
+    setBookDetail: (book) => dispatch(updateBookDetail(book)),
+    fetchChapters: bookId => 
+      dispatch(fetchBooksChapters(bookId))
   };
 };
 

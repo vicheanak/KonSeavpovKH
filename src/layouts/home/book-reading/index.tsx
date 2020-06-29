@@ -104,7 +104,6 @@ export default (props: any): React.ReactElement => {
   let currentBar =
     (bookDetail.currentChapter.currentChapter.chapterNumber * 100) /
     totalChapterBars;
-
   let currentChapter = bookDetail.currentChapter.currentChapter.chapterNumber;
   let chapterIndex = currentChapter - 1;
   const [selectedIndex, setSelectedIndex] = React.useState(chapterIndex);

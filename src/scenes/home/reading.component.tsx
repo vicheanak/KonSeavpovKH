@@ -66,8 +66,7 @@ const ReadingScreen = (props: any): ListElement => {
   };
 
   const navigateBookDetail = (todoIndex: number): void => {
-    const { [todoIndex]: todo } = todos;
-    props.navigation.navigate(AppRoute.BOOK_DETAIL, { todo });
+    props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
   const renderReading = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -29,6 +29,7 @@ import {CloseIcon} from './../../../assets/icons';
 import {SOURCE} from '../../../app/app-environment';
 import {connect} from 'react-redux';
 import { updateBookCurrentChapter } from './../../../redux/actions';
+import { Playlist } from './extra/Playlist';
 
 const product: Product = Product.centralParkApartment();
 
@@ -60,16 +61,39 @@ const SkipForwardIcon = (style): IconElement => (
   <Icon {...style} name="skip-forward-outline" />
 );
 
-const BookDetailLayout = (props: any): React.ReactElement => {
+export default (props: any): React.ReactElement => {
+// const BookDetailLayout = (props: any): React.ReactElement => {
   // export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
-  const {book} = props.route.params;
+  const {book} = props.bookDetail;
+
+  useEffect(() => {
+    (async () => {
+      const currentTrack = await TrackPlayer.getCurrentTrack();
+      let foundTrack = props.bookDetail.chapters.find(matching => {
+        return matching.id == currentTrack;
+      });
+
+      if (!foundTrack) {
+        await TrackPlayer.reset();
+        const playlistData = Playlist.getPlaylist(props.bookDetail);
+        await TrackPlayer.add(playlistData);
+      }
+      else{
+        //Slightly wrongkkkkk
+        let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
+        if (currentChapterId != currentTrack) {
+          await TrackPlayer.stop();
+        }
+      }
+    })();
+  }, []);
 
   const onReadingButtonPress = (): void => {
     let matchingChapter = props.bookDetail.chapters.find((chapter) => {
       return chapter.chapterNumber == 1; 
     });
-    props.setBookCurrentChapter({currentChapter: matchingChapter});
+    // props.setBookCurrentChapter({currentChapter: matchingChapter});
     props.navigation.navigate(AppRoute.BOOK_READING);
   };
 
@@ -81,28 +105,26 @@ const BookDetailLayout = (props: any): React.ReactElement => {
   );
 
   const onGoBackListener = async () => {
-    console.log('Back to Book Detail Screen');
     const listeningState = await TrackPlayer.getState();
     const currentTrack = await TrackPlayer.getCurrentTrack();
-    console.log({listeningState});
     const track = await TrackPlayer.getTrack(currentTrack);
     const {title, artist, artwork} = track || {};
     setTitle(title);
     setArtist(artist);
     setArtwork(artwork);
     setToolbarVisibility(true);
-    console.log({title, artist, artwork});
   };
 
   const onListeningButtonPress = (): void => {
     let matchingChapter = props.bookDetail.chapters.find((chapter) => {
       return chapter.chapterNumber == 1; 
     });
-    props.setBookCurrentChapter({currentChapter: matchingChapter});
-    props.navigation.navigate(AppRoute.BOOK_LISTENING, {
-      book,
-      onGoBack: () => onGoBackListener(),
-    });
+    // props.setBookCurrentChapter({currentChapter: matchingChapter});
+    props.navigation.navigate(AppRoute.BOOK_LISTENING);
+    // props.navigation.navigate(AppRoute.BOOK_LISTENING, {
+    //   book,
+    //   onGoBack: () => onGoBackListener(),
+    // });
   };
 
   const renderOptionItemIcon = (
@@ -181,7 +203,6 @@ const BookDetailLayout = (props: any): React.ReactElement => {
   );
 
   const onTogglePlayback = async () => {
-    console.log({playbackState});
     if (playbackState === TrackPlayer.STATE_PAUSED) {
       setPlayPauseIcon('pause');
       await TrackPlayer.play();
@@ -189,7 +210,6 @@ const BookDetailLayout = (props: any): React.ReactElement => {
       setPlayPauseIcon('play');
       await TrackPlayer.pause();
     }
-    console.log({playPauseIcon});
   };
 
   let imageUrl = SOURCE + book.imageUrl;
@@ -434,20 +454,3 @@ const themedStyles = StyleService.create({
     marginHorizontal: 8,
   },
 });
-
-const mapStateToProps = state => {
-  return {
-    intlData: state.intlData,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(BookDetailLayout);

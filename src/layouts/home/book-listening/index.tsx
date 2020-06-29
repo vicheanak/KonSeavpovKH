@@ -32,10 +32,7 @@ import {ProfileAvatar} from './extra/profile-avatar.component';
 import {ProfileSetting} from './extra/profile-setting.component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Slider from '@react-native-community/slider';
-import TrackPlayer, {
-  usePlaybackState,
-  getState,
-} from 'react-native-track-player';
+import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
 
 import Player from './extra/Player';
 // import playlistData from "./extra/playlist.json";
@@ -151,9 +148,7 @@ export default (props: any): React.ReactElement => {
       if (!foundTrack) {
         setup();
         togglePlayback();
-        setTimeout(async () => {
-          await TrackPlayer.skip(currentChapterId.toString());
-        }, 100);
+        await TrackPlayer.skip(currentChapterId.toString());
       }else{
         if (currentChapterId != currentTrack) {
           await TrackPlayer.skip(currentChapterId.toString());
@@ -182,21 +177,13 @@ export default (props: any): React.ReactElement => {
     });
   }
 
-  async function togglePlayback() {
+  const togglePlayback = async () => {
     const currentTrack = await TrackPlayer.getCurrentTrack();
     if (currentTrack == null) {
       await TrackPlayer.reset();
       const playlistData = Playlist.getPlaylist(props.bookDetail);
       await TrackPlayer.add(playlistData);
-      // TrackPlayer.skip();
-      TrackPlayer.play()
-        .then(() => {
-          console.log('Toggle Playback Promise ==> ');
-        })
-        .catch(() => {
-          console.log('Toggle Playback Error ==>');
-        });
-      // await TrackPlayer.play();
+      await TrackPlayer.play();
     } else {
       if (playbackState === TrackPlayer.STATE_PAUSED) {
         await TrackPlayer.play();

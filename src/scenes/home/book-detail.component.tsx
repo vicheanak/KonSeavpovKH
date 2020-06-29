@@ -29,23 +29,24 @@ import {
   fetchBooksChapters
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
-import BookDetailLayout from '../../layouts/home/book-detail';
+import ContentView from '../../layouts/home/book-detail';
 
 export type BookChapterRouteParams = {
   book: any;
 };
 
 export const BookDetailScreen = (props: any): LayoutElement => {
-  const {book} = props.route.params;
+  // const {book} = props.route.params;
   const insets: EdgeInsets = useSafeArea();
 
   const [bookId, setBookId] = useState(0);
 
-  const {setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
+  const {bookDetail, setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
+  const book = bookDetail.book;
 
   useEffect(() => {
-    fetchChapters(book.id);
-    setBookCurrentChapter({currentChapter: 1});
+    // fetchChapters(book.id);
+    setBookCurrentChapter({currentChapter: props.bookDetail.chapters[0]});
     setBookTextSizeVisibility({textSizeVisibility: false});
   }, [bookId]);
 
@@ -82,7 +83,7 @@ export const BookDetailScreen = (props: any): LayoutElement => {
         leftControl={renderBackAction()}
         rightControls={[renderBookmarkAction()]}
       />
-      <BookDetailLayout {...props} />
+      <ContentView {...props}/>
     </React.Fragment>
   );
 };
@@ -116,6 +117,7 @@ const mapStateToProps = state => {
     bookDetail: state.bookDetail,
     currentChapter: state.currentChapter,
     totalChapters: state.totalChapters,
+    intlData: state.intlData,
   };
 };
 

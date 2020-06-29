@@ -72,8 +72,7 @@ const SavedScreen = (props: any): SafeAreaLayoutElement => {
   };
 
   const navigateBookDetail = (todoIndex: number): void => {
-    const { [todoIndex]: todo } = todos;
-    props.navigation.navigate(AppRoute.BOOK_DETAIL, { todo });
+    props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
   const renderSaved = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => (

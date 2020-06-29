@@ -81,9 +81,8 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
   const navigateBookChapter = (chapterIndex: number): void => {
     const { [chapterIndex]: chapter } = bookDetail.chapters;
     console.log({chapter});
-    setBookCurrentChapter({currentChapter: chapter.chapterNumber});
-    props.navigation.navigate(AppRoute.BOOK_READING, bookDetail.book);
-    // props.navigation.navigate(AppRoute.BOOK_DETAIL, { todo });
+    setBookCurrentChapter({currentChapter: chapter});
+    props.navigation.navigate(AppRoute.BOOK_READING);
   };
 
   const renderChapters = ({ item }: ListRenderItemInfo<any>): ListItemElement => (

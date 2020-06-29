@@ -155,7 +155,6 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   };
 
   const sliderOneValuesChangeFinish = (value) => {
-    console.log('textSize', value[0]);
     props.setBookTextSize(value[0]);
 
     setSliderOneChanging(false);
@@ -253,8 +252,6 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
-  console.log('book-reading.component.tsx ==>');
-  console.log({state});
   return {
     bookDetail: state.bookDetail,
     textSize: state.bookReading.textSize,
