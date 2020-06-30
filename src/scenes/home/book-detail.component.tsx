@@ -30,6 +30,7 @@ import {
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
+import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
 
 export type BookChapterRouteParams = {
   book: any;
@@ -44,10 +45,33 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   const {bookDetail, setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
   const book = bookDetail.book;
 
+  const playbackState = usePlaybackState();
+
   useEffect(() => {
-    // fetchChapters(book.id);
-    setBookCurrentChapter({currentChapter: props.bookDetail.chapters[0]});
-    setBookTextSizeVisibility({textSizeVisibility: false});
+    (async () => {
+      // Check chapter exists in Playlist, if Exist in Playlist Do Nothing
+      // If not in Playlist, Set to the first Chapter of the new book
+      // const currentTrack = await TrackPlayer.getCurrentTrack();
+      // let foundTrack = book.chapters.find(matching => {
+      //   return matching.id == currentTrack;
+      // });
+
+      // if (!foundTrack) {
+      //   await TrackPlayer.reset();
+      //   const playlistData = Playlist.getPlaylist(book);
+      //   await TrackPlayer.add(playlistData);
+      // }
+      // else{
+      //   let currentChapterId = book.currentChapter.currentChapter.id.toString();
+      //   console.log({currentChapterId, currentTrack});
+      //   if (currentChapterId != currentTrack) {
+      //     await TrackPlayer.stop();
+      //   }
+      // }
+      // setBookCurrentChapter({currentChapter: props.bookDetail.book.chapters[0]});
+      console.log('#### Book Detail Component ####');
+      console.log({props});
+    })();
   }, [bookId]);
 
 
@@ -113,22 +137,19 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log('<===## Book Detail component state ##==>');
+  console.log({state});
   return {
     bookDetail: state.bookDetail,
-    currentChapter: state.currentChapter,
-    totalChapters: state.totalChapters,
+    bookChapter: state.bookChapter,
     intlData: state.intlData,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setBookmarkBookDetail: bookmarked =>
-      dispatch(updateBookmarkBookDetail(bookmarked)),
     setBookCurrentChapter: currentChapter =>
       dispatch(updateBookCurrentChapter(currentChapter)),
-    setBookTotalChapters: totalChapters =>
-      dispatch(updateBookTotalChapters(totalChapters)),
     setBookTextSizeVisibility: textSizeVisibility =>
       dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
     fetchChapters: bookId => 

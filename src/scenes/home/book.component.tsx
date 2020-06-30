@@ -34,7 +34,8 @@ import {
   fetchBooksData,
   updateBookmarkBookDetail,
   updateBookDetail,
-  fetchBooksChapters
+  fetchBooksChapters,
+  updateBookCurrentChapter
 } from '../../redux/actions';
 import { SOURCE } from '../../app/app-environment';
 
@@ -51,21 +52,30 @@ const BookScreen = (props: any): ListElement => {
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
+  const {setBookCurrentChapter, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     // props.fetchPeople();
     // props.fetchBooks();
-    fetchBooks();
+    (async () => {
+      fetchBooks();
+      console.log('Book Detail Component -====>');
+      console.log({props});
+    })();
   }, [bookId]);
 
   const navigateBookDetail = (bookIndex: number): void => {
     const {[bookIndex]: book} = books;
     setBookDetail(book);
     fetchChapters(book.id);
-    // setBookCurrentChapter({currentChapter: props.bookDetail.chapters[0]});
+    console.log('Props 2');
+    console.log({props});
+    console.log('book.chapters[0]', book.chapters);
+    setBookCurrentChapter({currentChapter: book.chapters[0]});
+    console.log('Props 3');
+    console.log({props});
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
@@ -226,9 +236,12 @@ const themedStyles = StyleService.create({
 });
 
 const mapStateToProps = state => {
+  console.log('State 1');
+  console.log({state});
   return {
     intlData: state.intlData,
     books: state.books.data,
+    bookChapter: state.bookChapter
   };
 };
 
@@ -239,7 +252,9 @@ const mapDispatchToProps = dispatch => {
     fetchBooks: () => dispatch(fetchBooksData()),
     setBookDetail: (book) => dispatch(updateBookDetail(book)),
     fetchChapters: bookId => 
-      dispatch(fetchBooksChapters(bookId))
+      dispatch(fetchBooksChapters(bookId)),
+    setBookCurrentChapter: currentChapter =>
+      dispatch(updateBookCurrentChapter(currentChapter)),
   };
 };
 

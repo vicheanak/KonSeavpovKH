@@ -101,6 +101,7 @@ export default (props: any): React.ReactElement => {
   );
 
   const totalChapterBars = (bookDetail.chapters.length * 100) / 100;
+  console.log({bookDetail});
   let currentBar =
     (bookDetail.currentChapter.currentChapter.chapterNumber * 100) /
     totalChapterBars;

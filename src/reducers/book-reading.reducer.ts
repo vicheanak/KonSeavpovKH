@@ -21,7 +21,6 @@ const initialState = {
 
 export const bookReading = (state = initialState, action) => {
     if (action === undefined) return state;
-    console.log('book-reading.reducer.ts ==> ', action.textSize);
     switch (action.type) {
         case UPDATE_BOOK_TOTOAL_CHAPTERS:
             return {

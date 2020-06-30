@@ -64,6 +64,12 @@ export function getBooksDataSuccess(data) {
   }
 }
 
+export const getBookChaptersData = () => {
+  return {
+    type: FETCHING_BOOK_CHAPTERS
+  }
+}
+
 export function getBookChaptersSuccess(data) {
   return {
     type: FETCHING_BOOK_CHAPTERS_SUCCESS,
@@ -161,7 +167,7 @@ export function fetchBooksData() {
 
 export function fetchBooksChapters(bookId) {
   return (dispatch) => {
-    dispatch(postUser());
+    dispatch(getBookChaptersData());
     getBookChapters(bookId)
       .then((data) => {
         dispatch(getBookChaptersSuccess(data))
@@ -219,6 +225,7 @@ export const updateBookmarkBookDetail = (bookmarked) => {
 }
 
 export const updateBookCurrentChapter = (currentChapter) => {
+  console.log('ACTIONS ==> ', currentChapter);
   return (dispatch) => {
     dispatch({
       type: UPDATE_BOOK_CURRENT_CHAPTER,

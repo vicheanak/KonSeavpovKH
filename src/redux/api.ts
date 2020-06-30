@@ -18,7 +18,6 @@ export const getPeople = () => {
       // .get(`https://jsonplaceholder.typicode.com/users`)
       .get(`${API_SOURCE}/books`)
       .then(res => {
-        console.log('getPeople API ==> ', res);
         return resolve(res.data);
       }).catch((err) => {
         console.log('ERROR getPeople API ===>', err);
@@ -31,7 +30,6 @@ export const getBooksList = () => {
     axios
       .get(`${API_SOURCE}/books`)
       .then(res => {
-        console.log(res);
         return resolve(res.data);
       });
   })

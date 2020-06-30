@@ -69,23 +69,6 @@ export default (props: any): React.ReactElement => {
 
   useEffect(() => {
     (async () => {
-      const currentTrack = await TrackPlayer.getCurrentTrack();
-      let foundTrack = props.bookDetail.chapters.find(matching => {
-        return matching.id == currentTrack;
-      });
-
-      if (!foundTrack) {
-        await TrackPlayer.reset();
-        const playlistData = Playlist.getPlaylist(props.bookDetail);
-        await TrackPlayer.add(playlistData);
-      }
-      else{
-        //Slightly wrongkkkkk
-        let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
-        if (currentChapterId != currentTrack) {
-          await TrackPlayer.stop();
-        }
-      }
     })();
   }, []);
 
