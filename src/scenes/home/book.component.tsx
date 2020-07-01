@@ -61,8 +61,6 @@ const BookScreen = (props: any): ListElement => {
     // props.fetchBooks();
     (async () => {
       fetchBooks();
-      console.log('Book Detail Component -====>');
-      console.log({props});
     })();
   }, [bookId]);
 
@@ -70,12 +68,7 @@ const BookScreen = (props: any): ListElement => {
     const {[bookIndex]: book} = books;
     setBookDetail(book);
     fetchChapters(book.id);
-    console.log('Props 2');
-    console.log({props});
-    console.log('book.chapters[0]', book.chapters);
     setBookCurrentChapter({currentChapter: book.chapters[0]});
-    console.log('Props 3');
-    console.log({props});
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
@@ -236,8 +229,6 @@ const themedStyles = StyleService.create({
 });
 
 const mapStateToProps = state => {
-  console.log('State 1');
-  console.log({state});
   return {
     intlData: state.intlData,
     books: state.books.data,

@@ -48,6 +48,7 @@ const ListIcon = (style): IconElement => (
 export default (props: any): React.ReactElement => {
   const {
     setBookCurrentChapter,
+    bookChapter,
     bookDetail,
     hideTextSizeCard,
     bookReading,
@@ -100,12 +101,11 @@ export default (props: any): React.ReactElement => {
     </View>
   );
 
-  const totalChapterBars = (bookDetail.chapters.length * 100) / 100;
-  console.log({bookDetail});
+  const totalChapterBars = (bookChapter.chapters.length * 100) / 100;
   let currentBar =
-    (bookDetail.currentChapter.currentChapter.chapterNumber * 100) /
+    (bookChapter.currentChapter.currentChapter.chapterNumber * 100) /
     totalChapterBars;
-  let currentChapter = bookDetail.currentChapter.currentChapter.chapterNumber;
+  let currentChapter = bookChapter.currentChapter.currentChapter.chapterNumber;
   let chapterIndex = currentChapter - 1;
   const [selectedIndex, setSelectedIndex] = React.useState(chapterIndex);
 
@@ -126,7 +126,7 @@ export default (props: any): React.ReactElement => {
           }
           hideTextSizeCard();
 
-          let matchingChapter = props.bookDetail.chapters.find(chapter => {
+          let matchingChapter = bookChapter.chapters.find(chapter => {
             return chapter.chapterNumber == currentChapter;
           });
           setBookCurrentChapter({currentChapter: matchingChapter});
@@ -135,7 +135,7 @@ export default (props: any): React.ReactElement => {
             await TrackPlayer.skip(matchingChapter.id.toString());
           }
         }}>
-        {bookDetail.chapters.map(chapter => {
+        {bookChapter.chapters.map(chapter => {
           return (
             <ScrollView key={chapter.id} style={styles.container}>
               <View style={styles.headerContainer}>

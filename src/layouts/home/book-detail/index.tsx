@@ -73,10 +73,10 @@ export default (props: any): React.ReactElement => {
   }, []);
 
   const onReadingButtonPress = (): void => {
-    let matchingChapter = props.bookDetail.chapters.find((chapter) => {
+    let matchingChapter = props.bookChapter.chapters.find((chapter) => {
       return chapter.chapterNumber == 1; 
     });
-    // props.setBookCurrentChapter({currentChapter: matchingChapter});
+    props.setBookCurrentChapter({currentChapter: matchingChapter});
     props.navigation.navigate(AppRoute.BOOK_READING);
   };
 

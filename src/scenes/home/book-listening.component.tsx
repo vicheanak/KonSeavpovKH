@@ -90,13 +90,12 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => {
-  console.log('book-listening.component.tsx ==> ');
-  console.log({state});
   return {
     bookmarkedBookDetail: state.bookmarkedBookDetail,
     currentChapter: state.currentChapter,
     totalChapters: state.totalChapters,
-    bookDetail: state.bookDetail
+    bookDetail: state.bookDetail,
+    bookChapter: state.bookChapter
   };
 };
 

@@ -256,7 +256,8 @@ const mapStateToProps = state => {
     bookDetail: state.bookDetail,
     textSize: state.bookReading.textSize,
     textSizeVisibility: state.bookReading.textSizeVisibility,
-    bookReading: state.bookReading.data
+    bookReading: state.bookReading.data,
+    bookChapter: state.bookChapter
   };
 };
 

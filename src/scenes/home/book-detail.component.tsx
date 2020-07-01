@@ -69,8 +69,6 @@ export const BookDetailScreen = (props: any): LayoutElement => {
       //   }
       // }
       // setBookCurrentChapter({currentChapter: props.bookDetail.book.chapters[0]});
-      console.log('#### Book Detail Component ####');
-      console.log({props});
     })();
   }, [bookId]);
 
@@ -137,8 +135,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log('<===## Book Detail component state ##==>');
-  console.log({state});
   return {
     bookDetail: state.bookDetail,
     bookChapter: state.bookChapter,
