@@ -3,11 +3,10 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Layout, LayoutElement, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
 import { EdgeInsets, useSafeArea } from 'react-native-safe-area-context';
 import { Toolbar } from '../../components/toolbar.component';
-import { ImageOverlay } from '../../components/image-overlay.component';
 import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
-import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon, ArrowDownwardOutline, AssetTextIcon} from '../../assets/icons';
+import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon, ArrowDownwardOutline, TextIcon, BookIcon} from '../../assets/icons';
 import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters} from '../../redux/actions';
 import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
@@ -46,11 +45,12 @@ export const BookListeningScreen = (props: any): LayoutElement => {
   const renderBookReading = (): React.ReactElement => (
     <TopNavigationAction
       icon={
-        AssetTextIcon
+        TextIcon
       }
       onPress={onBookReading}
     />
   );
+
 
   return (
     <React.Fragment>

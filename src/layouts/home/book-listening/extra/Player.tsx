@@ -75,13 +75,19 @@ const BookmarkIcon = (style): IconElement => (
   <Icon {...style} name='bookmark-outline'/>
 );
 
-const PauseIcon = (style): ImageStyle => (
-  <Icon {...style} pack='app' name='pause'/>
-)
+const PauseIcon = (style): ImageStyle => {
+  const pauseImage = require('../assets/pause.png');
+  return (
+    <Image style={{width: 20, height: 20, marginHorizontal: 10}} source={pauseImage} />
+  )
+}
 
-const PlayIcon = (style): ImageStyle => (
-  <Icon {...style} pack='app' name='play'/>
-);
+const PlayIcon = (style): ImageStyle => {
+  const playImage = require('../assets/play.png');
+  return (
+    <Image style={{width: 20, height: 20, marginHorizontal: 10}} source={playImage} />
+  )
+};
 
 const SkipForwardIcon = (style): IconElement => (
   <Icon {...style} name='skip-forward-outline'/>
@@ -149,7 +155,6 @@ export default function Player(props) {
   const skipNext15 = async () => {
     const progress = await TrackPlayer.getPosition();
     const newProgress = Math.floor(progress) + 15;
-    console.log('skipNext15', newProgress);
     // await TrackPlayer.play();
     await TrackPlayer.seekTo(12);
     await TrackPlayer.play();
@@ -171,24 +176,12 @@ export default function Player(props) {
           icon={SkipBackIcon}
           onPress={onPrevious}
         />
-        {/* <Button
-          style={styles.mediaButtonSmall}
-          status='basic'
-          icon={ArrowLeftIcon}
-          onPress={onSkipBack15}
-        /> */}
         <Button
           style={styles.mediaButtonLarge}
           status='basic'
           icon={playPauseButton}
           onPress={onTogglePlayback}
         />
-        {/* <Button
-          style={styles.mediaButtonSmall}
-          status='basic'
-          icon={ArrowRightIcon}
-          onPress={skipNext15}
-        /> */}
         <Button
           style={styles.mediaButtonSmall}
           status='basic'

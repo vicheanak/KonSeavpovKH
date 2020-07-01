@@ -456,3 +456,7 @@ export const LibrarySaveIcon = (style): IconElement => (
 export const ListeningIcon = (style): IconElement => (
   <Icon {...style} name='volume-up-outline'/>
 );
+
+export const TextIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='text-outline'/>
+);

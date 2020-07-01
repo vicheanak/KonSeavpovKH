@@ -41,31 +41,13 @@ const ListeningIcon = (style): IconElement => (
   <Icon {...style} name="volume-up-outline" />
 );
 
-const PauseIcon = (style): ImageStyle => (
-  <Icon {...style} pack="app" name="pause" />
-);
-
-const PlayIcon = (style): ImageStyle => (
-  <Icon {...style} pack="app" name="play" />
-);
-
-const ClockIcon = (style): IconElement => (
-  <Icon {...style} name="clock-outline" />
-);
-
-const ListIcon = (style): IconElement => (
-  <Icon {...style} name="list-outline" />
-);
-
-const SkipForwardIcon = (style): IconElement => (
-  <Icon {...style} name="skip-forward-outline" />
-);
 
 export default (props: any): React.ReactElement => {
 // const BookDetailLayout = (props: any): React.ReactElement => {
   // export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const {book} = props.bookDetail;
+  const {bookChapter} = props;
 
   useEffect(() => {
     (async () => {
@@ -73,7 +55,7 @@ export default (props: any): React.ReactElement => {
   }, []);
 
   const onReadingButtonPress = (): void => {
-    let matchingChapter = props.bookChapter.chapters.find((chapter) => {
+    let matchingChapter = bookChapter.chapters.find((chapter) => {
       return chapter.chapterNumber == 1; 
     });
     props.setBookCurrentChapter({currentChapter: matchingChapter});
@@ -99,10 +81,6 @@ export default (props: any): React.ReactElement => {
   };
 
   const onListeningButtonPress = (): void => {
-    let matchingChapter = props.bookDetail.chapters.find((chapter) => {
-      return chapter.chapterNumber == 1; 
-    });
-    // props.setBookCurrentChapter({currentChapter: matchingChapter});
     props.navigation.navigate(AppRoute.BOOK_LISTENING);
     // props.navigation.navigate(AppRoute.BOOK_LISTENING, {
     //   book,

@@ -40,50 +40,12 @@ import {Playlist} from './extra/Playlist';
 
 const localTrack = require('./extra/pure.m4a');
 
-// import Player from "../components/Player";
-// import playlistData from "../data/playlist.json";
-// import localTrack from "../resources/pure.m4a";
-// import { getCurrentTrack } from './../../../../index.d';
-import {bookDetail} from './../../../reducers/book-detail.reducer';
-
 const AnimatedView = Animated.createAnimatedComponent(View);
 
 const width = 50;
 const pointerWidth = width * 0.47;
 
 const product: Product = Product.centralParkApartment();
-
-const BookmarkIcon = (style): IconElement => (
-  <Icon {...style} name="bookmark-outline" />
-);
-
-const PauseIcon = (style): IconElement => (
-  <Icon {...style} name="code-outline" />
-);
-
-const PlayIcon = (style): IconElement => (
-  <Icon {...style} name="arrow-right-outline" />
-);
-
-const SkipForwardIcon = (style): IconElement => (
-  <Icon {...style} name="skip-forward-outline" />
-);
-
-const SkipBackIcon = (style): IconElement => (
-  <Icon {...style} name="skip-back-outline" />
-);
-
-const ListIcon = (style): IconElement => (
-  <Icon {...style} name="list-outline" />
-);
-
-const ArrowLeftIcon = (style): IconElement => (
-  <Icon {...style} name="arrowhead-left-outline" />
-);
-
-const ArrowRightIcon = (style): IconElement => (
-  <Icon {...style} name="arrowhead-right-outline" />
-);
 
 export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
@@ -92,6 +54,8 @@ export default (props: any): React.ReactElement => {
     props.navigation.state.params.onGoBackListening();
     props.navigation && props.navigation.goBack();
   };
+
+  const {bookChapter, bookDetail} = props;
 
   const sliderOneValuesChangeStart = () => {};
 
@@ -103,7 +67,7 @@ export default (props: any): React.ReactElement => {
 
   const matchNewTrackToChapter = async () => {
       let newTrack = await TrackPlayer.getCurrentTrack();
-      let matchingChapter = props.bookDetail.chapters.find(chapter => {
+      let matchingChapter = bookChapter.chapters.find(chapter => {
         return chapter.id == newTrack;
       });
       props.setBookCurrentChapter({currentChapter: matchingChapter});
@@ -141,10 +105,10 @@ export default (props: any): React.ReactElement => {
   useEffect(() => {
     (async function f() {
       const currentTrack = await TrackPlayer.getCurrentTrack();
-      let foundTrack = props.bookDetail.chapters.find(matching => {
+      let foundTrack = bookChapter.chapters.find(matching => {
         return matching.id == currentTrack;
       });
-      let currentChapterId = props.bookDetail.currentChapter.currentChapter.id.toString();
+      let currentChapterId = bookChapter.currentChapter.currentChapter.id.toString();
       if (!foundTrack) {
         setup();
         togglePlayback();
@@ -181,7 +145,7 @@ export default (props: any): React.ReactElement => {
     const currentTrack = await TrackPlayer.getCurrentTrack();
     if (currentTrack == null) {
       await TrackPlayer.reset();
-      const playlistData = Playlist.getPlaylist(props.bookDetail);
+      const playlistData = Playlist.getPlaylist(bookChapter);
       await TrackPlayer.add(playlistData);
       await TrackPlayer.play();
     } else {

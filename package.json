@@ -25,6 +25,7 @@
     "@ui-kitten/eva-icons": "^4.4.1",
     "axios": "^0.19.2",
     "formik": "^2.1.4",
+    "jshint": "^2.11.1",
     "react": "16.9.0",
     "react-native": "^0.61.5",
     "react-native-gesture-handler": "^1.6.0",
