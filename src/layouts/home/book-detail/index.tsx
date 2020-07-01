@@ -29,7 +29,6 @@ import {CloseIcon} from './../../../assets/icons';
 import {SOURCE} from '../../../app/app-environment';
 import {connect} from 'react-redux';
 import { updateBookCurrentChapter } from './../../../redux/actions';
-import { Playlist } from './extra/Playlist';
 
 const product: Product = Product.centralParkApartment();
 

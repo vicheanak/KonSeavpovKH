@@ -31,6 +31,7 @@ import {
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
 import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
+import { Playlist } from './../../services/Playlist';
 
 export type BookChapterRouteParams = {
   book: any;
@@ -51,29 +52,51 @@ export const BookDetailScreen = (props: any): LayoutElement => {
     (async () => {
       // Check chapter exists in Playlist, if Exist in Playlist Do Nothing
       // If not in Playlist, Set to the first Chapter of the new book
-      // const currentTrack = await TrackPlayer.getCurrentTrack();
-      // let foundTrack = book.chapters.find(matching => {
-      //   return matching.id == currentTrack;
-      // });
-
-      // if (!foundTrack) {
-      //   await TrackPlayer.reset();
-      //   const playlistData = Playlist.getPlaylist(book);
-      //   await TrackPlayer.add(playlistData);
-      // }
-      // else{
-      //   let currentChapterId = book.currentChapter.currentChapter.id.toString();
-      //   console.log({currentChapterId, currentTrack});
-      //   if (currentChapterId != currentTrack) {
-      //     await TrackPlayer.stop();
-      //   }
-      // }
-      // setBookCurrentChapter({currentChapter: props.bookDetail.book.chapters[0]});
+      const currentTrack = await TrackPlayer.getCurrentTrack();
+      if (!currentTrack){
+        setup();
+        resetPlaylist();
+      }
+      else{
+        let foundTrack = book.chapters.find(matching => {
+          return matching.id == currentTrack;
+        });
+        if (!foundTrack) {
+          await TrackPlayer.stop();
+          resetPlaylist();
+        }
+      }
     })();
   }, [bookId]);
 
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
+
+  const resetPlaylist = async () => {
+      await TrackPlayer.reset();
+      const playlistData = Playlist.getPlaylist(book);
+      await TrackPlayer.add(playlistData);
+  }
+
+  const setup = async () => {
+    await TrackPlayer.setupPlayer({});
+    await TrackPlayer.updateOptions({
+      stopWithApp: true,
+      capabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+        TrackPlayer.CAPABILITY_STOP,
+        TrackPlayer.CAPABILITY_SEEK_TO,
+      ],
+      compactCapabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_SEEK_TO,
+      ],
+    });
+  }
 
   const onBookmarkActionPress = (): void => {
     setBookmarked(!bookmarked);

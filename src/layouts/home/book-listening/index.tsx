@@ -36,9 +36,7 @@ import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
 
 import Player from './extra/Player';
 // import playlistData from "./extra/playlist.json";
-import {Playlist} from './extra/Playlist';
 
-const localTrack = require('./extra/pure.m4a');
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -103,25 +101,27 @@ export default (props: any): React.ReactElement => {
   }
 
   useEffect(() => {
-    (async function f() {
-      const currentTrack = await TrackPlayer.getCurrentTrack();
-      let foundTrack = bookChapter.chapters.find(matching => {
-        return matching.id == currentTrack;
-      });
-      let currentChapterId = bookChapter.currentChapter.currentChapter.id.toString();
-      if (!foundTrack) {
-        setup();
-        togglePlayback();
-        await TrackPlayer.skip(currentChapterId.toString());
-      }else{
-        if (currentChapterId != currentTrack) {
-          await TrackPlayer.skip(currentChapterId.toString());
-        }
-      }
+    (async () => {
+      // const currentTrack = await TrackPlayer.getCurrentTrack();
+      // let foundTrack = bookChapter.chapters.find(matching => {
+      //   return matching.id == currentTrack;
+      // });
+      // let currentChapterId = bookChapter.currentChapter.currentChapter.id.toString();
+      // console.log({foundTrack, currentChapterId});
+      // if (!foundTrack) {
+      //   setup();
+      //   togglePlayback();
+      //   await TrackPlayer.skip(currentChapterId.toString());
+      // }else{
+      //   if (currentChapterId != currentTrack) {
+      //     await TrackPlayer.skip(currentChapterId.toString());
+      //   }
+      // }
+      await TrackPlayer.play();
     })();
   }, []);
 
-  async function setup() {
+  const setup = async () => {
     await TrackPlayer.setupPlayer({});
     await TrackPlayer.updateOptions({
       stopWithApp: true,
@@ -142,21 +142,23 @@ export default (props: any): React.ReactElement => {
   }
 
   const togglePlayback = async () => {
-    const currentTrack = await TrackPlayer.getCurrentTrack();
-    if (currentTrack == null) {
-      await TrackPlayer.reset();
-      const playlistData = Playlist.getPlaylist(bookChapter);
-      await TrackPlayer.add(playlistData);
+    if (playbackState === TrackPlayer.STATE_PAUSED) {
+      await TrackPlayer.play();
+    } else if (playbackState === TrackPlayer.STATE_NONE) {
       await TrackPlayer.play();
     } else {
-      if (playbackState === TrackPlayer.STATE_PAUSED) {
-        await TrackPlayer.play();
-      } else if (playbackState === TrackPlayer.STATE_NONE) {
-        await TrackPlayer.play();
-      } else {
-        await TrackPlayer.pause();
-      }
+      await TrackPlayer.pause();
     }
+    // const currentTrack = await TrackPlayer.getCurrentTrack();
+    // if (currentTrack == null) {
+    //   await TrackPlayer.reset();
+    //   const playlistData = Playlist.getPlaylist(bookDetail);
+    //   console.log({playlistData});
+    //   await TrackPlayer.add(playlistData);
+    //   await TrackPlayer.play();
+    // } else {
+    //   await TrackPlayer.play();
+    // }
   }
 
   return (
