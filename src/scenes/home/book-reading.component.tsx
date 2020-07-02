@@ -7,12 +7,13 @@ import { ImageOverlay } from '../../components/image-overlay.component';
 import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
-import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon} from '../../assets/icons';
+import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowDownwardOutline} from '../../assets/icons';
 import {updateBookmarkBookDetail, 
   updateBookCurrentChapter, 
   updateBookTextSize,
   updateBookTextSizeVisibility,
-  fetchBooksChapters} from '../../redux/actions';
+  fetchBooksChapters,
+  updatePlayerVisibility} from '../../redux/actions';
 import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-reading';
 import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
@@ -90,14 +91,14 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   );
 
   const onGoBack = (): void => {
+    // props.setPlayerVisibility({playerVisibility: true});
+    props.setPlayerVisibility(true);
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
-    // props.navigation.state.params.onGoBackListening();
-    // props.navigation && props.navigation.goBack();
   };
 
   const renderBackAction = (): React.ReactElement => (
     <TopNavigationAction
-      icon={ArrowIosBackIcon}
+      icon={ArrowDownwardOutline}
       onPress={onGoBack}
     />
   );
@@ -173,7 +174,6 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   return (
     <React.Fragment>
       <TopNavigation
-        title="Product Details"
         leftControl={renderBackAction()}
         rightControls={[
           renderChapterListAction(),
@@ -273,7 +273,8 @@ const mapDispatchToProps = dispatch => {
     setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
     setBookTextSize: (textSize) => dispatch(updateBookTextSize(textSize)),
     setBookTextSizeVisibility: (textSizeVisibility) => dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
-    fetchChapters: (bookId) => dispatch(fetchBooksChapters(bookId))
+    fetchChapters: (bookId) => dispatch(fetchBooksChapters(bookId)),
+    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility))
   };
 };
 

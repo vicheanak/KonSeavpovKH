@@ -51,16 +51,19 @@ const loadingTasks: Task[] = [
 ];
 
 const App = (props: any): React.ReactElement => {
-  const {currentTheme, currentLang, playerVisibility, bookChapter} = props;
+  const {currentTheme, currentLang,  bookChapter} = props;
   // This value is used to determine the initial screen
   const isAuthorized: boolean = false;
   const [theme, setTheme] = React.useState(currentTheme);
 
+  const [bookId, setBookId] = useState(0);
+
   useEffect(() => {
     (async () => {
-      console.log(props);
+      props.setPlayerVisibility(false);
+      // console.log('APP.COMPONENT.TSX');
     })();
-  }, []);
+  }, [bookId]);
   switchLanguage(currentLang);
 
   const setCurrentTheme = (theme: any) => {
@@ -139,7 +142,7 @@ const App = (props: any): React.ReactElement => {
             <NavigationContainer>
               {/* <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/> */}
               <AppNavigator initialRouteName={AppRoute.HOME} />
-              {playerVisibility && (
+              {bookChapter.playerVisibility && (
               <View style={styles.cardContainer}>
                 {/* <Image style={styles.imageCard} source={require('./../assets/images/play.png')} /> */}
                 <View style={styles.labelContainer}>
