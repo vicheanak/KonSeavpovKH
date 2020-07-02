@@ -192,12 +192,9 @@ export default (props: any): React.ReactElement => {
 };
 
 const themedStyles = StyleService.create({
-  mainContainer: {
-    height: Dimensions.get('window').height - 70,
-  },
   container: {
     backgroundColor: 'background-basic-color-2',
-    height: Dimensions.get('window').height - 135,
+    height: Dimensions.get('window').height - 80,
   },
   itemProgressBar: {
     position: 'absolute',

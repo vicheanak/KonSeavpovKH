@@ -28,7 +28,8 @@ import {
   FETCHING_BOOK_CHAPTERS,
   FETCHING_BOOK_CHAPTERS_SUCCESS,
   FETCHING_BOOK_CHAPTERS_FAILURE,
-  UPDATE_BOOK_DETAIL
+  UPDATE_BOOK_DETAIL,
+  UPDATE_PLAYER_VISIBILITY
 } from './constants'
 import { getPeople, addPeople, getBooksList, getFavoriteBooksList, getBookDetail, getBookChapters } from './api'
 
@@ -256,6 +257,15 @@ export const updateBookTextSizeVisibility = (textSizeVisibility) => {
     dispatch({
       type: UPDATE_BOOK_TEXT_SIZE_VISIBILITY,
       textSizeVisibility
+    })
+  }
+}
+
+export const updatePlayerVisibility = (playerVisibility) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_PLAYER_VISIBILITY,
+      playerVisibility
     })
   }
 }

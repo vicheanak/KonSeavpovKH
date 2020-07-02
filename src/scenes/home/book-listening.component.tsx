@@ -25,9 +25,11 @@ export const BookListeningScreen = (props: any): LayoutElement => {
     props.setBookmarkBookDetail(bookmarked);
   };
 
+  
   const onGoBack = (): void => {
-    // props.route.params.onGoBack();
-    props.navigation && props.navigation.goBack();
+    props.navigation.navigate(AppRoute.BOOK_DETAIL);
+    // props.navigation.state.params.onGoBackListening();
+    // props.navigation && props.navigation.goBack();
   };
 
 

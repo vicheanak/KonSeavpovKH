@@ -68,23 +68,23 @@ export default (props: any): React.ReactElement => {
     false,
   );
 
-  const onGoBackListener = async () => {
-    const listeningState = await TrackPlayer.getState();
-    const currentTrack = await TrackPlayer.getCurrentTrack();
-    const track = await TrackPlayer.getTrack(currentTrack);
-    const {title, artist, artwork} = track || {};
-    setTitle(title);
-    setArtist(artist);
-    setArtwork(artwork);
-    setToolbarVisibility(true);
+  const onComeBack = async () => {
+    console.log('onGoBackListener ==>');
+    // const listeningState = await TrackPlayer.getState();
+    // const currentTrack = await TrackPlayer.getCurrentTrack();
+    // const track = await TrackPlayer.getTrack(currentTrack);
+    // const {title, artist, artwork} = track || {};
+    // setTitle(title);
+    // setArtist(artist);
+    // setArtwork(artwork);
+    // setToolbarVisibility(true);
   };
 
   const onListeningButtonPress = (): void => {
-    props.navigation.navigate(AppRoute.BOOK_LISTENING);
-    // props.navigation.navigate(AppRoute.BOOK_LISTENING, {
-    //   book,
-    //   onGoBack: () => onGoBackListener(),
-    // });
+    // props.navigation.navigate(AppRoute.BOOK_LISTENING);
+    props.navigation.navigate(AppRoute.BOOK_LISTENING, {
+      onGoBack: () => onComeBack(),
+    });
   };
 
   const renderOptionItemIcon = (

@@ -89,10 +89,16 @@ export const BookReadingScreen = (props: any): LayoutElement => {
     />
   );
 
+  const onGoBack = (): void => {
+    props.navigation.navigate(AppRoute.BOOK_DETAIL);
+    // props.navigation.state.params.onGoBackListening();
+    // props.navigation && props.navigation.goBack();
+  };
+
   const renderBackAction = (): React.ReactElement => (
     <TopNavigationAction
       icon={ArrowIosBackIcon}
-      onPress={props.navigation.goBack}
+      onPress={onGoBack}
     />
   );
 

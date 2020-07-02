@@ -49,7 +49,8 @@ export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
 
   const onDoneButtonPress = (): void => {
-    props.navigation.state.params.onGoBackListening();
+    // props.navigation.state.params.onGoBackListening();
+    console.log(props.navigation);
     props.navigation && props.navigation.goBack();
   };
 

@@ -18,7 +18,6 @@ import {i18n, switchLanguage} from './i18n';
 import {connect} from 'react-redux';
 import {fetchData} from '../redux/actions';
 import {Image, ImageStyle, View, Dimensions} from 'react-native';
-
 import {
   Button,
   Icon,
@@ -28,6 +27,10 @@ import {
 } from '@ui-kitten/components';
 
 import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
+
+import {
+  updatePlayerVisibility,
+} from './../redux/actions';
 
 const defaultConfig: {local: Local; theme: Theme} = {
   local: 'kh',
@@ -136,6 +139,7 @@ const App = (props: any): React.ReactElement => {
             <NavigationContainer>
               {/* <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/> */}
               <AppNavigator initialRouteName={AppRoute.HOME} />
+              {playerVisibility && (
               <View style={styles.cardContainer}>
                 {/* <Image style={styles.imageCard} source={require('./../assets/images/play.png')} /> */}
                 <View style={styles.labelContainer}>
@@ -154,6 +158,7 @@ const App = (props: any): React.ReactElement => {
                   />
                 </View>
               </View>
+              )}
             </NavigationContainer>
           </SafeAreaProvider>
         </ApplicationProvider>
@@ -220,7 +225,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    setPlayerVisibility: playerVisibility =>
+      dispatch(updatePlayerVisibility(playerVisibility)),
+  };
 };
 
 export default connect(
