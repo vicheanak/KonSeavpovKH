@@ -11,6 +11,7 @@ import configureStore from './src/redux/configureStore';
 import serviceFactory from './src/services/track-player.service';
 // import TrackPlayer from './libs/index.js';
 
+console.disableYellowBox = true;
 const store = configureStore();
 
 const ReduxApp = () => (
