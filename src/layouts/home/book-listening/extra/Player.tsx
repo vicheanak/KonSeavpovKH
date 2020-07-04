@@ -25,6 +25,7 @@ import {
   IconElement,
   Divider
 } from '@ui-kitten/components';
+import TextTicker from 'react-native-text-ticker';
 
 function secondsToTime(e){
   var h = Math.floor(e / 3600).toString().padStart(2,'0'),
@@ -165,7 +166,15 @@ export default function Player(props) {
       <Image style={styles.cover} source={{ uri: trackArtwork }} />
       <ProgressBar />
       <View style={styles.titleAuthor}>
-        <Text style={styles.title}>{trackTitle}</Text>
+        <TextTicker
+          style={styles.title}
+          duration={5000}
+          loop
+          bounce
+          repeatSpacer={50}
+          marqueeDelay={100}>
+          {trackTitle} Whatever is long goes here ...
+        </TextTicker>
         <Text style={styles.artist}>{trackArtist}</Text>
       </View>
     
@@ -268,7 +277,10 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 24,
+    color: '#EAEEF4',
+    marginBottom: 20
   },
   artist: {
     textAlign: 'center',

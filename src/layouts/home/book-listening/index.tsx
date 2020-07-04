@@ -50,7 +50,6 @@ export default (props: any): React.ReactElement => {
 
   const onDoneButtonPress = (): void => {
     // props.navigation.state.params.onGoBackListening();
-    console.log(props.navigation);
     props.navigation && props.navigation.goBack();
   };
 

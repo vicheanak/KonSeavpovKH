@@ -13,6 +13,10 @@ type ListeningNavigatorParams = AppNavigatorParams & {
   [AppRoute.BOOK_LISTENING]: undefined;
 }
 
+export interface BookListeningScreenProps {
+  navigation: StackNavigationProp<ListeningNavigatorParams, AppRoute.BOOK_LISTENING>;
+  route: RouteProp<ListeningNavigatorParams, AppRoute.BOOK_LISTENING>;
+}
 const Stack = createStackNavigator<ListeningNavigatorParams>();
 
 export const ListeningNavigator = (): React.ReactElement => (

@@ -17,7 +17,14 @@ import {AppIconsPack} from './app-icons-pack';
 import {i18n, switchLanguage} from './i18n';
 import {connect} from 'react-redux';
 import {fetchData} from '../redux/actions';
-import {Image, ImageStyle, View, Dimensions} from 'react-native';
+import {
+  Image,
+  ImageStyle,
+  View,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
+
 import {
   Button,
   Icon,
@@ -25,12 +32,12 @@ import {
   Text,
   useStyleSheet,
 } from '@ui-kitten/components';
-
+import {CloseOutlineIcon} from '../assets/icons';
 import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
-
-import {
-  updatePlayerVisibility,
-} from './../redux/actions';
+import {updatePlayerVisibility} from './../redux/actions';
+import {SOURCE} from './app-environment';
+import TextTicker from 'react-native-text-ticker';
+import * as RootNavigation from './RootNavigation';
 
 const defaultConfig: {local: Local; theme: Theme} = {
   local: 'kh',
@@ -51,7 +58,7 @@ const loadingTasks: Task[] = [
 ];
 
 const App = (props: any): React.ReactElement => {
-  const {currentTheme, currentLang,  bookChapter} = props;
+  const {currentTheme, currentLang, bookChapter, bookDetail} = props;
   // This value is used to determine the initial screen
   const isAuthorized: boolean = false;
   const [theme, setTheme] = React.useState(currentTheme);
@@ -60,8 +67,7 @@ const App = (props: any): React.ReactElement => {
 
   useEffect(() => {
     (async () => {
-      props.setPlayerVisibility(false);
-      // console.log('APP.COMPONENT.TSX');
+      // props.setPlayerVisibility(false);
     })();
   }, [bookId]);
   switchLanguage(currentLang);
@@ -99,6 +105,11 @@ const App = (props: any): React.ReactElement => {
     }
   };
 
+  const onClosePlayer = async () => {
+    await TrackPlayer.stop();
+    props.setPlayerVisibility(false);
+  };
+
   const PauseIcon = (style): ImageStyle => {
     const pauseImage = require('./../assets/images/pause.png');
     return (
@@ -128,6 +139,17 @@ const App = (props: any): React.ReactElement => {
     playPauseButton = PauseIcon;
   }
 
+  let photo = SOURCE + props.bookDetail.book.imageUrl;
+
+  const onPlayerPress = async () => {
+    props.setPlayerVisibility(false);
+    let routeName = AppRoute.BOOK_READING;
+    if (props.bookChapter.playerNavigation == 'listening'){
+      routeName = AppRoute.BOOK_LISTENING;
+    }
+    RootNavigation.navigate(routeName, {});
+  };
+
   return (
     <React.Fragment>
       <IconRegistry icons={[EvaIconsPack, AppIconsPack]} />
@@ -139,28 +161,47 @@ const App = (props: any): React.ReactElement => {
           {...eva}
           theme={{...eva[theme], ...appTheming}}>
           <SafeAreaProvider>
-            <NavigationContainer>
+            <NavigationContainer ref={RootNavigation.navigationRef}>
               {/* <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/> */}
               <AppNavigator initialRouteName={AppRoute.HOME} />
               {bookChapter.playerVisibility && (
-              <View style={styles.cardContainer}>
-                {/* <Image style={styles.imageCard} source={require('./../assets/images/play.png')} /> */}
-                <View style={styles.labelContainer}>
-                  <Text appearance="hint" category="s1">Title here</Text>
-                  <Text appearance="hint" category="c1">
-                    Artist name
-                  </Text>
+                <View style={styles.cardContainer}>
+                  <TouchableOpacity
+                    style={styles.touchableView}
+                    onPress={onPlayerPress}>
+                    <Image style={styles.imageCard} source={{uri: photo}} />
+                    <View style={styles.labelContainer}>
+                      <TextTicker
+                        style={styles.textTitle}
+                        duration={3000}
+                        loop
+                        bounce
+                        repeatSpacer={50}
+                        marqueeDelay={500}>
+                        {bookChapter.currentChapter.currentChapter.title}
+                      </TextTicker>
+                      <Text appearance="hint" category="c1">
+                        {bookDetail.book.authorname}
+                      </Text>
+                    </View>
+                    <View style={styles.mediaController}>
+                      <Button
+                        style={[styles.iconButton]}
+                        appearance="ghost"
+                        status="primary"
+                        icon={playPauseButton}
+                        onPress={onTogglePlayback}
+                      />
+                      <Button
+                        style={[styles.iconButton]}
+                        appearance="ghost"
+                        status="primary"
+                        icon={CloseOutlineIcon}
+                        onPress={onClosePlayer}
+                      />
+                    </View>
+                  </TouchableOpacity>
                 </View>
-                <View style={styles.mediaController}>
-                  <Button
-                    style={[styles.iconButton]}
-                    appearance="ghost"
-                    status="primary"
-                    icon={playPauseButton}
-                    onPress={onTogglePlayback}
-                  />
-                </View>
-              </View>
               )}
             </NavigationContainer>
           </SafeAreaProvider>
@@ -171,11 +212,18 @@ const App = (props: any): React.ReactElement => {
 };
 
 const themedStyles = StyleService.create({
-  labelContainer: {
+  touchableView: {
     flex: 1,
-    height: '100%',
-    padding: 16,
-    width: Dimensions.get('window').width - 10,
+    flexDirection: 'row',
+  },
+  labelContainer: {
+    // flex: 1,
+    position: 'relative',
+    left: 10,
+    height: 70,
+    paddingVertical: 10,
+    // width: 70,
+    width: Dimensions.get('window').width - 180,
   },
   mediaController: {
     flex: 1,
@@ -185,7 +233,7 @@ const themedStyles = StyleService.create({
   },
   iconButton: {
     paddingHorizontal: 0,
-    // justifyContent: 'flex-end',
+    justifyContent: 'flex-end',
     width: 50,
   },
   cardContainer: {
@@ -197,8 +245,20 @@ const themedStyles = StyleService.create({
     bottom: 50,
     left: 0,
     right: 0,
-    backgroundColor: '#242424',
-    shadowColor: '#000',
+    backgroundColor: '#222A43',
+    borderColor: '#1C2237',
+    borderWidth: 2,
+    marginBottom: 2,
+    height: 70,
+  },
+  imageCard: {
+    width: 65,
+    height: 65,
+  },
+  textTitle: {
+    fontSize: 16,
+    color: '#EAEEF4',
+    marginBottom: 5,
   },
 });
 

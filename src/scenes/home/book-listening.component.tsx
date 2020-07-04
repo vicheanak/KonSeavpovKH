@@ -7,7 +7,7 @@ import { ProgressBar } from '../../components/progress-bar.component';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon, ArrowDownwardOutline, TextIcon, BookIcon} from '../../assets/icons';
-import {updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters, updatePlayerVisibility} from '../../redux/actions';
+import {updatePlayerNavigation, updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters, updatePlayerVisibility} from '../../redux/actions';
 import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
 import {AppRoute} from '../../navigation/app-routes';
@@ -28,9 +28,8 @@ export const BookListeningScreen = (props: any): LayoutElement => {
   
   const onGoBack = (): void => {
     props.setPlayerVisibility(true);
+    props.setPlayerNavigation('listening');
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
-    // props.navigation.state.params.onGoBackListening();
-    // props.navigation && props.navigation.goBack();
   };
 
 
@@ -107,7 +106,8 @@ const mapDispatchToProps = dispatch => {
     setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked)),
     setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
     setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters)),
-    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility))
+    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility)),
+    setPlayerNavigation: (playerNavigation) => dispatch(updatePlayerNavigation(playerNavigation))
   };
 };
 

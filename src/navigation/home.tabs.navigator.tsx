@@ -80,7 +80,7 @@ const HomeTabsNavigator = (props: any): React.ReactElement => {
           <TopTab.Screen
               name={AppRoute.READING}
               component={ReadingScreen}
-              options={{title: props.intlData.messages['READS'], tabBarIcon: BookmarkIcon}}
+              options={{title: props.intlData.messages['saved'], tabBarIcon: BookmarkIcon}}
           />
         </TopTab.Navigator>
     );

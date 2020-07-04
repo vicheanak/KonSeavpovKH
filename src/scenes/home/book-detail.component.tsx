@@ -26,7 +26,8 @@ import {
   updateBookTextSizeVisibility,
   updateBookCurrentChapter,
   updateBookTotalChapters,
-  fetchBooksChapters
+  fetchBooksChapters,
+  updatePlayerVisibility
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
@@ -62,6 +63,7 @@ export const BookDetailScreen = (props: any): LayoutElement => {
           return matching.id == currentTrack;
         });
         if (!foundTrack) {
+          props.setPlayerVisibility(false);
           await TrackPlayer.stop();
           resetPlaylist();
         }
@@ -172,7 +174,8 @@ const mapDispatchToProps = dispatch => {
     setBookTextSizeVisibility: textSizeVisibility =>
       dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
     fetchChapters: bookId => 
-      dispatch(fetchBooksChapters(bookId))
+      dispatch(fetchBooksChapters(bookId)),
+    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility))
   };
 };
 

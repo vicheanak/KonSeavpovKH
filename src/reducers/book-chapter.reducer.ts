@@ -1,11 +1,12 @@
 
-import { UPDATE_BOOK_CURRENT_CHAPTER, FETCHING_BOOK_CHAPTERS, FETCHING_BOOK_CHAPTERS_SUCCESS, FETCHING_BOOK_CHAPTERS_FAILURE, UPDATE_PLAYER_VISIBILITY } from '../redux/constants'
+import { UPDATE_BOOK_CURRENT_CHAPTER, FETCHING_BOOK_CHAPTERS, FETCHING_BOOK_CHAPTERS_SUCCESS, FETCHING_BOOK_CHAPTERS_FAILURE, UPDATE_PLAYER_VISIBILITY, UPDATE_PLAYER_NAVIGATION } from '../redux/constants'
 
 const initialState = {
 	chapters: [],
 	isFetchingChapters: true,
     currentChapter: {},
-    playerVisibility: false
+    playerVisibility: false,
+    playerNavigation: ''
 };
 
 export const bookChapter = (state = initialState, action) => {
@@ -38,6 +39,11 @@ export const bookChapter = (state = initialState, action) => {
             return {
                 ...state,
                 playerVisibility: action.playerVisibility
+            }
+        case UPDATE_PLAYER_NAVIGATION: 
+            return {
+                ...state,
+                playerNavigation: action.playerNavigation
             }
 		default:
 			return state;

@@ -54,6 +54,7 @@ export default (props: any): React.ReactElement => {
   }, []);
 
   const onReadingButtonPress = (): void => {
+    props.setPlayerVisibility(false);
     let matchingChapter = bookChapter.chapters.find((chapter) => {
       return chapter.chapterNumber == 1; 
     });
@@ -64,12 +65,11 @@ export default (props: any): React.ReactElement => {
   const [title, setTitle] = React.useState<string>('');
   const [artist, setArtist] = React.useState<string>('');
   const [artwork, setArtwork] = React.useState<string>('');
-  const [bottomVisibility, setToolbarVisibility] = React.useState<boolean>(
-    false,
-  );
+  // const [bottomVisibility, setToolbarVisibility] = React.useState<boolean>(
+  //   false,
+  // );
 
   const onComeBack = async () => {
-    console.log('onGoBackListener ==>');
     // const listeningState = await TrackPlayer.getState();
     // const currentTrack = await TrackPlayer.getCurrentTrack();
     // const track = await TrackPlayer.getTrack(currentTrack);
@@ -81,10 +81,11 @@ export default (props: any): React.ReactElement => {
   };
 
   const onListeningButtonPress = (): void => {
-    // props.navigation.navigate(AppRoute.BOOK_LISTENING);
-    props.navigation.navigate(AppRoute.BOOK_LISTENING, {
-      onGoBack: () => onComeBack(),
-    });
+    props.setPlayerVisibility(false);
+    props.navigation.navigate(AppRoute.BOOK_LISTENING);
+    // props.navigation.navigate(AppRoute.BOOK_LISTENING, {
+    //   onGoBack: () => onComeBack(),
+    // });
   };
 
   const renderOptionItemIcon = (
@@ -178,7 +179,7 @@ export default (props: any): React.ReactElement => {
     <View style={styles.container}>
       <ScrollView
         style={[
-          styles.scrollViewContainer && bottomVisibility
+          styles.scrollViewContainer && bookChapter.playerVisibility
             ? {marginBottom: 70}
             : {marginBottom: 0},
         ]}>
@@ -226,26 +227,6 @@ export default (props: any): React.ReactElement => {
         </Text>
         <Text style={styles.description}>{book.aboutAuthor}</Text>
       </ScrollView>
-      {bottomVisibility && (
-        <View style={styles.cardContainer}>
-          <Image style={styles.imageCard} source={{uri: artwork}} />
-          <View style={styles.labelContainer}>
-            <Text category="s1">{title}</Text>
-            <Text appearance="hint" category="c1">
-              {artist}
-            </Text>
-          </View>
-          <View style={styles.mediaController}>
-            <Button
-              style={[styles.iconButton]}
-              appearance="ghost"
-              status="primary"
-              icon={PlayPauseIcon}
-              onPress={onTogglePlayback}
-            />
-          </View>
-        </View>
-      )}
     </View>
   );
 };

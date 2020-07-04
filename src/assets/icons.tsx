@@ -95,6 +95,10 @@ export const CloseIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='close'/>
 );
 
+export const CloseOutlineIcon = (style: ImageStyle): IconElement => (
+  <Icon {...style} name='close-outline'/>
+);
+
 export const GithubIcon = (style: ImageStyle): IconElement => (
   <Icon {...style} name='github'/>
 );

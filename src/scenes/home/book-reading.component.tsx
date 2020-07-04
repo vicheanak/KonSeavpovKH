@@ -13,7 +13,8 @@ import {updateBookmarkBookDetail,
   updateBookTextSize,
   updateBookTextSizeVisibility,
   fetchBooksChapters,
-  updatePlayerVisibility} from '../../redux/actions';
+  updatePlayerVisibility,
+  updatePlayerNavigation} from '../../redux/actions';
 import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-reading';
 import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
@@ -21,6 +22,7 @@ import {AppRoute} from '../../navigation/app-routes';
 import { ThemeContext } from '../../services/theme.service';
 import Slider from '@react-native-community/slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
 
 export type BookReadingRouteParams = {
     todo: Todo;
@@ -36,7 +38,7 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   const {textSize, bookDetail, ...listProps} = props;
 
   useEffect(() => {
-
+    props.setPlayerVisibility(false);
   }, [bookId]);
 
   const themeContext = React.useContext(ThemeContext);
@@ -91,7 +93,7 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   );
 
   const onGoBack = (): void => {
-    // props.setPlayerVisibility({playerVisibility: true});
+    props.setPlayerNavigation('reading');
     props.setPlayerVisibility(true);
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
@@ -274,7 +276,8 @@ const mapDispatchToProps = dispatch => {
     setBookTextSize: (textSize) => dispatch(updateBookTextSize(textSize)),
     setBookTextSizeVisibility: (textSizeVisibility) => dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
     fetchChapters: (bookId) => dispatch(fetchBooksChapters(bookId)),
-    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility))
+    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility)),
+    setPlayerNavigation: (playerNavigation) => dispatch(updatePlayerNavigation(playerNavigation))
   };
 };
 

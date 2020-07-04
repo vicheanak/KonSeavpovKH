@@ -29,7 +29,8 @@ import {
   FETCHING_BOOK_CHAPTERS_SUCCESS,
   FETCHING_BOOK_CHAPTERS_FAILURE,
   UPDATE_BOOK_DETAIL,
-  UPDATE_PLAYER_VISIBILITY
+  UPDATE_PLAYER_VISIBILITY,
+  UPDATE_PLAYER_NAVIGATION
 } from './constants'
 import { getPeople, addPeople, getBooksList, getFavoriteBooksList, getBookDetail, getBookChapters } from './api'
 
@@ -266,6 +267,15 @@ export const updatePlayerVisibility = (playerVisibility) => {
     dispatch({
       type: UPDATE_PLAYER_VISIBILITY,
       playerVisibility
+    })
+  }
+}
+
+export const updatePlayerNavigation = (playerNavigation) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_PLAYER_NAVIGATION,
+      playerNavigation
     })
   }
 }
