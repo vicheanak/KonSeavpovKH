@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   View,
   Dimensions,
+  Animated,
 } from 'react-native';
 import {
   ButtonGroup,
@@ -101,6 +102,30 @@ export default (props: any): React.ReactElement => {
     </View>
   );
 
+  let fadeAnim = useRef(new Animated.Value(0)).current;
+  let windowWidth = Dimensions.get('window').width * currentBar / 100;
+
+  const onViewSelected = async () => {
+    fadeInText();
+    // changeWidth();
+    setTimeout(() => {
+      fadeOutText();
+    }, 4000);
+  };
+
+  const fadeInText = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+    }).start();
+  };
+
+  const fadeOutText = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 1000,
+    }).start();
+  };
   const totalChapterBars = (bookChapter.chapters.length * 100) / 100;
   let currentBar =
     (bookChapter.currentChapter.currentChapter.chapterNumber * 100) /
@@ -114,7 +139,7 @@ export default (props: any): React.ReactElement => {
       <ViewPager
         selectedIndex={chapterIndex}
         onSelect={async index => {
-          console.log({index});
+          onViewSelected();
           if (index > chapterIndex) {
             //nextChapter
             currentBar = currentBar + currentBar;
@@ -187,6 +212,7 @@ export default (props: any): React.ReactElement => {
         progress={currentBar}
         // text={`${3}%`}
         text={currentChapter}
+        fadeAnim={fadeAnim}
       />
     </View>
   );

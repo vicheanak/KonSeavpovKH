@@ -6,15 +6,20 @@ import * as Progress from 'react-native-progress';
 export interface ProgressBarProps extends ViewProps, ThemedComponentProps {
   progress: number;
   text?: any;
+  fadeAnim: any
 }
 
-const ProgressBarComponent = ({ progress, text, ...props }: ProgressBarProps): React.ReactElement<ViewProps> => {
+const ProgressBarComponent = ({ progress, fadeAnim, text, ...props }: ProgressBarProps): React.ReactElement<ViewProps> => {
   return (
     <View style={props.themedStyle.container}>
-         <View style={[props.themedStyle.talkBubble, {left: `${progress}%`}]}>
+       <Animated.View style={[{opacity: fadeAnim}, props.themedStyle.talkBubble, {left: `${progress}%`}]}>
           <Text style={[props.themedStyle.text]}>{text}</Text>
           <View style={props.themedStyle.talkBubbleSquare} />
-        </View>   
+        </Animated.View>
+         {/* <View style={[props.themedStyle.talkBubble, {left: `${progress}%`}]}>
+          <Text style={[props.themedStyle.text]}>{text}</Text>
+          <View style={props.themedStyle.talkBubbleSquare} />
+        </View>    */}
       <View
         {...props}
         style={[props.themedStyle.progressContainer, props.style]}>
