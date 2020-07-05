@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   View,
   ViewPropTypes,
-  ImageStyle
+  ImageStyle,
+  Dimensions
 } from "react-native";
 import {
   ButtonGroup,
@@ -26,6 +27,7 @@ import {
   Divider
 } from '@ui-kitten/components';
 import TextTicker from 'react-native-text-ticker';
+import Slider from "@brlja/react-native-slider";
 
 function secondsToTime(e){
   var h = Math.floor(e / 3600).toString().padStart(2,'0'),
@@ -40,18 +42,31 @@ function ProgressBar() {
   let currentTime = secondsToTime(progress.position);
   let totalDuration = secondsToTime(progress.duration);
   let remainingTime = secondsToTime(progress.duration - progress.position);
+  // console.log({progress, currentTime, totalDuration, remainingTime});
+  // console.log({duration});
+
   
   return (
     <View style={styles.progressContainer}>
       <Text category="s2" appearance="hint" style={[styles.timeLabel, styles.timeCurrent]}>{currentTime}</Text>
       <View style={styles.progress}>
-        <View style={{ flex: progress.position, backgroundColor: "red" }} />
-        <View
+        {/* <View style={{ flex: progress.position, backgroundColor: "red" }} /> */}
+        <Slider
+          value={0}
+          onSlidingComplete={value => {
+            let seekTo = progress.duration * value;
+            TrackPlayer.seekTo(seekTo);
+            TrackPlayer.play();
+          }}
+          thumbTintColor="#dfd01e"
+          minimumTrackTintColor="#dfd01e"
+        />
+        {/* <View
           style={{
             flex: progress.duration - progress.position,
             backgroundColor: "grey"
           }}
-        />
+        /> */}
       </View>
       <Text category="s2" appearance="hint" style={[styles.timeLabel, styles.timeRemaining]}>{remainingTime}</Text>
     </View>
@@ -142,7 +157,7 @@ export default function Player(props) {
   });
   
 
-  const { style, onNext, onPrevious, onTogglePlayback, onSkipNext15, onSkipBack15 } = props;
+  const { style, onNext, onPrevious, onTogglePlayback, onSkipNext, onSkipBack } = props;
 
   let playPauseButton = PlayIcon;
 
@@ -153,13 +168,6 @@ export default function Player(props) {
     playPauseButton = PauseIcon;
   }
 
-  const skipNext15 = async () => {
-    const progress = await TrackPlayer.getPosition();
-    const newProgress = Math.floor(progress) + 15;
-    // await TrackPlayer.play();
-    await TrackPlayer.seekTo(12);
-    await TrackPlayer.play();
-  }
 
   return (
     <View style={[styles.card, style]}>
@@ -186,10 +194,22 @@ export default function Player(props) {
           onPress={onPrevious}
         />
         <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={ArrowLeftIcon}
+          onPress={onSkipBack}
+        />
+        <Button
           style={styles.mediaButtonLarge}
           status='basic'
           icon={playPauseButton}
           onPress={onTogglePlayback}
+        />
+        <Button
+          style={styles.mediaButtonSmall}
+          status='basic'
+          icon={ArrowRightIcon}
+          onPress={onSkipNext}
         />
         <Button
           style={styles.mediaButtonSmall}
@@ -218,7 +238,8 @@ const styles = StyleSheet.create({
     marginTop: -30,
   },
   timeLabel: {
-    marginTop: 15,
+    position: 'relative',
+    top: 40
   },
   timeCurrent: {
     left: 40
@@ -229,11 +250,27 @@ const styles = StyleSheet.create({
   progressContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
-    height: 50,
+    // justifyContent: 'center',
+    height: 20,
     position: 'relative',
-    marginTop: 50,
-    left: 20
+    width: Dimensions.get('window').width - 20,
+    top: 30
+    // marginTop: 50,
+    // left: 20
+  },
+  progress: {
+    // height: 3,
+    // width: Dimensions.get('window').width - 50,
+    width: 400,
+    // marginTop: 10,
+    // flexDirection: "row"
+    // borderWidth: 2,
+    height: 50,
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    alignItems: "stretch",
+    justifyContent: "flex-start"
   },
   mediaController: {
     flex: 1,
@@ -269,12 +306,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: "grey",
     borderRadius: 30
-  },
-  progress: {
-    height: 3,
-    width: "100%",
-    marginTop: 10,
-    flexDirection: "row"
   },
   title: {
     textAlign: 'center',

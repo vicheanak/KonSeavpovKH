@@ -86,13 +86,16 @@ export default (props: any): React.ReactElement => {
   }
 
   const skipNext15 = async () => {
+    console.log('Skip Next 15');
     const progress = await TrackPlayer.getPosition();
     const newProgress = Math.floor(progress) + 15;
-    await TrackPlayer.play();
-    await TrackPlayer.seekTo(12);
+    console.log({progress, newProgress});
+    // await TrackPlayer.play();
+    await TrackPlayer.seekTo(newProgress);
   }
 
   const skipBack15 = async () => {
+    console.log('Skip Back 15');
     const progress = await TrackPlayer.getPosition();
     const newProgress = Math.floor(progress) - 15;
     await TrackPlayer.play();
