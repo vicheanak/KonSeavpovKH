@@ -114,6 +114,7 @@ export default (props: any): React.ReactElement => {
       <ViewPager
         selectedIndex={chapterIndex}
         onSelect={async index => {
+          console.log({index});
           if (index > chapterIndex) {
             //nextChapter
             currentBar = currentBar + currentBar;
@@ -185,7 +186,7 @@ export default (props: any): React.ReactElement => {
         style={styles.itemProgressBar}
         progress={currentBar}
         // text={`${3}%`}
-        text="11"
+        text={currentChapter}
       />
     </View>
   );
@@ -198,9 +199,9 @@ const themedStyles = StyleService.create({
   },
   itemProgressBar: {
     position: 'absolute',
-    bottom: 8,
+    bottom: 0,
     width: '100%',
-    marginVertical: 12,
+    // marginVertical: 12,
   },
   descriptionText: {
     fontSize: 15,

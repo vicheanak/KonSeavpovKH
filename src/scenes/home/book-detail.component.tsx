@@ -76,6 +76,7 @@ export const BookDetailScreen = (props: any): LayoutElement => {
 
   const resetPlaylist = async () => {
       await TrackPlayer.reset();
+      console.log(book);
       const playlistData = Playlist.getPlaylist(book);
       await TrackPlayer.add(playlistData);
   }
