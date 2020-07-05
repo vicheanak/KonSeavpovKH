@@ -28,6 +28,7 @@ import {
 } from '@ui-kitten/components';
 import TextTicker from 'react-native-text-ticker';
 import Slider from "@brlja/react-native-slider";
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 function secondsToTime(e){
   var h = Math.floor(e / 3600).toString().padStart(2,'0'),
@@ -42,9 +43,11 @@ function ProgressBar() {
   let currentTime = secondsToTime(progress.position);
   let totalDuration = secondsToTime(progress.duration);
   let remainingTime = secondsToTime(progress.duration - progress.position);
-  // console.log({progress, currentTime, totalDuration, remainingTime});
-  // console.log({duration});
 
+  let currentDuration = 0;
+  if (progress.duration > 0){
+    currentDuration = progress.position / progress.duration;
+  }
   
   return (
     <View style={styles.progressContainer}>
@@ -52,8 +55,9 @@ function ProgressBar() {
       <View style={styles.progress}>
         {/* <View style={{ flex: progress.position, backgroundColor: "red" }} /> */}
         <Slider
-          value={0}
+          value={currentDuration}
           onSlidingComplete={value => {
+            // let seekTo = progress.duration * value[0] / 100;
             let seekTo = progress.duration * value;
             TrackPlayer.seekTo(seekTo);
             TrackPlayer.play();
@@ -193,24 +197,24 @@ export default function Player(props) {
           icon={SkipBackIcon}
           onPress={onPrevious}
         />
-        <Button
+        {/* <Button
           style={styles.mediaButtonSmall}
           status='basic'
           icon={ArrowLeftIcon}
           onPress={onSkipBack}
-        />
+        /> */}
         <Button
           style={styles.mediaButtonLarge}
           status='basic'
           icon={playPauseButton}
           onPress={onTogglePlayback}
         />
-        <Button
+        {/* <Button
           style={styles.mediaButtonSmall}
           status='basic'
           icon={ArrowRightIcon}
           onPress={onSkipNext}
-        />
+        /> */}
         <Button
           style={styles.mediaButtonSmall}
           status='basic'
