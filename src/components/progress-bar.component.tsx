@@ -29,11 +29,11 @@ export const ProgressBar = withStyles(ProgressBarComponent, (theme) => ({
     backgroundColor: 'transparent',
     position: 'absolute',
     bottom: 20,
-    paddingRight: 40,
+    paddingRight: 10,
   },
   talkBubbleSquare: {
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
     backgroundColor: 'yellow',
     borderRadius: 50,
     position: 'relative',
@@ -42,12 +42,12 @@ export const ProgressBar = withStyles(ProgressBarComponent, (theme) => ({
   text: {
     zIndex: 99,
     position: 'relative',
-    top: 27,
-    left: 9,
+    top: 20,
+    left: -24,
     color: 'black',
-    fontSize: 20,
+    fontSize: 15,
     // height: 30,
-    left: -20
+    // left: -23
   },
   container: {
     flexDirection: 'row',
