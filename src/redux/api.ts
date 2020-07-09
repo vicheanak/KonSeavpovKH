@@ -10,7 +10,6 @@ const people = [
 
 // const API_SOURCE = 'http://10.0.2.2:3002/api';
 
-console.log({API_SOURCE});
 
 export const getPeople = () => {
   return new Promise((resolve, reject) => {
@@ -45,16 +44,28 @@ export const getBookChapters = (bookId) => {
   })
 }
 
-export const getFavoriteBooksList = () => {
+export const getUserFavorites = () => {
   let params = {
-    pagination: { page: 1, perPage: 5 },
-    sort: { field: "title", order: "ASC" },
+    pagination: { page: 1, perPage: 100 },
+    // sort: { field: "title", order: "ASC" },
   }
   return new Promise((resolve, reject) => {
     axios
-      .get(`${API_SOURCE}/books`, {params})
+      .get(`${API_SOURCE}/users/1/favorites`, {params})
       .then(res => {
         return resolve(res.data);
+      });
+  })
+}
+
+export const getUserFavorite = (bookId) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${API_SOURCE}/users/1/favorites/${bookId}`)
+      .then(res => {
+        return resolve(res.data);
+      }).catch((error) => {
+        console.error(error);
       });
   })
 }

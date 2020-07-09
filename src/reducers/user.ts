@@ -1,0 +1,38 @@
+
+import { FETCHING_USER_FAVORITES_DATA, FETCHING_USER_FAVORITES_DATA_SUCCESS, FETCHING_USER_FAVORITE_DATA, FETCHING_USER_FAVORITE_DATA_SUCCESS } from '../redux/constants'
+const initialState = {
+  favorites: [],
+  favorite: {},
+  isFavoriteFetching: false,
+  isFavoritesFetching: false,
+  error: false
+}
+
+export const user = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCHING_USER_FAVORITES_DATA:
+      return {
+        ...state,
+        isFavoritesFetching: true
+      }
+    case FETCHING_USER_FAVORITES_DATA_SUCCESS:
+      return {
+        ...state,
+        favorites: action.data,
+        isFavoritesFetching: false
+      }
+    case FETCHING_USER_FAVORITE_DATA:
+      return {
+        ...state,
+        isFavoriteFetching: true
+      }
+    case FETCHING_USER_FAVORITE_DATA_SUCCESS:
+      return {
+        ...state,
+        favorite: action.data,
+        isFavoriteFetching: false
+      }
+    default:
+      return state
+  }
+}

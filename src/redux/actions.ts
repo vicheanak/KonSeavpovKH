@@ -30,9 +30,13 @@ import {
   FETCHING_BOOK_CHAPTERS_FAILURE,
   UPDATE_BOOK_DETAIL,
   UPDATE_PLAYER_VISIBILITY,
-  UPDATE_PLAYER_NAVIGATION
+  UPDATE_PLAYER_NAVIGATION,
+  FETCHING_USER_FAVORITES_DATA,
+  FETCHING_USER_FAVORITES_DATA_SUCCESS,
+  FETCHING_USER_FAVORITE_DATA,
+  FETCHING_USER_FAVORITE_DATA_SUCCESS
 } from './constants'
-import { getPeople, addPeople, getBooksList, getFavoriteBooksList, getBookDetail, getBookChapters } from './api'
+import { getPeople, addPeople, getBooksList, getUserFavorites, getUserFavorite, getBookDetail, getBookChapters } from './api'
 
 export function getData() {
   return {
@@ -62,6 +66,32 @@ export function getBooksData() {
 export function getBooksDataSuccess(data) {
   return {
     type: FETCHING_BOOKS_DATA_SUCCESS,
+    data,
+  }
+}
+
+export function getUserFavoritesData() {
+  return {
+    type: FETCHING_USER_FAVORITES_DATA
+  }
+}
+
+export function getUserFavoritesDataSuccess(data) {
+  return {
+    type: FETCHING_USER_FAVORITES_DATA_SUCCESS,
+    data,
+  }
+}
+
+export function getUserFavoriteData() {
+  return {
+    type: FETCHING_USER_FAVORITE_DATA
+  }
+}
+
+export function getUserFavoriteDataSuccess(data) {
+  return {
+    type: FETCHING_USER_FAVORITE_DATA_SUCCESS,
     data,
   }
 }
@@ -162,6 +192,28 @@ export function fetchBooksData() {
     getBooksList()
       .then((data) => {
         dispatch(getBooksDataSuccess(data))
+      })
+      .catch((err) => console.log('err:', err))
+  }
+}
+
+export function fetchUserFavorites() {
+  return (dispatch) => {
+    dispatch(getUserFavoritesData())
+    getUserFavorites()
+      .then((data) => {
+        dispatch(getUserFavoritesDataSuccess(data))
+      })
+      .catch((err) => console.log('err:', err))
+  }
+}
+
+export function fetchUserFavorite(bookId) {
+  return (dispatch) => {
+    dispatch(getUserFavoriteData())
+    getUserFavorite(bookId)
+      .then((data) => {
+        dispatch(getUserFavoriteDataSuccess(data))
       })
       .catch((err) => console.log('err:', err))
   }

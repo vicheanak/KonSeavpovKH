@@ -16,10 +16,10 @@ const ProgressBarComponent = ({ progress, fadeAnim, text, ...props }: ProgressBa
           <Text style={[props.themedStyle.text]}>{text}</Text>
           <View style={props.themedStyle.talkBubbleSquare} />
         </Animated.View>
-         {/* <View style={[props.themedStyle.talkBubble, {left: `${progress}%`}]}>
+         <View style={[props.themedStyle.talkBubble, {left: `${progress}%`}]}>
           <Text style={[props.themedStyle.text]}>{text}</Text>
           <View style={props.themedStyle.talkBubbleSquare} />
-        </View>    */}
+        </View>   
       <View
         {...props}
         style={[props.themedStyle.progressContainer, props.style]}>
@@ -28,6 +28,7 @@ const ProgressBarComponent = ({ progress, fadeAnim, text, ...props }: ProgressBa
     </View>
   )
 };
+
 
 export const ProgressBar = withStyles(ProgressBarComponent, (theme) => ({
   talkBubble: {
@@ -59,7 +60,65 @@ export const ProgressBar = withStyles(ProgressBarComponent, (theme) => ({
     flex: 1,
     alignItems: 'center',
     // height: 30,
-    borderWidth: 2
+    // borderWidth: 2
+  },
+  progressContainer: {
+    // height: 6,
+    height: 10,
+    borderRadius: 3,
+    backgroundColor: theme['background-basic-color-2'],
+    overflow: 'hidden',
+  },
+  progress: {
+    flex: 1,
+    backgroundColor: theme['color-primary-default'],
+  },
+}));
+
+
+const ProgressBarLibraryComponent = ({ progress, fadeAnim, text, ...props }: ProgressBarProps): React.ReactElement<ViewProps> => {
+  return (
+    <View style={props.themedStyle.container}>
+      <View
+        {...props}
+        style={[props.themedStyle.progressContainer, props.style]}>
+        <View style={[props.themedStyle.progress, { width: `${progress}%` }]}/>
+      </View>
+    </View>
+  )
+};
+
+export const ProgressBarLibrary = withStyles(ProgressBarLibraryComponent, (theme) => ({
+  talkBubble: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 20,
+    paddingRight: 10,
+  },
+  talkBubbleSquare: {
+    width: 20,
+    height: 20,
+    backgroundColor: 'yellow',
+    borderRadius: 50,
+    position: 'relative',
+    left: -30
+  },
+  text: {
+    zIndex: 99,
+    position: 'relative',
+    top: 20,
+    left: -24,
+    color: 'black',
+    fontSize: 15,
+    // height: 30,
+    // left: -23
+  },
+  container: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    // height: 30,
+    // borderWidth: 2
   },
   progressContainer: {
     // height: 6,

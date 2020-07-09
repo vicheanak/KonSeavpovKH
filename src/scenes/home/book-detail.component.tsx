@@ -27,7 +27,8 @@ import {
   updateBookCurrentChapter,
   updateBookTotalChapters,
   fetchBooksChapters,
-  updatePlayerVisibility
+  updatePlayerVisibility,
+  fetchUserFavorite
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
@@ -42,9 +43,9 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   // const {book} = props.route.params;
   const insets: EdgeInsets = useSafeArea();
 
-  const [bookId, setBookId] = useState(0);
+  const [bookDetailId, setBookDetailId] = useState(0);
 
-  const {bookDetail, setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
+  const {fetchFavorite, favorite, bookDetail, setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
   const book = bookDetail.book;
 
   const playbackState = usePlaybackState();
@@ -53,6 +54,7 @@ export const BookDetailScreen = (props: any): LayoutElement => {
     (async () => {
       // Check chapter exists in Playlist, if Exist in Playlist Do Nothing
       // If not in Playlist, Set to the first Chapter of the new book
+      fetchFavorite(book.id);
       const currentTrack = await TrackPlayer.getCurrentTrack();
       if (!currentTrack){
         setup();
@@ -69,14 +71,13 @@ export const BookDetailScreen = (props: any): LayoutElement => {
         }
       }
     })();
-  }, [bookId]);
+  }, [bookDetailId]);
 
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
   const resetPlaylist = async () => {
       await TrackPlayer.reset();
-      console.log(book);
       const playlistData = Playlist.getPlaylist(book);
       await TrackPlayer.add(playlistData);
   }
@@ -106,16 +107,22 @@ export const BookDetailScreen = (props: any): LayoutElement => {
     props.setBookmarkBookDetail(bookmarked);
   };
 
-  const renderBookmarkAction = (): React.ReactElement => (
-    <TopNavigationAction
-      icon={
-        props.bookDetail.bookmarked
-          ? BookmarkIcon
-          : BookmarkOutlineIcon
-      }
-      onPress={onBookmarkActionPress}
-    />
-  );
+  const renderBookmarkAction = (): React.ReactElement => {
+    let isBookmarked = false;
+    if (favorite.books.length){
+      isBookmarked = favorite.books[0].favorite.isBookmarked;
+    }
+    return (
+      <TopNavigationAction
+        icon={
+          isBookmarked
+            ? BookmarkIcon
+            : BookmarkOutlineIcon
+        }
+        onPress={onBookmarkActionPress}
+      />
+    )
+  };
 
   const renderBackAction = (): React.ReactElement => (
     <TopNavigationAction
@@ -165,6 +172,7 @@ const mapStateToProps = state => {
     bookDetail: state.bookDetail,
     bookChapter: state.bookChapter,
     intlData: state.intlData,
+    favorite: state.user.favorite
   };
 };
 
@@ -176,7 +184,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
     fetchChapters: bookId => 
       dispatch(fetchBooksChapters(bookId)),
-    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility))
+    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility)),
+    fetchFavorite: (bookId) => dispatch(fetchUserFavorite(bookId))
   };
 };
 

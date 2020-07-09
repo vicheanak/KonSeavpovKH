@@ -99,12 +99,12 @@ const BookScreen = (props: any): ListElement => {
           ellipsizeMode="tail">
           {item.item.title}
         </Text>
-        <Button
+        {/* <Button
           appearance="ghost"
           status="primary"
           style={styles.iconButton}
           icon={BookmarkIcon}
-        />
+        /> */}
       </View>
       <Text category="c1" style={styles.productShortDescription}>
         {item.item.shortDescription}
@@ -232,7 +232,8 @@ const mapStateToProps = state => {
   return {
     intlData: state.intlData,
     books: state.books.data,
-    bookChapter: state.bookChapter
+    bookChapter: state.bookChapter,
+    user: state.user.favorites
   };
 };
 

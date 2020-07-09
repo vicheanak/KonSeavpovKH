@@ -18,7 +18,7 @@ import {
 } from '@ui-kitten/components';
 import { ReadingScreenProps } from '../../navigation/home.navigator';
 import { AppRoute } from '../../navigation/app-routes';
-import { ProgressBar } from '../../components/progress-bar.component';
+import { ProgressBarLibrary } from '../../components/progress-bar.component';
 import { SearchIcon, StarIcon, ArrowIosForwardIcon } from '../../assets/icons';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
@@ -86,7 +86,7 @@ const ReadingScreen = (props: any): ListElement => {
           category='c1'>
           Author Name
         </Text>
-        <ProgressBar
+        <ProgressBarLibrary
           style={styles.itemProgressBar}
           progress={item.progress}
           text={`${item.progress}%`}

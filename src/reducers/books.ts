@@ -6,7 +6,7 @@ const initialState = {
   error: false
 }
 
-export default function books (state = initialState, action) {
+export const books = (state = initialState, action) => {
   switch (action.type) {
     case FETCHING_BOOKS_DATA:
       return {
