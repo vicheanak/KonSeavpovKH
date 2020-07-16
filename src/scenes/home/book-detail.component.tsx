@@ -28,7 +28,9 @@ import {
   updateBookTotalChapters,
   fetchBooksChapters,
   updatePlayerVisibility,
-  fetchUserFavorite
+  fetchUserFavorite,
+  createUserBookmark,
+  updateUserBookmark
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
@@ -50,11 +52,23 @@ export const BookDetailScreen = (props: any): LayoutElement => {
 
   const playbackState = usePlaybackState();
 
+  let isBookmarked = false;
+
+  let [bookmarked, setBookmarked] = React.useState<boolean>(false);
   useEffect(() => {
     (async () => {
       // Check chapter exists in Playlist, if Exist in Playlist Do Nothing
       // If not in Playlist, Set to the first Chapter of the new book
-      fetchFavorite(book.id);
+      fetchFavorite({userUuid: '11609902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid});
+      setTimeout(() => {
+        if (props.favorite){
+          setBookmarked(props.favorite.isBookmarked);
+        }
+        else{
+          setBookmarked(true);
+        }
+        console.log('bookmarked ==> ', {bookmarked});
+      }, 1000);
       const currentTrack = await TrackPlayer.getCurrentTrack();
       if (!currentTrack){
         setup();
@@ -62,7 +76,7 @@ export const BookDetailScreen = (props: any): LayoutElement => {
       }
       else{
         let foundTrack = book.chapters.find(matching => {
-          return matching.id == currentTrack;
+          return matching.uuid == currentTrack;
         });
         if (!foundTrack) {
           props.setPlayerVisibility(false);
@@ -74,7 +88,6 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   }, [bookDetailId]);
 
 
-  const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
   const resetPlaylist = async () => {
       await TrackPlayer.reset();
@@ -103,19 +116,24 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   }
 
   const onBookmarkActionPress = (): void => {
-    setBookmarked(!bookmarked);
-    props.setBookmarkBookDetail(bookmarked);
+    console.log(bookmarked);
+    isBookmarked = !bookmarked;
+    console.log({isBookmarked});
+    setBookmarked(isBookmarked);
+    if (bookmarked == undefined){
+      props.createBookmark({bookId: book.id, isBookmarked: isBookmarked});
+    }
+    else{
+      props.updateBookmark({bookId: book.id, isBookmarked: isBookmarked});
+    }
   };
 
   const renderBookmarkAction = (): React.ReactElement => {
-    let isBookmarked = false;
-    if (favorite.books.length){
-      isBookmarked = favorite.books[0].favorite.isBookmarked;
-    }
+    // console.log('bookmarked ==> actions ==> ', bookmarked);
     return (
       <TopNavigationAction
         icon={
-          isBookmarked
+          bookmarked
             ? BookmarkIcon
             : BookmarkOutlineIcon
         }
@@ -185,7 +203,9 @@ const mapDispatchToProps = dispatch => {
     fetchChapters: bookId => 
       dispatch(fetchBooksChapters(bookId)),
     setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility)),
-    fetchFavorite: (bookId) => dispatch(fetchUserFavorite(bookId))
+    fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
+    updateBookmark: (bookId) => dispatch(updateUserBookmark(bookId)),
+    createBookmark: (bookId) => dispatch(createUserBookmark(bookId))
   };
 };
 

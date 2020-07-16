@@ -39,15 +39,8 @@ import {
 } from '../../redux/actions';
 import { SOURCE } from '../../app/app-environment';
 
-const allTodos: Todo[] = [
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
-  Todo.mocked3(),
-];
 
 const BookScreen = (props: any): ListElement => {
-  const [todos, setTodos] = React.useState<Todo[]>(allTodos);
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
@@ -67,8 +60,9 @@ const BookScreen = (props: any): ListElement => {
   const navigateBookDetail = (bookIndex: number): void => {
     const {[bookIndex]: book} = books;
     setBookDetail(book);
-    fetchChapters(book.id);
+    fetchChapters(book.uuid);
     setBookCurrentChapter({currentChapter: book.chapters[0]});
+    console.log({book});
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 

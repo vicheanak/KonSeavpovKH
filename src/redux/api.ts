@@ -58,10 +58,42 @@ export const getUserFavorites = () => {
   })
 }
 
-export const getUserFavorite = (bookId) => {
+export const getUserFavorite = (params) => {
+  const { bookUuid, userUuid } = params;
   return new Promise((resolve, reject) => {
     axios
-      .get(`${API_SOURCE}/users/1/favorites/${bookId}`)
+      .get(`${API_SOURCE}/users/${userUuid}/favorites/${bookUuid}`)
+      .then(res => {
+        let result;
+        if (res.data.books.length){
+          result = res.data.books[0].favorite; 
+        }
+        console.log(result);
+        return resolve(result);
+      }).catch((error) => {
+        console.error(error);
+      });
+  })
+}
+
+export const createBookmark = (params) => {
+  let bookId = params.bookId;
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${API_SOURCE}/users/1/favorites/${bookId}`, params)
+      .then(res => {
+        return resolve(res.data);
+      }).catch((error) => {
+        console.error(error);
+      });
+  })
+}
+
+export const updateBookmark = (params) => {
+  let bookId = params.bookId;
+  return new Promise((resolve, reject) => {
+    axios
+      .put(`${API_SOURCE}/users/1/favorites/${bookId}`, params)
       .then(res => {
         return resolve(res.data);
       }).catch((error) => {

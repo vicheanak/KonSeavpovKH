@@ -34,9 +34,13 @@ import {
   FETCHING_USER_FAVORITES_DATA,
   FETCHING_USER_FAVORITES_DATA_SUCCESS,
   FETCHING_USER_FAVORITE_DATA,
-  FETCHING_USER_FAVORITE_DATA_SUCCESS
+  FETCHING_USER_FAVORITE_DATA_SUCCESS,
+  CREATE_USER_BOOKMARK_DATA,
+  CREATE_USER_BOOKMARK_DATA_SUCCESS,
+  UPDATE_USER_BOOKMARK_DATA,
+  UPDATE_USER_BOOKMARK_DATA_SUCCESS
 } from './constants'
-import { getPeople, addPeople, getBooksList, getUserFavorites, getUserFavorite, getBookDetail, getBookChapters } from './api'
+import { getPeople, addPeople, getBooksList, getUserFavorites, getUserFavorite, getBookDetail, getBookChapters, createBookmark, updateBookmark } from './api'
 
 export function getData() {
   return {
@@ -179,10 +183,35 @@ export function postUserSuccess(data) {
   }
 }
 
-
 export function postUserFailure() {
   return {
     type: POST_USER_FAILURE,
+  }
+}
+
+export function createUserBookmarkData() {
+  return {
+    type: CREATE_USER_BOOKMARK_DATA,
+  }
+}
+
+export function createUserBookmarkDataSuccess(data) {
+  return {
+    type: CREATE_USER_BOOKMARK_DATA_SUCCESS,
+    data,
+  }
+}
+
+export function updateUserBookmarkData() {
+  return {
+    type: UPDATE_USER_BOOKMARK_DATA,
+  }
+}
+
+export function updateUserBookmarkDataSuccess(data) {
+  return {
+    type: UPDATE_USER_BOOKMARK_DATA_SUCCESS,
+    data,
   }
 }
 
@@ -208,10 +237,10 @@ export function fetchUserFavorites() {
   }
 }
 
-export function fetchUserFavorite(bookId) {
+export function fetchUserFavorite(params) {
   return (dispatch) => {
     dispatch(getUserFavoriteData())
-    getUserFavorite(bookId)
+    getUserFavorite(params)
       .then((data) => {
         dispatch(getUserFavoriteDataSuccess(data))
       })
@@ -247,6 +276,29 @@ export function addUser(params) {
     addPeople(params)
       .then((data) => {
         dispatch(postUserSuccess(data))
+      })
+      .catch((err) => dispatch(postUserFailure()))
+  };
+};
+
+export function updateUserBookmark(params) {
+  console.log({params});
+  return (dispatch) => {
+    dispatch(updateUserBookmarkData());
+    updateBookmark(params)
+      .then((data) => {
+        dispatch(updateUserBookmarkDataSuccess(data))
+      })
+      .catch((err) => dispatch(postUserFailure()))
+  };
+};
+
+export function createUserBookmark(params) {
+  return (dispatch) => {
+    dispatch(createUserBookmarkData());
+    createBookmark(params)
+      .then((data) => {
+        dispatch(createUserBookmarkDataSuccess(data))
       })
       .catch((err) => dispatch(postUserFailure()))
   };
