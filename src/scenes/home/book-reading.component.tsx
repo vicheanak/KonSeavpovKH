@@ -23,11 +23,17 @@ import { ThemeContext } from '../../services/theme.service';
 import Slider from '@react-native-community/slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
+import {
+  SafeAreaLayout,
+  SafeAreaLayoutElement,
+  SaveAreaInset,
+} from '../../components/safe-area-layout.component';
+
 export type BookReadingRouteParams = {
     todo: Todo;
 }  
 
-export const BookReadingScreen = (props: any): LayoutElement => {
+export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
 
   const insets: EdgeInsets = useSafeArea();
 
@@ -173,7 +179,9 @@ export const BookReadingScreen = (props: any): LayoutElement => {
   }
 
   return (
-    <React.Fragment>
+    <SafeAreaLayout
+    style={styles.safeArea}
+    insets={[SaveAreaInset.TOP, SaveAreaInset.BOTTOM]}>
       <TopNavigation
         leftControl={renderBackAction()}
         rightControls={[
@@ -205,11 +213,14 @@ export const BookReadingScreen = (props: any): LayoutElement => {
         </Card>
       )}
       <Divider />
-    </React.Fragment>
+    </SafeAreaLayout>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1
+  },
   smallText: {
     fontSize: 14
   },

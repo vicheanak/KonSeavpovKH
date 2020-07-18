@@ -282,7 +282,6 @@ export function addUser(params) {
 };
 
 export function updateUserBookmark(params) {
-  console.log({params});
   return (dispatch) => {
     dispatch(updateUserBookmarkData());
     updateBookmark(params)

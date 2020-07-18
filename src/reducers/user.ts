@@ -1,5 +1,5 @@
 
-import { FETCHING_USER_FAVORITES_DATA, FETCHING_USER_FAVORITES_DATA_SUCCESS, FETCHING_USER_FAVORITE_DATA, FETCHING_USER_FAVORITE_DATA_SUCCESS } from '../redux/constants'
+import { CREATE_USER_BOOKMARK_DATA, CREATE_USER_BOOKMARK_DATA_SUCCESS, UPDATE_USER_BOOKMARK_DATA, UPDATE_USER_BOOKMARK_DATA_SUCCESS, FETCHING_USER_FAVORITES_DATA, FETCHING_USER_FAVORITES_DATA_SUCCESS, FETCHING_USER_FAVORITE_DATA, FETCHING_USER_FAVORITE_DATA_SUCCESS } from '../redux/constants'
 const initialState = {
   favorites: [],
   favorite: {},
@@ -27,6 +27,28 @@ export const user = (state = initialState, action) => {
         isFavoriteFetching: true
       }
     case FETCHING_USER_FAVORITE_DATA_SUCCESS:
+      return {
+        ...state,
+        favorite: action.data,
+        isFavoriteFetching: false
+      }
+    case CREATE_USER_BOOKMARK_DATA:
+      return {
+        ...state,
+        isFavoriteFetching: true
+      }
+    case CREATE_USER_BOOKMARK_DATA_SUCCESS:
+      return {
+        ...state,
+        favorite: action.data,
+        isFavoriteFetching: false
+      }
+    case UPDATE_USER_BOOKMARK_DATA:
+      return {
+        ...state,
+        isFavoriteFetching: true
+      }
+    case UPDATE_USER_BOOKMARK_DATA_SUCCESS:
       return {
         ...state,
         favorite: action.data,

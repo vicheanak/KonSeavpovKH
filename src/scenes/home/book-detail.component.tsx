@@ -37,11 +37,17 @@ import ContentView from '../../layouts/home/book-detail';
 import TrackPlayer from 'react-native-track-player';
 import { Playlist } from './../../services/Playlist';
 
+import {
+  SafeAreaLayout,
+  SafeAreaLayoutElement,
+  SaveAreaInset,
+} from '../../components/safe-area-layout.component';
+
 export type BookChapterRouteParams = {
   book: any;
 };
 
-export const BookDetailScreen = (props: any): LayoutElement => {
+export const BookDetailScreen = (props: any): SafeAreaLayoutElement => {
   // const {book} = props.route.params;
   const insets: EdgeInsets = useSafeArea();
 
@@ -52,21 +58,8 @@ export const BookDetailScreen = (props: any): LayoutElement => {
 
   let isBookmarked = false;
 
-  let [bookmarked, setBookmarked] = React.useState<boolean>(false);
   useEffect(() => {
     (async () => {
-      // Check chapter exists in Playlist, if Exist in Playlist Do Nothing
-      // If not in Playlist, Set to the first Chapter of the new book
-      fetchFavorite({userUuid: '11609902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid});
-      setTimeout(() => {
-        if (props.favorite){
-          setBookmarked(props.favorite.isBookmarked);
-        }
-        else{
-          setBookmarked(true);
-        }
-        console.log('bookmarked ==> ', {bookmarked});
-      }, 1000);
       const currentTrack = await TrackPlayer.getCurrentTrack();
       if (!currentTrack){
         setup();
@@ -114,24 +107,19 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   }
 
   const onBookmarkActionPress = (): void => {
-    console.log(bookmarked);
-    isBookmarked = !bookmarked;
-    console.log({isBookmarked});
-    setBookmarked(isBookmarked);
-    if (bookmarked == undefined){
-      props.createBookmark({bookId: book.id, isBookmarked: isBookmarked});
+    if (props.favorite == undefined){
+      props.createBookmark({userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid, isBookmarked: true});
     }
     else{
-      props.updateBookmark({bookId: book.id, isBookmarked: isBookmarked});
+      props.updateBookmark({userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid, isBookmarked: !props.favorite?.isBookmarked});
     }
   };
 
   const renderBookmarkAction = (): React.ReactElement => {
-    // console.log('bookmarked ==> actions ==> ', bookmarked);
     return (
       <TopNavigationAction
         icon={
-          bookmarked
+          props.favorite?.isBookmarked
             ? BookmarkIcon
             : BookmarkOutlineIcon
         }
@@ -148,14 +136,16 @@ export const BookDetailScreen = (props: any): LayoutElement => {
   );
 
   return (
-    <React.Fragment>
+    <SafeAreaLayout
+    style={styles.safeArea}
+    insets={SaveAreaInset.TOP}>
       <TopNavigation
         title={book.title}
         leftControl={renderBackAction()}
         rightControls={[renderBookmarkAction()]}
       />
       <ContentView {...props}/>
-    </React.Fragment>
+    </SafeAreaLayout>
   );
 };
 

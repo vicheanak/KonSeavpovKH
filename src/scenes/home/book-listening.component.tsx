@@ -12,11 +12,17 @@ import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
 import {AppRoute} from '../../navigation/app-routes';
 
+import {
+  SafeAreaLayout,
+  SafeAreaLayoutElement,
+  SaveAreaInset,
+} from '../../components/safe-area-layout.component';
+
 export type BookListeningRouteParams = {
     todo: Todo;
 }  
 
-export const BookListeningScreen = (props: any): LayoutElement => {
+export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
 
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
@@ -55,13 +61,15 @@ export const BookListeningScreen = (props: any): LayoutElement => {
 
 
   return (
-    <React.Fragment>
+    <SafeAreaLayout
+    style={styles.safeArea}
+    insets={[SaveAreaInset.TOP]}>
       <TopNavigation
           leftControl={renderBackAction()}
           rightControls={[renderBookReading()]}
         />
          <ContentView {...props}/>
-    </React.Fragment>
+    </SafeAreaLayout>
   );
 };
 

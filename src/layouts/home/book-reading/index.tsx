@@ -135,7 +135,7 @@ export default (props: any): React.ReactElement => {
   const [selectedIndex, setSelectedIndex] = React.useState(chapterIndex);
 
   return (
-    <View>
+    <View style={styles.mainContainer}>
       <ViewPager
         selectedIndex={chapterIndex}
         onSelect={async index => {
@@ -207,21 +207,31 @@ export default (props: any): React.ReactElement => {
           );
         })}
       </ViewPager>
-      <ProgressBar
-        style={styles.itemProgressBar}
-        progress={currentBar}
-        // text={`${3}%`}
-        text={currentChapter}
-        fadeAnim={fadeAnim}
-      />
+      <View style={styles.bottom}>
+        <ProgressBar
+          style={styles.itemProgressBar}
+          progress={currentBar}
+          // text={`${3}%`}
+          text={currentChapter}
+          fadeAnim={fadeAnim}
+        />
+      </View>
     </View>
   );
 };
 
 const themedStyles = StyleService.create({
-  container: {
+  mainContainer: {
+    flex: 1,
     backgroundColor: 'background-basic-color-2',
-    height: Dimensions.get('window').height - 80,
+  },
+  container: {
+    // backgroundColor: 'background-basic-color-2',
+    // height: Dimensions.get('window').height - 100,
+  },
+  bottom: {
+    flex: 1,
+    justifyContent: 'flex-end'
   },
   itemProgressBar: {
     position: 'absolute',

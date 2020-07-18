@@ -40,6 +40,9 @@ export const getBookChapters = (bookId) => {
       .get(`${API_SOURCE}/books/${bookId}/chapters`)
       .then(res => {
         return resolve(res.data);
+      }).catch((error) => {
+        console.log('erorr ', error);
+        return resolve(error);
       });
   })
 }
@@ -54,6 +57,9 @@ export const getUserFavorites = () => {
       .get(`${API_SOURCE}/users/1/favorites`, {params})
       .then(res => {
         return resolve(res.data);
+      }).catch((error) => {
+        console.log('erorr ', error);
+        return resolve(error);
       });
   })
 }
@@ -71,33 +77,38 @@ export const getUserFavorite = (params) => {
         console.log(result);
         return resolve(result);
       }).catch((error) => {
-        console.error(error);
+        console.error('error user favorite ==> ', error);
+        return resolve(error);
       });
   })
 }
 
 export const createBookmark = (params) => {
-  let bookId = params.bookId;
+  let bookUuid = params.bookUuid;
+  let userUuid = params.userUuid;
   return new Promise((resolve, reject) => {
     axios
-      .post(`${API_SOURCE}/users/1/favorites/${bookId}`, params)
+      .post(`${API_SOURCE}/users/${userUuid}/favorites/${bookUuid}`, params)
       .then(res => {
         return resolve(res.data);
       }).catch((error) => {
         console.error(error);
+        return resolve(error);
       });
   })
 }
 
 export const updateBookmark = (params) => {
-  let bookId = params.bookId;
+  let bookUuid = params.bookUuid;
+  let userUuid = params.userUuid;
   return new Promise((resolve, reject) => {
     axios
-      .put(`${API_SOURCE}/users/1/favorites/${bookId}`, params)
+      .put(`${API_SOURCE}/users/${userUuid}/favorites/${bookUuid}`, params)
       .then(res => {
         return resolve(res.data);
       }).catch((error) => {
         console.error(error);
+        return resolve(error);
       });
   })
 }
@@ -111,6 +122,9 @@ export const getBookDetail = () => {
       .get(`${API_SOURCE}/books`, {params})
       .then(res => {
         return resolve(res.data);
+      }).catch((error) => {
+        console.log('erorr ', error);
+        return resolve(error);
       });
   })
 }
@@ -123,7 +137,13 @@ export const addPeople = (params) => {
         axios.get(`https://reqres.in/api/users`)
           .then(res => {
             return resolve(res.data);
-          })
+          }).catch((error) => {
+            console.log('erorr ', error);
+            return resolve(error);
+          });
+      }).catch((error) => {
+        console.log('erorr ', error);
+        return resolve(error);
       });
   })
 }

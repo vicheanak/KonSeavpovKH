@@ -35,7 +35,8 @@ import {
   updateBookmarkBookDetail,
   updateBookDetail,
   fetchBooksChapters,
-  updateBookCurrentChapter
+  updateBookCurrentChapter,
+  fetchUserFavorite
 } from '../../redux/actions';
 import { SOURCE } from '../../app/app-environment';
 
@@ -45,7 +46,7 @@ const BookScreen = (props: any): ListElement => {
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {setBookCurrentChapter, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
+  const {fetchFavorite, setBookCurrentChapter, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
@@ -62,7 +63,7 @@ const BookScreen = (props: any): ListElement => {
     setBookDetail(book);
     fetchChapters(book.uuid);
     setBookCurrentChapter({currentChapter: book.chapters[0]});
-    console.log({book});
+    fetchFavorite({userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid});
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
@@ -241,6 +242,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(fetchBooksChapters(bookId)),
     setBookCurrentChapter: currentChapter =>
       dispatch(updateBookCurrentChapter(currentChapter)),
+    fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
   };
 };
 
