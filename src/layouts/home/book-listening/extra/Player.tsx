@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import TrackPlayer, {
-  useTrackPlayerProgress,
-  usePlaybackState,
-  useTrackPlayerEvents
-} from "react-native-track-player";
+import TrackPlayer from "react-native-track-player";
+import {useTrackPlayerEvents, useTrackPlayerProgress, usePlaybackState} from 'react-native-track-player/lib/hooks';
 import {
   Image,
   StyleSheet,

@@ -34,7 +34,7 @@ import {
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
-import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
+import TrackPlayer from 'react-native-track-player';
 import { Playlist } from './../../services/Playlist';
 
 export type BookChapterRouteParams = {
@@ -49,8 +49,6 @@ export const BookDetailScreen = (props: any): LayoutElement => {
 
   const {fetchFavorite, favorite, bookDetail, setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
   const book = bookDetail.book;
-
-  const playbackState = usePlaybackState();
 
   let isBookmarked = false;
 

@@ -32,8 +32,8 @@ import {ProfileAvatar} from './extra/profile-avatar.component';
 import {ProfileSetting} from './extra/profile-setting.component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Slider from '@react-native-community/slider';
-import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
-
+import TrackPlayer from 'react-native-track-player';
+import {usePlaybackState} from 'react-native-track-player/lib/hooks';
 import Player from './extra/Player';
 // import playlistData from "./extra/playlist.json";
 

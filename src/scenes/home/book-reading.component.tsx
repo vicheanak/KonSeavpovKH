@@ -22,7 +22,6 @@ import {AppRoute} from '../../navigation/app-routes';
 import { ThemeContext } from '../../services/theme.service';
 import Slider from '@react-native-community/slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
 
 export type BookReadingRouteParams = {
     todo: Todo;

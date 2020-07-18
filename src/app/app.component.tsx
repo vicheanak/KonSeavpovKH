@@ -33,7 +33,8 @@ import {
   useStyleSheet,
 } from '@ui-kitten/components';
 import {CloseOutlineIcon} from '../assets/icons';
-import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
+import TrackPlayer from 'react-native-track-player';
+import {usePlaybackState} from 'react-native-track-player/lib/hooks';
 import {updatePlayerVisibility} from './../redux/actions';
 import {SOURCE} from './app-environment';
 import TextTicker from 'react-native-text-ticker';

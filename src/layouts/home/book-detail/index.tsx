@@ -24,7 +24,8 @@ import {
 import {ImageOverlay} from './extra/image-overlay.component';
 import {Product, ProductOption} from './extra/data';
 import {AppRoute} from '../../../navigation/app-routes';
-import TrackPlayer, {usePlaybackState} from 'react-native-track-player';
+import TrackPlayer from 'react-native-track-player';
+import {usePlaybackState} from 'react-native-track-player/lib/hooks';
 import {CloseIcon} from './../../../assets/icons';
 import {SOURCE} from '../../../app/app-environment';
 import {connect} from 'react-redux';
