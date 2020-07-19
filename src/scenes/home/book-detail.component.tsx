@@ -60,6 +60,7 @@ export const BookDetailScreen = (props: any): SafeAreaLayoutElement => {
 
   useEffect(() => {
     (async () => {
+      fetchFavorite({userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid});
       const currentTrack = await TrackPlayer.getCurrentTrack();
       if (!currentTrack){
         setup();

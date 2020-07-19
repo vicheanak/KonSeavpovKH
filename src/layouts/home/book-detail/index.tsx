@@ -29,7 +29,7 @@ import {usePlaybackState} from 'react-native-track-player/lib/hooks';
 import {CloseIcon} from './../../../assets/icons';
 import {SOURCE} from '../../../app/app-environment';
 import {connect} from 'react-redux';
-import { updateBookCurrentChapter } from './../../../redux/actions';
+import {updateBookCurrentChapter} from './../../../redux/actions';
 
 const product: Product = Product.centralParkApartment();
 
@@ -41,52 +41,65 @@ const ListeningIcon = (style): IconElement => (
   <Icon {...style} name="volume-up-outline" />
 );
 
-
 export default (props: any): React.ReactElement => {
-// const BookDetailLayout = (props: any): React.ReactElement => {
+  // const BookDetailLayout = (props: any): React.ReactElement => {
   // export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const {book} = props.bookDetail;
   const {bookChapter} = props;
 
+  let favorite : {
+    currentChapter: number;
+    isAudioDownload: boolean; 
+    isBookmarked: boolean;
+    isFinished: boolean;
+    isProgress: boolean;
+    isStarted: boolean;
+    audioLocalSource: string;
+    userUuid: string;
+    bookUuid: string;
+  } = {
+    currentChapter: 0,
+    isAudioDownload: false, 
+    isBookmarked: false,
+    isFinished: false,
+    isProgress: false,
+    isStarted: false,
+    audioLocalSource: 'na',
+    userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d',
+    bookUuid: book.uuid
+  };
+
   useEffect(() => {
-    (async () => {
-    })();
+    (async () => {})();
   }, []);
 
+  console.log({favorite});
+  const setBookmarked = () => {
+    if (props.favorite == undefined) {
+      favorite.isStarted = true;
+      props.createBookmark(favorite);
+    } else {
+      favorite = props.favorite;
+      favorite.isStarted = true;
+      props.updateBookmark(favorite);
+    }
+  };
+
   const onReadingButtonPress = (): void => {
+    setBookmarked();
     props.setPlayerVisibility(false);
-    let matchingChapter = bookChapter.chapters.find((chapter) => {
-      return chapter.chapterNumber == 1; 
+    let matchingChapter = bookChapter.chapters.find(chapter => {
+      return chapter.chapterNumber == 1;
     });
     props.setBookCurrentChapter({currentChapter: matchingChapter});
     props.navigation.navigate(AppRoute.BOOK_READING);
   };
 
-  const [title, setTitle] = React.useState<string>('');
-  const [artist, setArtist] = React.useState<string>('');
-  const [artwork, setArtwork] = React.useState<string>('');
-  // const [bottomVisibility, setToolbarVisibility] = React.useState<boolean>(
-  //   false,
-  // );
-
-  const onComeBack = async () => {
-    // const listeningState = await TrackPlayer.getState();
-    // const currentTrack = await TrackPlayer.getCurrentTrack();
-    // const track = await TrackPlayer.getTrack(currentTrack);
-    // const {title, artist, artwork} = track || {};
-    // setTitle(title);
-    // setArtist(artist);
-    // setArtwork(artwork);
-    // setToolbarVisibility(true);
-  };
-
   const onListeningButtonPress = (): void => {
+    setBookmarked();
     props.setPlayerVisibility(false);
     props.navigation.navigate(AppRoute.BOOK_LISTENING);
-    // props.navigation.navigate(AppRoute.BOOK_LISTENING, {
-    //   onGoBack: () => onComeBack(),
-    // });
   };
 
   const renderOptionItemIcon = (
@@ -204,14 +217,14 @@ export default (props: any): React.ReactElement => {
               icon={ReadingIcon}
               style={styles.bookButton}
               onPress={onReadingButtonPress}>
-                {props.intlData.messages['reading']}
+              {props.intlData.messages['reading']}
             </Button>
             <Button
               status="basic"
               icon={ListeningIcon}
               style={styles.bookButton}
               onPress={onListeningButtonPress}>
-                {props.intlData.messages['listening']}
+              {props.intlData.messages['listening']}
             </Button>
           </ButtonGroup>
         </Card>

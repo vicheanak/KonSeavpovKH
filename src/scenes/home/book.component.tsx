@@ -63,7 +63,6 @@ const BookScreen = (props: any): ListElement => {
     setBookDetail(book);
     fetchChapters(book.uuid);
     setBookCurrentChapter({currentChapter: book.chapters[0]});
-    fetchFavorite({userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid});
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
