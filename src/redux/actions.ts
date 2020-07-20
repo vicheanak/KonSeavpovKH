@@ -248,10 +248,10 @@ export function fetchUserFavorite(params) {
   }
 }
 
-export function fetchBooksChapters(bookId) {
+export function fetchBooksChapters(bookUuid) {
   return (dispatch) => {
     dispatch(getBookChaptersData());
-    getBookChapters(bookId)
+    getBookChapters(bookUuid)
       .then((data) => {
         dispatch(getBookChaptersSuccess(data))
       })

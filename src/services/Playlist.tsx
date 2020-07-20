@@ -2,8 +2,9 @@ import { SOURCE } from './../app/app-environment';
 export const Playlist = {
   getPlaylist: (book: any) => {
     let playlist = book.chapters.map((track: any) => {
+      console.log({track});
       return {
-        "id": track.id,
+        "id": track.uuid,
         "url": SOURCE + track.audioUrl,
         "title": track.title,
         "artist": book.authorname,

@@ -5,6 +5,7 @@ const initialState = {
 	chapters: [],
 	isFetchingChapters: true,
     currentChapter: {},
+    book: {},
     playerVisibility: false,
     playerNavigation: ''
 };
@@ -33,7 +34,8 @@ export const bookChapter = (state = initialState, action) => {
         case UPDATE_BOOK_CURRENT_CHAPTER:
             return {
                 ...state,
-                currentChapter: action.currentChapter
+                currentChapter: action.currentChapter,
+                book: action.book
             };
         case UPDATE_PLAYER_VISIBILITY: 
             return {

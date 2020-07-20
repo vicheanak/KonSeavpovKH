@@ -63,6 +63,8 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
 
   const { bookDetail, setBookCurrentChapter } = props;
 
+  const {book} = bookDetail;
+
   const [selectedOption, setSelectedOption] = React.useState(defaultOptions);
 
   const onSelect = (option) => {
@@ -81,7 +83,7 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
   const navigateBookChapter = (chapterIndex: number): void => {
     const { [chapterIndex]: chapter } = bookDetail.chapters;
     console.log({chapter});
-    setBookCurrentChapter({currentChapter: chapter});
+    setBookCurrentChapter({currentChapter: chapter, book: book});
     props.navigation.navigate(AppRoute.BOOK_READING);
   };
 

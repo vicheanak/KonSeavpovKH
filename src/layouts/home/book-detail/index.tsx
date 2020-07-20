@@ -46,27 +46,23 @@ export default (props: any): React.ReactElement => {
   // export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const {book} = props.bookDetail;
-  const {bookChapter} = props;
+  const {fetchChapters, bookChapter, setPlayerVisibility} = props;
 
   let favorite : {
     currentChapter: number;
-    isAudioDownload: boolean; 
+    isAudioDownloaded: boolean; 
     isBookmarked: boolean;
-    isFinished: boolean;
-    isProgress: boolean;
     isStarted: boolean;
     audioLocalSource: string;
     userUuid: string;
     bookUuid: string;
   } = {
     currentChapter: 0,
-    isAudioDownload: false, 
+    isAudioDownloaded: false, 
     isBookmarked: false,
-    isFinished: false,
-    isProgress: false,
     isStarted: false,
     audioLocalSource: 'na',
-    userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d',
+    userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d',
     bookUuid: book.uuid
   };
 
@@ -74,31 +70,44 @@ export default (props: any): React.ReactElement => {
     (async () => {})();
   }, []);
 
-  console.log({favorite});
   const setBookmarked = () => {
     if (props.favorite == undefined) {
       favorite.isStarted = true;
       props.createBookmark(favorite);
     } else {
-      favorite = props.favorite;
-      favorite.isStarted = true;
+      favorite.currentChapter = props.favorite.currentChapter;
+      favorite.isAudioDownloaded = props.favorite.isAudioDownloaded;
+      favorite.isBookmarked = props.favorite.isBookmarked;
+      favorite.audioLocalSource = props.favorite.audioLocalSource;
+      favorite.userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
+      favorite.isStarted = book.uuid;
       props.updateBookmark(favorite);
     }
   };
 
-  const onReadingButtonPress = (): void => {
-    setBookmarked();
-    props.setPlayerVisibility(false);
+  const setChapter = () => {
+    // fetchChapters(book.uuid);
     let matchingChapter = bookChapter.chapters.find(chapter => {
-      return chapter.chapterNumber == 1;
+      if (props.favorite){
+        return chapter.chapterNumber == props.favorite.currentChapter;
+      }
+      else{
+        return bookChapter.chapters[0];
+      }
     });
-    props.setBookCurrentChapter({currentChapter: matchingChapter});
+    props.setBookCurrentChapter({currentChapter: matchingChapter, book: book});
+  }
+
+  const onReadingButtonPress = async () => {
+    setBookmarked();
+    setChapter();
     props.navigation.navigate(AppRoute.BOOK_READING);
   };
 
   const onListeningButtonPress = (): void => {
     setBookmarked();
-    props.setPlayerVisibility(false);
+    setChapter();
+    // setPlayerVisibility(false);
     props.navigation.navigate(AppRoute.BOOK_LISTENING);
   };
 

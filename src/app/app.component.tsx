@@ -24,7 +24,6 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-
 import {
   Button,
   Icon,
@@ -140,7 +139,7 @@ const App = (props: any): React.ReactElement => {
     playPauseButton = PauseIcon;
   }
 
-  let photo = SOURCE + props.bookDetail.book.imageUrl;
+  // let photo = SOURCE + props.bookDetail.book.imageUrl;
 
   const onPlayerPress = async () => {
     props.setPlayerVisibility(false);
@@ -165,12 +164,12 @@ const App = (props: any): React.ReactElement => {
             <NavigationContainer ref={RootNavigation.navigationRef}>
               {/* <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/> */}
               <AppNavigator initialRouteName={AppRoute.HOME} />
-              {bookChapter.playerVisibility && (
+              {bookChapter.currentChapter && bookChapter.playerVisibility && (
                 <View style={styles.cardContainer}>
                   <TouchableOpacity
                     style={styles.touchableView}
                     onPress={onPlayerPress}>
-                    <Image style={styles.imageCard} source={{uri: photo}} />
+                    <Image style={styles.imageCard} source={{uri: SOURCE + props.bookChapter.currentChapter.book.imageUrl}} />
                     <View style={styles.labelContainer}>
                       <TextTicker
                         style={styles.textTitle}
@@ -182,7 +181,7 @@ const App = (props: any): React.ReactElement => {
                         {bookChapter.currentChapter.currentChapter.title}
                       </TextTicker>
                       <Text appearance="hint" category="c1">
-                        {bookDetail.book.authorname}
+                        {bookChapter.currentChapter.book.authorname}
                       </Text>
                     </View>
                     <View style={styles.mediaController}>
@@ -243,7 +242,7 @@ const themedStyles = StyleService.create({
     alignSelf: 'center',
     alignItems: 'flex-start',
     position: 'absolute',
-    bottom: 50,
+    bottom: 90,
     left: 0,
     right: 0,
     backgroundColor: '#222A43',

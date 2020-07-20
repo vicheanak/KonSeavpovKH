@@ -1,74 +1,146 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Button, Layout, LayoutElement, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
-import { EdgeInsets, useSafeArea } from 'react-native-safe-area-context';
-import { Toolbar } from '../../components/toolbar.component';
-import { ProgressBar } from '../../components/progress-bar.component';
-import { Todo } from '../../data/todo.model';
-import { connect } from 'react-redux';
-import {SearchIcon, BookmarkIcon, BookmarkOutlineIcon, ArrowIosBackIcon, ArrowDownwardOutline, TextIcon, BookIcon} from '../../assets/icons';
-import {updatePlayerNavigation, updateBookmarkBookDetail, updateBookCurrentChapter, updateBookTotalChapters, updatePlayerVisibility} from '../../redux/actions';
-import { bookDetail } from './../../reducers/book-detail.reducer';
+import React, {useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {
+  Button,
+  Layout,
+  LayoutElement,
+  Text,
+  TopNavigation,
+  TopNavigationAction,
+} from '@ui-kitten/components';
+import {EdgeInsets, useSafeArea} from 'react-native-safe-area-context';
+import {Toolbar} from '../../components/toolbar.component';
+import {ProgressBar} from '../../components/progress-bar.component';
+import {Todo} from '../../data/todo.model';
+import {connect} from 'react-redux';
+import {
+  SearchIcon,
+  BookmarkIcon,
+  BookmarkOutlineIcon,
+  ArrowIosBackIcon,
+  ArrowDownwardOutline,
+  TextIcon,
+  BookIcon,
+} from '../../assets/icons';
+import {
+  updatePlayerNavigation,
+  updateBookmarkBookDetail,
+  updateBookCurrentChapter,
+  updateBookTotalChapters,
+  updatePlayerVisibility,
+} from '../../redux/actions';
+import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
 import {AppRoute} from '../../navigation/app-routes';
-
+import TrackPlayer from 'react-native-track-player';
+import {usePlaybackState} from 'react-native-track-player/lib/hooks';
 import {
   SafeAreaLayout,
   SafeAreaLayoutElement,
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
+import {Playlist} from './../../services/Playlist';
 
 export type BookListeningRouteParams = {
-    todo: Todo;
-}  
+  todo: Todo;
+};
 
 export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
-
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
-  const onBookmarkActionPress = (): void => {
-    setBookmarked(!bookmarked);
-    props.setBookmarkBookDetail(bookmarked);
+  const {book} = props.bookDetail;
+
+  useEffect(() => {
+    (async () => {
+      const currentTrack = await TrackPlayer.getCurrentTrack();
+      console.log(
+        'currentTrack ==>',
+        currentTrack,
+        typeof currentTrack,
+        currentTrack == 'undefined',
+      );
+      if (!currentTrack || currentTrack == 'undefined') {
+        console.log('Track not found');
+        await setup();
+        await resetPlaylist();
+      } else {
+        console.log('Track found');
+        let foundTrack = book.chapters.find(matching => {
+          return matching.uuid == currentTrack;
+        });
+        console.log({foundTrack});
+        if (!foundTrack) {
+          // props.setPlayerVisibility(false);
+          await TrackPlayer.stop();
+          await resetPlaylist();
+        }
+      }
+      console.log('Start Playing 3');
+      await TrackPlayer.play();
+    })();
+  }, []);
+
+  const resetPlaylist = () => {
+    return new Promise(async (resolve, reject) => {
+      await TrackPlayer.reset();
+      console.log({book});
+      const playlistData = Playlist.getPlaylist(book);
+      console.log({playlistData});
+      await TrackPlayer.add(playlistData);
+      console.log('End Reset Playlist 2');
+      return resolve(true);
+    });
   };
 
-  
+  const setup = () => {
+    return new Promise(async (resolve, reject) => {
+      await TrackPlayer.setupPlayer({});
+      await TrackPlayer.updateOptions({
+        stopWithApp: true,
+        capabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE,
+          TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+          TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+          TrackPlayer.CAPABILITY_STOP,
+          TrackPlayer.CAPABILITY_SEEK_TO,
+        ],
+        compactCapabilities: [
+          TrackPlayer.CAPABILITY_PLAY,
+          TrackPlayer.CAPABILITY_PAUSE,
+          TrackPlayer.CAPABILITY_SEEK_TO,
+        ],
+      });
+      console.log('Setup 1');
+      resolve(true);
+    });
+  };
+
   const onGoBack = (): void => {
     props.setPlayerVisibility(true);
-    props.setPlayerNavigation('listening');
+    // props.setPlayerNavigation('listening');
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
-
   const renderBackAction = (): React.ReactElement => (
-    <TopNavigationAction
-      icon={ArrowDownwardOutline}
-      onPress={onGoBack}
-    />
+    <TopNavigationAction icon={ArrowDownwardOutline} onPress={onGoBack} />
   );
 
   const onBookReading = (): void => {
     props.navigation.navigate(AppRoute.BOOK_READING);
-  }
+  };
 
   const renderBookReading = (): React.ReactElement => (
-    <TopNavigationAction
-      icon={
-        TextIcon
-      }
-      onPress={onBookReading}
-    />
+    <TopNavigationAction icon={TextIcon} onPress={onBookReading} />
   );
 
-
   return (
-    <SafeAreaLayout
-    style={styles.safeArea}
-    insets={[SaveAreaInset.TOP]}>
+    <SafeAreaLayout style={styles.safeArea} insets={[SaveAreaInset.TOP]}>
       <TopNavigation
-          leftControl={renderBackAction()}
-          rightControls={[renderBookReading()]}
-        />
-         <ContentView {...props}/>
+        leftControl={renderBackAction()}
+        rightControls={[renderBookReading()]}
+      />
+      <ContentView {...props} />
     </SafeAreaLayout>
   );
 };
@@ -97,28 +169,30 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
 const mapStateToProps = state => {
   return {
     bookmarkedBookDetail: state.bookmarkedBookDetail,
     currentChapter: state.currentChapter,
     totalChapters: state.totalChapters,
     bookDetail: state.bookDetail,
-    bookChapter: state.bookChapter
+    bookChapter: state.bookChapter,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setBookmarkBookDetail: (bookmarked) => dispatch(updateBookmarkBookDetail(bookmarked)),
-    setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
-    setBookTotalChapters: (totalChapters) => dispatch(updateBookTotalChapters(totalChapters)),
-    setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility)),
-    setPlayerNavigation: (playerNavigation) => dispatch(updatePlayerNavigation(playerNavigation))
+    setBookmarkBookDetail: bookmarked =>
+      dispatch(updateBookmarkBookDetail(bookmarked)),
+    setBookCurrentChapter: currentChapter =>
+      dispatch(updateBookCurrentChapter(currentChapter)),
+    setBookTotalChapters: totalChapters =>
+      dispatch(updateBookTotalChapters(totalChapters)),
+    setPlayerVisibility: playerVisibility =>
+      dispatch(updatePlayerVisibility(playerVisibility)),
+    setPlayerNavigation: playerNavigation =>
+      dispatch(updatePlayerNavigation(playerNavigation)),
   };
 };
-
 
 export default connect(
   mapStateToProps,

@@ -12,14 +12,14 @@ export interface ProgressBarProps extends ViewProps, ThemedComponentProps {
 const ProgressBarComponent = ({ progress, fadeAnim, text, ...props }: ProgressBarProps): React.ReactElement<ViewProps> => {
   return (
     <View style={props.themedStyle.container}>
-       <Animated.View style={[{opacity: fadeAnim}, props.themedStyle.talkBubble, {left: `${progress}%`}]}>
+       {/* <Animated.View style={[{opacity: fadeAnim}, props.themedStyle.talkBubble, {left: `${progress}%`}]}>
           <Text style={[props.themedStyle.text]}>{text}</Text>
           <View style={props.themedStyle.talkBubbleSquare} />
-        </Animated.View>
-         <View style={[props.themedStyle.talkBubble, {left: `${progress}%`}]}>
+        </Animated.View> */}
+         {/* <View style={[props.themedStyle.talkBubble, {left: `${progress}%`}]}>
           <Text style={[props.themedStyle.text]}>{text}</Text>
           <View style={props.themedStyle.talkBubbleSquare} />
-        </View>   
+        </View>    */}
       <View
         {...props}
         style={[props.themedStyle.progressContainer, props.style]}>

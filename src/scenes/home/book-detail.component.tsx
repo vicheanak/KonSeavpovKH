@@ -51,68 +51,35 @@ export const BookDetailScreen = (props: any): SafeAreaLayoutElement => {
   // const {book} = props.route.params;
   const insets: EdgeInsets = useSafeArea();
 
-  const [bookDetailId, setBookDetailId] = useState(0);
-
   const {fetchFavorite, favorite, bookDetail, setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
   const book = bookDetail.book;
 
   let isBookmarked = false;
 
+
   useEffect(() => {
     (async () => {
-      fetchFavorite({userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid});
-      const currentTrack = await TrackPlayer.getCurrentTrack();
-      if (!currentTrack){
-        setup();
-        resetPlaylist();
-      }
-      else{
-        let foundTrack = book.chapters.find(matching => {
-          return matching.uuid == currentTrack;
-        });
-        if (!foundTrack) {
-          props.setPlayerVisibility(false);
-          await TrackPlayer.stop();
-          resetPlaylist();
-        }
-      }
+      // fetchFavorite({userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid});
+      props.setPlayerVisibility(false);
     })();
-  }, [bookDetailId]);
+  }, []);
 
 
-
-  const resetPlaylist = async () => {
-      await TrackPlayer.reset();
-      const playlistData = Playlist.getPlaylist(book);
-      await TrackPlayer.add(playlistData);
+  const setChapters = () => {
+    // let matchingChapter = bookChapter.chapters.find(chapter => {
+    //   return chapter.chapterNumber == 1;
+    // });
+    // console.log({matchingChapter});
+    // props.setBookCurrentChapter({currentChapter: book.chapters[0], book: book});
   }
 
-  const setup = async () => {
-    await TrackPlayer.setupPlayer({});
-    await TrackPlayer.updateOptions({
-      stopWithApp: true,
-      capabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-        TrackPlayer.CAPABILITY_STOP,
-        TrackPlayer.CAPABILITY_SEEK_TO,
-      ],
-      compactCapabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SEEK_TO,
-      ],
-    });
-  }
 
   const onBookmarkActionPress = (): void => {
     if (props.favorite == undefined){
-      props.createBookmark({userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid, isBookmarked: true});
+      props.createBookmark({userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid, isBookmarked: true});
     }
     else{
-      props.updateBookmark({userUuid: '1user902-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid, isBookmarked: !props.favorite?.isBookmarked});
+      props.updateBookmark({userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid, isBookmarked: !props.favorite?.isBookmarked});
     }
   };
 
@@ -129,10 +96,23 @@ export const BookDetailScreen = (props: any): SafeAreaLayoutElement => {
     )
   };
 
+  const onGoBack = (): void => {
+    let isCurrentChapterExist = Object.keys(props.bookChapter.currentChapter).length
+    let playerVisibility = isCurrentChapterExist ? true : false;
+    props.setPlayerVisibility(playerVisibility);
+    console.log('fetch Chapters', props.bookChapter.currentChapter.book);
+    let bookCurrentChapter = props.bookChapter.currentChapter.book;
+    console.log({bookCurrentChapter});
+    if (bookCurrentChapter){
+      fetchChapters(bookCurrentChapter.uuid);
+    }
+    props.navigation.goBack();
+  };
+
   const renderBackAction = (): React.ReactElement => (
     <TopNavigationAction
       icon={ArrowIosBackIcon}
-      onPress={props.navigation.goBack}
+      onPress={onGoBack}
     />
   );
 
@@ -189,12 +169,11 @@ const mapDispatchToProps = dispatch => {
       dispatch(updateBookCurrentChapter(currentChapter)),
     setBookTextSizeVisibility: textSizeVisibility =>
       dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
-    fetchChapters: bookId => 
-      dispatch(fetchBooksChapters(bookId)),
+    fetchChapters: (bookUuid) => dispatch(fetchBooksChapters(bookUuid)),
     setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility)),
     fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
-    updateBookmark: (bookId) => dispatch(updateUserBookmark(bookId)),
-    createBookmark: (bookId) => dispatch(createUserBookmark(bookId))
+    updateBookmark: (params) => dispatch(updateUserBookmark(params)),
+    createBookmark: (params) => dispatch(createUserBookmark(params))
   };
 };
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -53,17 +53,49 @@ export default (props: any): React.ReactElement => {
     bookDetail,
     hideTextSizeCard,
     bookReading,
+    updateBookmark,
   } = props;
+  const {book} = props.bookDetail;
   const styles = useStyleSheet(themedStyles);
+  const userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
 
+  let favorite : {
+    currentChapter: number;
+    isAudioDownloaded: boolean; 
+    isBookmarked: boolean;
+    isFinished: boolean;
+    isProgress: boolean;
+    isStarted: boolean;
+    audioLocalSource: string;
+    userUuid: string;
+    bookUuid: string;
+  } = {
+    currentChapter: 0,
+    isAudioDownloaded: false, 
+    isBookmarked: false,
+    isFinished: false,
+    isProgress: false,
+    isStarted: false,
+    audioLocalSource: 'na',
+    userUuid: userUuid,
+    bookUuid: book.uuid
+  };
+
+  if (props.favorite){
+    favorite.currentChapter = props.favorite.currentChapter;
+    favorite.isAudioDownloaded = props.favorite.isAudioDownloaded;
+    favorite.isBookmarked = props.favorite.isBookmarked;
+    favorite.audioLocalSource = props.favorite.audioLocalSource;
+    favorite.userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
+    favorite.isStarted = true;
+    favorite.userUuid = userUuid;
+    favorite.bookUuid = book.uuid;
+  }
+  else{
+    favorite.isStarted = true;
+  }
 
   const onBookButtonPress = (): void => {};
-
-  // const renderImageItem = (
-  //   info: ListRenderItemInfo<ImageSourcePropType>,
-  // ): React.ReactElement => (
-  //   <Image style={styles.imageItem} source={info.item} />
-  // );
 
   const renderOptionItemIcon = (
     style: ImageStyle,
@@ -103,7 +135,6 @@ export default (props: any): React.ReactElement => {
   );
 
   let fadeAnim = useRef(new Animated.Value(0)).current;
-  let windowWidth = Dimensions.get('window').width * currentBar / 100;
 
   const onViewSelected = async () => {
     fadeInText();
@@ -126,44 +157,47 @@ export default (props: any): React.ReactElement => {
       duration: 1000,
     }).start();
   };
-  const totalChapterBars = (bookChapter.chapters.length * 100) / 100;
+
+  let totalChapterBars = (bookChapter.chapters.length * 100) / 100;
   let currentBar =
     (bookChapter.currentChapter.currentChapter.chapterNumber * 100) /
     totalChapterBars;
   let currentChapter = bookChapter.currentChapter.currentChapter.chapterNumber;
   let chapterIndex = currentChapter - 1;
-  const [selectedIndex, setSelectedIndex] = React.useState(chapterIndex);
 
+  const onViewPagerSelected = async (index) => {
+    onViewSelected();
+    if (index > chapterIndex) {
+      //nextChapter
+      currentBar = currentBar + currentBar;
+      currentChapter++;
+    }
+    if (index < chapterIndex) {
+      //previousChapter
+      currentBar = currentBar - currentBar;
+      currentChapter--;
+    }
+    favorite.currentChapter = currentChapter;
+    updateBookmark(favorite);
+    hideTextSizeCard();
+
+    let matchingChapter = bookChapter.chapters.find(chapter => {
+      return chapter.chapterNumber == currentChapter;
+    });
+    setBookCurrentChapter({currentChapter: matchingChapter, book: book});
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+    if (currentTrack && currentTrack != "undefined"){
+      await TrackPlayer.skip(matchingChapter.id.toString());
+    }
+  }
   return (
     <View style={styles.mainContainer}>
       <ViewPager
         selectedIndex={chapterIndex}
-        onSelect={async index => {
-          onViewSelected();
-          if (index > chapterIndex) {
-            //nextChapter
-            currentBar = currentBar + currentBar;
-            currentChapter++;
-          }
-          if (index < chapterIndex) {
-            //previousChapter
-            currentBar = currentBar - currentBar;
-            currentChapter--;
-          }
-          hideTextSizeCard();
-
-          let matchingChapter = bookChapter.chapters.find(chapter => {
-            return chapter.chapterNumber == currentChapter;
-          });
-          setBookCurrentChapter({currentChapter: matchingChapter});
-          const currentTrack = await TrackPlayer.getCurrentTrack();
-          if (currentTrack){
-            await TrackPlayer.skip(matchingChapter.id.toString());
-          }
-        }}>
-        {bookChapter.chapters.map(chapter => {
+        onSelect={onViewPagerSelected}>
+        {bookChapter.chapters.map((chapter, i) => {
           return (
-            <ScrollView key={chapter.id} style={styles.container}>
+            <ScrollView key={i} style={styles.container}>
               <View style={styles.headerContainer}>
                 <Text style={styles.title} category="h4">
                   {chapter.title}
@@ -211,10 +245,9 @@ export default (props: any): React.ReactElement => {
         <ProgressBar
           style={styles.itemProgressBar}
           progress={currentBar}
-          // text={`${3}%`}
           text={currentChapter}
           fadeAnim={fadeAnim}
-        />
+        /> 
       </View>
     </View>
   );

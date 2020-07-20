@@ -14,7 +14,10 @@ import {updateBookmarkBookDetail,
   updateBookTextSizeVisibility,
   fetchBooksChapters,
   updatePlayerVisibility,
-  updatePlayerNavigation} from '../../redux/actions';
+  updatePlayerNavigation,
+  updateUserBookmark,
+  createUserBookmark
+} from '../../redux/actions';
 import { bookDetail } from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-reading';
 import { ColorPaletteIcon, ListeningIcon, ListIcon } from './../../assets/icons';
@@ -40,23 +43,37 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
 
   const [bookId, setBookId] = useState(0);
 
-  const {textSize, bookDetail, ...listProps} = props;
+  const {setPlayerVisibility, textSize, bookDetail, ...listProps} = props;
+
+  const { book } = bookDetail;
+
+  let favorite : {
+    currentChapter: number;
+    isAudioDownload: boolean; 
+    isBookmarked: boolean;
+    isFinished: boolean;
+    isProgress: boolean;
+    isStarted: boolean;
+    audioLocalSource: string;
+    userUuid: string;
+    bookUuid: string;
+  } = {
+    currentChapter: 0,
+    isAudioDownload: false, 
+    isBookmarked: false,
+    isFinished: false,
+    isProgress: false,
+    isStarted: false,
+    audioLocalSource: 'na',
+    userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d',
+    bookUuid: book.uuid
+  };
 
   useEffect(() => {
     props.setPlayerVisibility(false);
   }, [bookId]);
 
   const themeContext = React.useContext(ThemeContext);
-
-  const [bookmarked, setBookmarked] = React.useState<boolean>(false);
-
-
-  const onBookmarkActionPress = (): void => {
-    setBookmarked(!bookmarked);
-    
-  
-    props.setBookmarkBookDetail(bookmarked);
-  };
 
   const onChapterListActionPress = (): void => {
     props.navigation.navigate(AppRoute.BOOK_CHAPTER);
@@ -100,7 +117,7 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
   const onGoBack = (): void => {
     props.setPlayerNavigation('reading');
     props.setPlayerVisibility(true);
-    props.navigation.navigate(AppRoute.BOOK_DETAIL);
+    props.navigation.navigate(AppRoute.BOOK);
   };
 
   const renderBackAction = (): React.ReactElement => (
@@ -109,31 +126,6 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
       onPress={onGoBack}
     />
   );
-
-  
-  const onReadingButtonPress = (): void => {
-    let todo = {
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
-      id: 0,
-      photo: 3,
-      progress: 33,
-      title: 'Learn React Navigation 5',
-    };
-    props.navigation.navigate(AppRoute.BOOK_READING, {todo});
-  };
-
-  const onListeningButtonPress = (): void => {
-    let todo = {
-      description:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
-      id: 0,
-      photo: 3,
-      progress: 33,
-      title: 'Learn React Navigation 5',
-    };
-    props.navigation.navigate(AppRoute.BOOK_LISTENING, {todo});
-  };
 
   const setTheme = (theme): void => {
     themeContext.setCurrentTheme(theme);
@@ -177,12 +169,14 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
   const hideTextSizeCard = () => {
     props.setBookTextSizeVisibility({textSizeVisibility: false});
   }
-
+  let chapterNumber = props.bookChapter.currentChapter.currentChapter.chapterNumber.toString();
+  let totalChapters = book.chapters.length.toString();
   return (
     <SafeAreaLayout
     style={styles.safeArea}
     insets={[SaveAreaInset.TOP, SaveAreaInset.BOTTOM]}>
       <TopNavigation
+        title={`${chapterNumber} of ${totalChapters}`}
         leftControl={renderBackAction()}
         rightControls={[
           renderChapterListAction(),
@@ -275,7 +269,8 @@ const mapStateToProps = state => {
     textSize: state.bookReading.textSize,
     textSizeVisibility: state.bookReading.textSizeVisibility,
     bookReading: state.bookReading.data,
-    bookChapter: state.bookChapter
+    bookChapter: state.bookChapter,
+    favorite: state.user.favorite
   };
 };
 
@@ -287,7 +282,9 @@ const mapDispatchToProps = dispatch => {
     setBookTextSizeVisibility: (textSizeVisibility) => dispatch(updateBookTextSizeVisibility(textSizeVisibility)),
     fetchChapters: (bookId) => dispatch(fetchBooksChapters(bookId)),
     setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility)),
-    setPlayerNavigation: (playerNavigation) => dispatch(updatePlayerNavigation(playerNavigation))
+    setPlayerNavigation: (playerNavigation) => dispatch(updatePlayerNavigation(playerNavigation)),
+    updateBookmark: (params) => dispatch(updateUserBookmark(params)),
+    createBookmark: (params) => dispatch(createUserBookmark(params))
   };
 };
 

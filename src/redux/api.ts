@@ -34,10 +34,10 @@ export const getBooksList = () => {
   })
 }
 
-export const getBookChapters = (bookId) => {
+export const getBookChapters = (bookUuid) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${API_SOURCE}/books/${bookId}/chapters`)
+      .get(`${API_SOURCE}/books/${bookUuid}/chapters`)
       .then(res => {
         return resolve(res.data);
       }).catch((error) => {
@@ -74,7 +74,6 @@ export const getUserFavorite = (params) => {
         if (res.data.books.length){
           result = res.data.books[0].favorite; 
         }
-        console.log(result);
         return resolve(result);
       }).catch((error) => {
         console.error('error user favorite ==> ', error);
