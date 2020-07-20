@@ -28,6 +28,7 @@ import {
   updateBookCurrentChapter,
   updateBookTotalChapters,
   updatePlayerVisibility,
+  updateUserBookmark,
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
@@ -48,34 +49,26 @@ export type BookListeningRouteParams = {
 export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
   const [bookmarked, setBookmarked] = React.useState<boolean>(false);
 
+  const {bookChapter} = props;
   const {book} = props.bookDetail;
+
 
   useEffect(() => {
     (async () => {
+      props.setPlayerVisibility(false);
       const currentTrack = await TrackPlayer.getCurrentTrack();
-      console.log(
-        'currentTrack ==>',
-        currentTrack,
-        typeof currentTrack,
-        currentTrack == 'undefined',
-      );
       if (!currentTrack || currentTrack == 'undefined') {
-        console.log('Track not found');
         await setup();
         await resetPlaylist();
       } else {
-        console.log('Track found');
         let foundTrack = book.chapters.find(matching => {
           return matching.uuid == currentTrack;
         });
-        console.log({foundTrack});
         if (!foundTrack) {
-          // props.setPlayerVisibility(false);
-          await TrackPlayer.stop();
           await resetPlaylist();
         }
       }
-      console.log('Start Playing 3');
+      await TrackPlayer.skip(bookChapter.currentChapter.currentChapter.uuid.toString());
       await TrackPlayer.play();
     })();
   }, []);
@@ -117,9 +110,9 @@ export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
   };
 
   const onGoBack = (): void => {
+    props.setPlayerNavigation('listening');
     props.setPlayerVisibility(true);
-    // props.setPlayerNavigation('listening');
-    props.navigation.navigate(AppRoute.BOOK_DETAIL);
+    props.navigation.navigate(AppRoute.BOOK);
   };
 
   const renderBackAction = (): React.ReactElement => (
@@ -191,6 +184,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(updatePlayerVisibility(playerVisibility)),
     setPlayerNavigation: playerNavigation =>
       dispatch(updatePlayerNavigation(playerNavigation)),
+    updateBookmark: (params) => dispatch(updateUserBookmark(params)),
   };
 };
 

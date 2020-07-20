@@ -53,7 +53,7 @@ export default (props: any): React.ReactElement => {
     props.navigation && props.navigation.goBack();
   };
 
-  const {bookChapter, bookDetail} = props;
+  const {updateBookmark, bookChapter, bookDetail} = props;
 
   const sliderOneValuesChangeStart = () => {};
 
@@ -63,25 +63,52 @@ export default (props: any): React.ReactElement => {
 
   const playbackState = usePlaybackState();
 
-  const matchNewTrackToChapter = async () => {
+  const {book} = props.bookDetail;
+
+  let favorite : {
+    currentChapter: number;
+    isAudioDownload: boolean; 
+    isBookmarked: boolean;
+    isFinished: boolean;
+    isProgress: boolean;
+    isStarted: boolean;
+    audioLocalSource: string;
+    userUuid: string;
+    bookUuid: string;
+  } = {
+    currentChapter: 0,
+    isAudioDownload: false, 
+    isBookmarked: false,
+    isFinished: false,
+    isProgress: false,
+    isStarted: true,
+    audioLocalSource: 'na',
+    userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d',
+    bookUuid: book.uuid
+  };
+
+  const setCurrentChapter = async () => {
       let newTrack = await TrackPlayer.getCurrentTrack();
       let matchingChapter = bookChapter.chapters.find(chapter => {
-        return chapter.id == newTrack;
+        return chapter.uuid == newTrack;
       });
-      props.setBookCurrentChapter({currentChapter: matchingChapter});
+      console.log({matchingChapter});
+      props.setBookCurrentChapter({currentChapter: matchingChapter, book: book});
+      favorite.currentChapter = matchingChapter.chapterNumber;
+      updateBookmark(favorite);
   }
 
   const skipToNext = async () => {
     try {
       await TrackPlayer.skipToNext();
-      matchNewTrackToChapter();
+      setCurrentChapter();
     } catch (_) {}
   };
 
   const skipToPrevious = async () => {
     try {
       await TrackPlayer.skipToPrevious();
-      matchNewTrackToChapter();
+      setCurrentChapter();
     } catch (_) {}
   }
 

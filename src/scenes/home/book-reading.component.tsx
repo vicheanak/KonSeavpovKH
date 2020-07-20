@@ -176,7 +176,7 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
     style={styles.safeArea}
     insets={[SaveAreaInset.TOP, SaveAreaInset.BOTTOM]}>
       <TopNavigation
-        title={`${chapterNumber} of ${totalChapters}`}
+        title={`${chapterNumber} of ${totalChapters} ${props.intlData.messages['chapters']}`}
         leftControl={renderBackAction()}
         rightControls={[
           renderChapterListAction(),
@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
+    intlData: state.intlData,
     bookDetail: state.bookDetail,
     textSize: state.bookReading.textSize,
     textSizeVisibility: state.bookReading.textSizeVisibility,

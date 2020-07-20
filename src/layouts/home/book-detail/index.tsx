@@ -107,7 +107,6 @@ export default (props: any): React.ReactElement => {
   const onListeningButtonPress = (): void => {
     setBookmarked();
     setChapter();
-    // setPlayerVisibility(false);
     props.navigation.navigate(AppRoute.BOOK_LISTENING);
   };
 

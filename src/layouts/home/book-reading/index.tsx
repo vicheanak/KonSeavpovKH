@@ -186,8 +186,9 @@ export default (props: any): React.ReactElement => {
     });
     setBookCurrentChapter({currentChapter: matchingChapter, book: book});
     const currentTrack = await TrackPlayer.getCurrentTrack();
+    console.log({currentTrack});
     if (currentTrack && currentTrack != "undefined"){
-      await TrackPlayer.skip(matchingChapter.id.toString());
+      await TrackPlayer.skip(matchingChapter.uuid.toString());
     }
   }
   return (
