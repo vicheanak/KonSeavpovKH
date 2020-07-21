@@ -27,8 +27,9 @@ import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import { BookmarkIcon } from './../../assets/icons';
 import { bookDetail } from './../../reducers/book-detail.reducer';
-import { updateBookCurrentChapter } from './../../redux/actions';
-
+import { updateBookCurrentChapter,updateUserBookmark } from './../../redux/actions';
+import * as RootNavigation from '../../app/RootNavigation';
+import TrackPlayer from 'react-native-track-player';
 
 
 const allTodos: Todo[] = [
@@ -61,11 +62,45 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
     { id: 4, text: props.intlData.messages['not_yet_read'] },
   ];
 
-  const { bookDetail, setBookCurrentChapter } = props;
+  const { bookChapter, bookDetail, setBookCurrentChapter, updateBookmark } = props;
 
   const {book} = bookDetail;
+  const userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
 
   const [selectedOption, setSelectedOption] = React.useState(defaultOptions);
+
+  let favorite : {
+    currentChapter: number;
+    isAudioDownloaded: boolean; 
+    isBookmarked: boolean;
+    isFinished: boolean;
+    isProgress: boolean;
+    isStarted: boolean;
+    audioLocalSource: string;
+    userUuid: string;
+    bookUuid: string;
+  } = {
+    currentChapter: 0,
+    isAudioDownloaded: false, 
+    isBookmarked: false,
+    isFinished: false,
+    isProgress: false,
+    isStarted: false,
+    audioLocalSource: 'na',
+    userUuid: userUuid,
+    bookUuid: book.uuid
+  };
+
+  if (props.favorite){
+    favorite.currentChapter = props.favorite.currentChapter;
+    favorite.isAudioDownloaded = props.favorite.isAudioDownloaded;
+    favorite.isBookmarked = props.favorite.isBookmarked;
+    favorite.audioLocalSource = props.favorite.audioLocalSource;
+    favorite.userUuid = userUuid;
+    favorite.isStarted = true;
+    favorite.userUuid = userUuid;
+    favorite.bookUuid = book.uuid;
+  }
 
   const onSelect = (option) => {
     setSelectedOption(option);
@@ -80,11 +115,31 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
     setQuery(query);
   };
 
-  const navigateBookChapter = (chapterIndex: number): void => {
-    const { [chapterIndex]: chapter } = bookDetail.chapters;
-    console.log({chapter});
+  const onGoBack = () => {
+    let routeName = AppRoute.BOOK_READING;
+    if (props.bookChapter.playerNavigation == 'listening'){
+      routeName = AppRoute.BOOK_LISTENING;
+    }
+    RootNavigation.navigate(routeName, {});
+  }
+
+  const navigateBookChapter = async (chapterIndex: number): void => {
+    const { [chapterIndex]: chapter } = book.chapters;
     setBookCurrentChapter({currentChapter: chapter, book: book});
-    props.navigation.navigate(AppRoute.BOOK_READING);
+    favorite.currentChapter = chapter.chapterNumber;
+    updateBookmark(favorite);
+    let routeName = AppRoute.BOOK_READING;
+    if (props.bookChapter.playerNavigation == 'listening'){
+      routeName = AppRoute.BOOK_LISTENING;
+    }
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+    if (currentTrack){
+      await TrackPlayer.skip(chapter.uuid.toString());
+      // await TrackPlayer.play();
+    }
+
+    // props.navigation.navigate(AppRoute.BOOK_READING);
+    RootNavigation.navigate(routeName, {});
   };
 
   const renderChapters = ({ item }: ListRenderItemInfo<any>): ListItemElement => (
@@ -105,14 +160,14 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
     style={styles.safeArea}
     insets={SaveAreaInset.TOP}>
     <Toolbar
-      title='Kon Seavpov'
-      onBackPress={props.navigation.goBack}
+      title={props.intlData.messages['chapters']}
+      onBackPress={onGoBack}
     />
     <Divider/>
     <Layout style={styles.container} level='1'>
       <List
         style={styles.list}
-        data={bookDetail.chapters}
+        data={book.chapters}
         renderItem={renderChapters}
         ItemSeparatorComponent={Divider}
       />
@@ -177,13 +232,16 @@ const themedStyles = StyleService.create({
 const mapStateToProps = state => {
   return {
     intlData: state.intlData,
-    bookDetail: state.bookDetail
+    bookDetail: state.bookDetail,
+    favorite: state.user.favorite,
+    bookChapter: state.bookChapter,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     setBookCurrentChapter: (currentChapter) => dispatch(updateBookCurrentChapter(currentChapter)),
+    updateBookmark: (params) => dispatch(updateUserBookmark(params)),
   };
 };
 

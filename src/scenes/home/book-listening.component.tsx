@@ -21,6 +21,7 @@ import {
   ArrowDownwardOutline,
   TextIcon,
   BookIcon,
+  ListIcon
 } from '../../assets/icons';
 import {
   updatePlayerNavigation,
@@ -127,11 +128,26 @@ export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
     <TopNavigationAction icon={TextIcon} onPress={onBookReading} />
   );
 
+  const onChapterListActionPress = (): void => {
+    props.setPlayerNavigation('listening');
+    props.navigation.navigate(AppRoute.BOOK_CHAPTER);
+  }
+
+  const renderChapterListAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={ListIcon}
+      onPress={onChapterListActionPress}
+    />
+  );
+
   return (
     <SafeAreaLayout style={styles.safeArea} insets={[SaveAreaInset.TOP]}>
       <TopNavigation
         leftControl={renderBackAction()}
-        rightControls={[renderBookReading()]}
+        rightControls={[
+          renderChapterListAction(), 
+          renderBookReading()
+        ]}
       />
       <ContentView {...props} />
     </SafeAreaLayout>

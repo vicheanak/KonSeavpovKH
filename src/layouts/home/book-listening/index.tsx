@@ -92,7 +92,6 @@ export default (props: any): React.ReactElement => {
       let matchingChapter = bookChapter.chapters.find(chapter => {
         return chapter.uuid == newTrack;
       });
-      console.log({matchingChapter});
       props.setBookCurrentChapter({currentChapter: matchingChapter, book: book});
       favorite.currentChapter = matchingChapter.chapterNumber;
       updateBookmark(favorite);

@@ -46,10 +46,11 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
   const {setPlayerVisibility, textSize, bookDetail, ...listProps} = props;
 
   const { book } = bookDetail;
+  const userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
 
   let favorite : {
     currentChapter: number;
-    isAudioDownload: boolean; 
+    isAudioDownloaded: boolean; 
     isBookmarked: boolean;
     isFinished: boolean;
     isProgress: boolean;
@@ -59,13 +60,13 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
     bookUuid: string;
   } = {
     currentChapter: 0,
-    isAudioDownload: false, 
+    isAudioDownloaded: false, 
     isBookmarked: false,
     isFinished: false,
     isProgress: false,
     isStarted: false,
     audioLocalSource: 'na',
-    userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d',
+    userUuid: userUuid,
     bookUuid: book.uuid
   };
 
@@ -76,6 +77,7 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
   const themeContext = React.useContext(ThemeContext);
 
   const onChapterListActionPress = (): void => {
+    props.setPlayerNavigation('reading');
     props.navigation.navigate(AppRoute.BOOK_CHAPTER);
   }
   

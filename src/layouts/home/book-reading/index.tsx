@@ -86,7 +86,6 @@ export default (props: any): React.ReactElement => {
     favorite.isAudioDownloaded = props.favorite.isAudioDownloaded;
     favorite.isBookmarked = props.favorite.isBookmarked;
     favorite.audioLocalSource = props.favorite.audioLocalSource;
-    favorite.userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
     favorite.isStarted = true;
     favorite.userUuid = userUuid;
     favorite.bookUuid = book.uuid;
