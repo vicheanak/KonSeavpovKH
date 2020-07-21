@@ -67,10 +67,9 @@ const App = (props: any): React.ReactElement => {
 
   useEffect(() => {
     (async () => {
-      // props.setPlayerVisibility(false);
+      switchLanguage(currentLang);
     })();
   }, [bookId]);
-  switchLanguage(currentLang);
 
   const setCurrentTheme = (theme: any) => {
     const nextTheme = theme;

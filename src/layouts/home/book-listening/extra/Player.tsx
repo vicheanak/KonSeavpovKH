@@ -26,6 +26,8 @@ import {
 import TextTicker from 'react-native-text-ticker';
 import Slider from "@brlja/react-native-slider";
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import {SOURCE} from './../../../../app/app-environment';
+import { bookChapter } from "src/reducers/book-chapter.reducer";
 
 function secondsToTime(e){
   var h = Math.floor(e / 3600).toString().padStart(2,'0'),
@@ -132,32 +134,6 @@ export default function Player(props) {
   const [trackArtwork, setTrackArtwork] = useState();
   const [trackArtist, setTrackArtist] = useState("");
 
-  useEffect(() => {
-    (async function f() {
-      const currentTrack = await TrackPlayer.getCurrentTrack();
-      const track = await TrackPlayer.getTrack(currentTrack);
-      if (currentTrack){
-        const { title, artist, artwork } = track || {};
-        setTrackTitle(title);
-        setTrackArtist(artist);
-        setTrackArtwork(artwork);
-        onTogglePlayback();
-      }
-    })();
-  }, []);
-
-
-  useTrackPlayerEvents(["playback-track-changed"], async event => {
-    if (event.type === TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {
-      const track = await TrackPlayer.getTrack(event.nextTrack);
-      const { title, artist, artwork } = track || {};
-      setTrackTitle(title);
-      setTrackArtist(artist);
-      setTrackArtwork(artwork);
-    }
-  });
-  
-
   const { style, onNext, onPrevious, onTogglePlayback, onSkipNext, onSkipBack } = props;
 
   let playPauseButton = PlayIcon;
@@ -172,7 +148,7 @@ export default function Player(props) {
 
   return (
     <View style={[styles.card, style]}>
-      <Image style={styles.cover} source={{ uri: trackArtwork }} />
+      <Image style={styles.cover} source={{ uri: SOURCE + props.bookChapter.currentChapter.book.imageUrl }} />
       <ProgressBar />
       <View style={styles.titleAuthor}>
         <TextTicker
@@ -182,7 +158,7 @@ export default function Player(props) {
           bounce
           repeatSpacer={50}
           marqueeDelay={100}>
-          {trackTitle} Whatever is long goes here ...
+          {props.bookChapter.currentChapter.currentChapter.chapterNumber} of {props.bookChapter.chapters.length} - {props.bookChapter.currentChapter.currentChapter.title}
         </TextTicker>
         <Text style={styles.artist}>{trackArtist}</Text>
       </View>

@@ -35,7 +35,7 @@ import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-listening';
 import {AppRoute} from '../../navigation/app-routes';
 import TrackPlayer from 'react-native-track-player';
-import {usePlaybackState} from 'react-native-track-player/lib/hooks';
+// import {usePlaybackState, useTrackPlayerEvents} from 'react-native-track-player/lib/hooks';
 import {
   SafeAreaLayout,
   SafeAreaLayoutElement,
@@ -74,14 +74,12 @@ export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
     })();
   }, []);
 
+
   const resetPlaylist = () => {
     return new Promise(async (resolve, reject) => {
       await TrackPlayer.reset();
-      console.log({book});
       const playlistData = Playlist.getPlaylist(book);
-      console.log({playlistData});
       await TrackPlayer.add(playlistData);
-      console.log('End Reset Playlist 2');
       return resolve(true);
     });
   };
@@ -105,7 +103,6 @@ export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
           TrackPlayer.CAPABILITY_SEEK_TO,
         ],
       });
-      console.log('Setup 1');
       resolve(true);
     });
   };
@@ -185,6 +182,7 @@ const mapStateToProps = state => {
     totalChapters: state.totalChapters,
     bookDetail: state.bookDetail,
     bookChapter: state.bookChapter,
+    favorite: state.user.favorite
   };
 };
 

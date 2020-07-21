@@ -29,7 +29,6 @@ import {usePlaybackState} from 'react-native-track-player/lib/hooks';
 import {CloseIcon} from './../../../assets/icons';
 import {SOURCE} from '../../../app/app-environment';
 import {connect} from 'react-redux';
-import {updateBookCurrentChapter} from './../../../redux/actions';
 
 const product: Product = Product.centralParkApartment();
 
@@ -46,7 +45,7 @@ export default (props: any): React.ReactElement => {
   // export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const {book} = props.bookDetail;
-  const {fetchChapters, bookChapter, setPlayerVisibility} = props;
+  const {updateBookmark, fetchChapters, bookChapter, setPlayerVisibility} = props;
 
   let favorite : {
     currentChapter: number;
@@ -70,7 +69,7 @@ export default (props: any): React.ReactElement => {
     (async () => {})();
   }, []);
 
-  const setBookmarked = () => {
+  const setFavorite = () => {
     if (props.favorite == undefined) {
       favorite.isStarted = true;
       props.createBookmark(favorite);
@@ -78,10 +77,11 @@ export default (props: any): React.ReactElement => {
       favorite.currentChapter = props.favorite.currentChapter;
       favorite.isAudioDownloaded = props.favorite.isAudioDownloaded;
       favorite.isBookmarked = props.favorite.isBookmarked;
+      favorite.isStarted = true;
       favorite.audioLocalSource = props.favorite.audioLocalSource;
       favorite.userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
-      favorite.isStarted = book.uuid;
-      props.updateBookmark(favorite);
+      favorite.bookUuid = book.uuid;
+      updateBookmark(favorite);
     }
   };
 
@@ -99,14 +99,16 @@ export default (props: any): React.ReactElement => {
   }
 
   const onReadingButtonPress = async () => {
-    setBookmarked();
+    setFavorite();
     setChapter();
+    // setPlaybackListener();
     props.navigation.navigate(AppRoute.BOOK_READING);
   };
 
   const onListeningButtonPress = (): void => {
-    setBookmarked();
+    setFavorite();
     setChapter();
+    // setPlaybackListener();
     props.navigation.navigate(AppRoute.BOOK_LISTENING);
   };
 
@@ -195,8 +197,6 @@ export default (props: any): React.ReactElement => {
     }
   };
 
-  let imageUrl = SOURCE + book.imageUrl;
-
   return (
     <View style={styles.container}>
       <ScrollView
@@ -205,7 +205,7 @@ export default (props: any): React.ReactElement => {
             ? {marginBottom: 70}
             : {marginBottom: 0},
         ]}>
-        <ImageOverlay style={styles.image} source={{uri: imageUrl}} />
+        <ImageOverlay style={styles.image} source={{uri: SOURCE + book.imageUrl}} />
         <View style={styles.headerContainer}>
           <Text style={styles.title} category="h4">
             {book.title}

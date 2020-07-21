@@ -67,7 +67,7 @@ export default (props: any): React.ReactElement => {
 
   let favorite : {
     currentChapter: number;
-    isAudioDownload: boolean; 
+    isAudioDownloaded: boolean; 
     isBookmarked: boolean;
     isFinished: boolean;
     isProgress: boolean;
@@ -77,7 +77,7 @@ export default (props: any): React.ReactElement => {
     bookUuid: string;
   } = {
     currentChapter: 0,
-    isAudioDownload: false, 
+    isAudioDownloaded: false, 
     isBookmarked: false,
     isFinished: false,
     isProgress: false,
@@ -93,6 +93,12 @@ export default (props: any): React.ReactElement => {
         return chapter.uuid == newTrack;
       });
       props.setBookCurrentChapter({currentChapter: matchingChapter, book: book});
+      favorite.isAudioDownloaded = props.favorite.isAudioDownloaded;
+      favorite.isBookmarked = props.favorite.isBookmarked;
+      favorite.isStarted = true;
+      favorite.audioLocalSource = props.favorite.audioLocalSource;
+      favorite.userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
+      favorite.bookUuid = book.uuid;
       favorite.currentChapter = matchingChapter.chapterNumber;
       updateBookmark(favorite);
   }
@@ -100,14 +106,14 @@ export default (props: any): React.ReactElement => {
   const skipToNext = async () => {
     try {
       await TrackPlayer.skipToNext();
-      setCurrentChapter();
+      // setCurrentChapter();
     } catch (_) {}
   };
 
   const skipToPrevious = async () => {
     try {
       await TrackPlayer.skipToPrevious();
-      setCurrentChapter();
+      // setCurrentChapter();
     } catch (_) {}
   }
 
@@ -131,22 +137,16 @@ export default (props: any): React.ReactElement => {
 
   useEffect(() => {
     (async () => {
-      // const currentTrack = await TrackPlayer.getCurrentTrack();
-      // let foundTrack = bookChapter.chapters.find(matching => {
-      //   return matching.id == currentTrack;
-      // });
-      // let currentChapterId = bookChapter.currentChapter.currentChapter.id.toString();
-      // console.log({foundTrack, currentChapterId});
-      // if (!foundTrack) {
-      //   setup();
-      //   togglePlayback();
-      //   await TrackPlayer.skip(currentChapterId.toString());
-      // }else{
-      //   if (currentChapterId != currentTrack) {
-      //     await TrackPlayer.skip(currentChapterId.toString());
-      //   }
-      // }
-      await TrackPlayer.play();
+      TrackPlayer.addEventListener('playback-track-changed', async (trackChanged) => {
+        const currentTrack = await TrackPlayer.getCurrentTrack();
+        const track = await TrackPlayer.getTrack(currentTrack);
+        setCurrentChapter();
+      });
+      TrackPlayer.addEventListener('playback-queue-ended', async (trackEnded) => {
+        const currentTrack = await TrackPlayer.getCurrentTrack();
+        const track = await TrackPlayer.getTrack(currentTrack);
+        setCurrentChapter();
+      });
     })();
   }, []);
 
@@ -199,6 +199,7 @@ export default (props: any): React.ReactElement => {
         onTogglePlayback={togglePlayback}
         onSkipNext={skipNext15}
         onSkipBack={skipBack15}
+        {...props}
       />
     </View>
   );
