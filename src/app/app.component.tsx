@@ -38,24 +38,20 @@ import {updatePlayerVisibility} from './../redux/actions';
 import {SOURCE} from './app-environment';
 import TextTicker from 'react-native-text-ticker';
 import * as RootNavigation from './RootNavigation';
+import {
+  LoginButton,
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk';
 
 const defaultConfig: {local: Local; theme: Theme} = {
   local: 'kh',
   theme: 'light',
 };
 
-const loadingTasks: Task[] = [
-  () =>
-    AppStorage.getTheme(defaultConfig.theme).then(result => [
-      'currentTheme',
-      result,
-    ]),
-  () =>
-    AppStorage.getLocal(defaultConfig.local).then(result => [
-      'currentLang',
-      result,
-    ]),
-];
+let initRouteName = AppRoute.AUTH;
+
 
 const App = (props: any): React.ReactElement => {
   const {currentTheme, currentLang, bookChapter, bookDetail} = props;
@@ -65,9 +61,20 @@ const App = (props: any): React.ReactElement => {
 
   const [bookId, setBookId] = useState(0);
 
+
+  const _responseInfoCallback = (error: any, result: any) => {
+    if (error) {
+      console.log('Error fetching data: ', error);
+    } else {
+      console.log('Success fetching data: ', result);
+    }
+  };
+
   useEffect(() => {
     (async () => {
+      console.log('LOADING LAST UseEffect', initRouteName);
       switchLanguage(currentLang);
+      // isLogin();
     })();
   }, [bookId]);
 
@@ -89,6 +96,7 @@ const App = (props: any): React.ReactElement => {
 
   const playbackState = usePlaybackState();
   const [playPauseIcon, setPlayPauseIcon] = React.useState<any>('pause');
+
 
   const PlayPauseIcon = (style): ImageStyle => (
     <Icon {...style} pack="app" name={playPauseIcon} />
@@ -162,7 +170,8 @@ const App = (props: any): React.ReactElement => {
           <SafeAreaProvider>
             <NavigationContainer ref={RootNavigation.navigationRef}>
               {/* <AppNavigator initialRouteName={isAuthorized ? AppRoute.HOME : AppRoute.AUTH}/> */}
-              <AppNavigator initialRouteName={AppRoute.HOME} />
+              {/* <AppNavigator initialRouteName={AppRoute.HOME} /> */}
+              <AppNavigator initialRouteName={initRouteName} />
               {bookChapter.currentChapter && bookChapter.playerVisibility && (
                 <View style={styles.cardContainer}>
                   <TouchableOpacity
@@ -267,6 +276,29 @@ const Splash = ({loading}): React.ReactElement => (
     source={require('../assets/images/image-splash.png')}
   />
 );
+
+const loadingTasks: Task[] = [
+  () =>
+    AppStorage.getTheme(defaultConfig.theme).then(result => [
+      'currentTheme',
+      result,
+    ]),
+  () =>
+    AppStorage.getLocal(defaultConfig.local).then(result => [
+      'currentLang',
+      result,
+    ]),
+  () => 
+    AccessToken.getCurrentAccessToken().then(data => {
+      console.log('SUCCESS LOADING', initRouteName);
+      console.log({data});
+      if (data) {
+        initRouteName = AppRoute.HOME;
+      }
+    })
+];
+
+console.log({loadingTasks});
 
 const AppComponent = (props: any): React.ReactElement => (
   <AppLoading

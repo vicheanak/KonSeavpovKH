@@ -7,3 +7,5 @@ include ':react-native-selectable-text'
 project(':react-native-selectable-text').projectDir = new File(rootProject.projectDir, 	'../node_modules/@astrocoders/react-native-selectable-text/android')
 include ':react-native-track-player'
 project(':react-native-track-player').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-track-player/android')
+include ':react-native-fbsdk'
+project(':react-native-fbsdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fbsdk/android')
