@@ -8,6 +8,7 @@ import {
   View,
   Dimensions,
   Animated,
+  TextComponent,
 } from 'react-native';
 import {
   ButtonGroup,
@@ -208,6 +209,9 @@ export default (props: any): React.ReactElement => {
               </View>
 
               <View style={styles.description}>
+                {/* <Text style={{fontSize: props.textSize}}>
+                  {chapter.content}
+                </Text> */}
                 <SelectableText
                   selectable={true}
                   menuItems={['Highlight', 'Copy', 'Share']}
@@ -233,9 +237,16 @@ export default (props: any): React.ReactElement => {
                       selectionEnd,
                     });
                   }}
-                  style={[styles.descriptionText, {fontSize: props.textSize}]}
-                  value={chapter.content}
-                />
+                  TextComponent={() => {
+                    return (
+                      <Text style={[styles.descriptionText, {fontSize: props.textSize}]}>{chapter.content}</Text>
+                    )
+                  }}
+                >
+                  <Text>
+                    {chapter.content}
+                  </Text>
+                </SelectableText>
               </View>
             </ScrollView>
           );
@@ -273,8 +284,7 @@ const themedStyles = StyleService.create({
     // marginVertical: 12,
   },
   descriptionText: {
-    fontSize: 15,
-    lineHeight: 45,
+    lineHeight: 35,
     color: 'text-basic-color',
   },
   image: {

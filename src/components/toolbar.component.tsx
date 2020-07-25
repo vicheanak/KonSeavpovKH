@@ -9,7 +9,7 @@ import {
   TopNavigationActionElement,
   TopNavigationProps,
 } from '@ui-kitten/components';
-import { BackIcon, MoreVerticalIcon } from '../assets/icons';
+import { BackIcon, SettingsIcon } from '../assets/icons';
 import { connect } from 'react-redux';
 import { fetchData } from '../redux/actions';
 
@@ -45,7 +45,7 @@ export const Toolbar = (props: ToolbarProps): TopNavigationActionElement => {
       onSelect={onMenuSelect}
       onBackdropPress={onMenuActionPress}>
       <TopNavigationAction
-        icon={props.menuIcon || MoreVerticalIcon}
+        icon={props.menuIcon || SettingsIcon}
         onPress={onMenuActionPress}
       />
     </OverflowMenu>

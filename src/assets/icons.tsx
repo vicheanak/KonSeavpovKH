@@ -15,6 +15,10 @@ export const PersonIcon = (style): IconElement => (
   <Icon {...style} name='person-outline'/>
 );
 
+export const PersonFillIcon = (style): IconElement => (
+  <Icon {...style} name='person'/>
+);
+
 export const MoreVerticalIcon = (style): IconElement => (
   <Icon {...style} name='more-vertical'/>
 );
@@ -108,7 +112,7 @@ export const ListIcon = (style: ImageStyle): IconElement => (
 );
 
 export const SettingsIcon = (style: ImageStyle): IconElement => (
-  <Icon {...style} name='settings'/>
+  <Icon {...style} name='settings-outline'/>
 );
 
 export const StarIcon = (style: ImageStyle): IconElement => (

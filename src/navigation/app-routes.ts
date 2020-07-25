@@ -28,5 +28,6 @@ export enum AppRoute {
   HIGHLIGHT = 'Highlight',
   SAVED = 'Saved',
   HIGHLIGHT_DETAIL = 'Highlight Detail',
-  LIBRARY_DETAIL = 'Library Detail'
+  LIBRARY_DETAIL = 'Library Detail',
+  PROFILE = 'Profile'
 }

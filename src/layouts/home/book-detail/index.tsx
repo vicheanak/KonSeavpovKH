@@ -126,6 +126,7 @@ export default (props: any): React.ReactElement => {
       style={styles.optionItem}
       appearance="ghost"
       status="basic"
+      textStyle={{fontSize: 17, lineHeight: 30}}
       icon={(style: ImageStyle) => renderOptionItemIcon(style, option.icon)}>
       {option.title}
     </Button>
@@ -152,6 +153,7 @@ export default (props: any): React.ReactElement => {
           style={styles.optionItem}
           appearance="ghost"
           status="basic"
+          textStyle={{fontSize: 15, lineHeight: 30}}
           icon={(style: ImageStyle) => renderOptionItemIcon(style, 'clock')}>
           {book.durationMinutes.toString()} {props.intlData.messages['minutes']}
         </Button>
@@ -160,6 +162,7 @@ export default (props: any): React.ReactElement => {
           style={styles.optionItem}
           appearance="ghost"
           status="basic"
+          textStyle={{fontSize: 15, lineHeight: 30}}
           icon={(style: ImageStyle) => renderOptionItemIcon(style, 'list')}>
           {book.totalChapters.toString()} {props.intlData.messages['chapters']}
         </Button>
@@ -219,18 +222,19 @@ export default (props: any): React.ReactElement => {
           appearance="filled"
           disabled={true}
           footer={renderBookingFooter}>
-          <ButtonGroup style={styles.buttonContainer} status="basic">
+          <ButtonGroup status={'danger'} style={styles.buttonContainer} >
             <Button
-              status="basic"
               icon={ReadingIcon}
               style={styles.bookButton}
+              textStyle={{fontSize: 17, lineHeight: 30}}
               onPress={onReadingButtonPress}>
               {props.intlData.messages['reading']}
             </Button>
             <Button
-              status="basic"
+              // status="basic"
               icon={ListeningIcon}
               style={styles.bookButton}
+              textStyle={{fontSize: 17, lineHeight: 30}}
               onPress={onListeningButtonPress}>
               {props.intlData.messages['listening']}
             </Button>
@@ -364,6 +368,7 @@ const themedStyles = StyleService.create({
   },
   bookButton: {
     width: 150,
+    padding: 90
   },
   headerContainer: {
     flexDirection: 'column',
@@ -377,6 +382,7 @@ const themedStyles = StyleService.create({
     borderRadius: 30,
     justifyContent: 'center',
     marginLeft: 15,
+    lineHeight: 50
   },
   detailsList: {
     flexDirection: 'row',
@@ -395,11 +401,12 @@ const themedStyles = StyleService.create({
   optionItem: {
     marginHorizontal: 4,
     paddingHorizontal: 0,
+    lineHeight: 30
   },
   description: {
     marginHorizontal: 16,
     marginVertical: 8,
-    lineHeight: 25,
+    lineHeight: 35,
   },
   sectionLabel: {
     marginHorizontal: 30,

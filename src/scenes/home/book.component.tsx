@@ -56,7 +56,7 @@ const BookScreen = (props: any): ListElement => {
     (async () => {
       fetchBooks();
     })();
-  }, [bookId]);
+  }, []);
 
   const navigateBookDetail = (bookIndex: number): void => {
     const {[bookIndex]: book} = books;
@@ -91,7 +91,8 @@ const BookScreen = (props: any): ListElement => {
           style={styles.productTitle}
           numberOfLines={2}
           ellipsizeMode="tail">
-          {item.item.title}
+          {/* {item.item.title} */}
+          សួស្តីឆ្នាំថ្មី ខ្ញុំស្រលាញ់វត្តអារាម
         </Text>
         {/* <Button
           appearance="ghost"
@@ -101,14 +102,15 @@ const BookScreen = (props: any): ListElement => {
         /> */}
       </View>
       <Text category="c1" style={styles.productShortDescription}>
-        {item.item.shortDescription}
+        {/* {item.item.shortDescription} */}
+        អារម្មណ៍ស្រស់ស្រាយ ជាទីមនោរម្យ
       </Text>
     </Card>
   );
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.hint} category="h6">
+      <Text style={styles.labelHeader} category="h6">
         {props.intlData.messages['book_for_you']}
       </Text>
       <List
@@ -119,7 +121,7 @@ const BookScreen = (props: any): ListElement => {
         renderItem={renderBookList}
         {...listProps}
       />
-      <Text style={styles.hint} category="h6">
+      <Text style={styles.labelHeader} category="h6">
         {props.intlData.messages['trending_book']}
       </Text>
       <List
@@ -130,7 +132,7 @@ const BookScreen = (props: any): ListElement => {
         renderItem={renderBookList}
         {...listProps}
       />
-      <Text style={styles.hint} category="h6">
+      <Text style={styles.labelHeader} category="h6">
         {props.intlData.messages['new_book']}
       </Text>
       <List
@@ -150,8 +152,9 @@ const themedStyles = StyleService.create({
     flex: 1,
     backgroundColor: 'background-basic-color-1',
   },
-  hint: {
+  labelHeader: {
     margin: 16,
+    color: 'color-primary-700'
   },
   filterInput: {
     marginTop: 16,
@@ -201,8 +204,8 @@ const themedStyles = StyleService.create({
     marginHorizontal: -15,
     marginVertical: -10,
     fontWeight: 'bold',
-    lineHeight: 20,
-    height: 55,
+    // lineHeight: 25,
+    height: 50,
     width: Dimensions.get('window').width / 2 - 80,
   },
   iconButton: {

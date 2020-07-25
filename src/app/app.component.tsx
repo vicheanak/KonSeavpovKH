@@ -52,7 +52,6 @@ const defaultConfig: {local: Local; theme: Theme} = {
 
 let initRouteName = AppRoute.AUTH;
 
-
 const App = (props: any): React.ReactElement => {
   const {currentTheme, currentLang, bookChapter, bookDetail} = props;
   // This value is used to determine the initial screen
@@ -60,7 +59,6 @@ const App = (props: any): React.ReactElement => {
   const [theme, setTheme] = React.useState(currentTheme);
 
   const [bookId, setBookId] = useState(0);
-
 
   const _responseInfoCallback = (error: any, result: any) => {
     if (error) {
@@ -72,7 +70,6 @@ const App = (props: any): React.ReactElement => {
 
   useEffect(() => {
     (async () => {
-      console.log('LOADING LAST UseEffect', initRouteName);
       switchLanguage(currentLang);
       // isLogin();
     })();
@@ -96,7 +93,6 @@ const App = (props: any): React.ReactElement => {
 
   const playbackState = usePlaybackState();
   const [playPauseIcon, setPlayPauseIcon] = React.useState<any>('pause');
-
 
   const PlayPauseIcon = (style): ImageStyle => (
     <Icon {...style} pack="app" name={playPauseIcon} />
@@ -151,7 +147,7 @@ const App = (props: any): React.ReactElement => {
   const onPlayerPress = async () => {
     props.setPlayerVisibility(false);
     let routeName = AppRoute.BOOK_READING;
-    if (props.bookChapter.playerNavigation == 'listening'){
+    if (props.bookChapter.playerNavigation == 'listening') {
       routeName = AppRoute.BOOK_LISTENING;
     }
     RootNavigation.navigate(routeName, {});
@@ -163,9 +159,9 @@ const App = (props: any): React.ReactElement => {
       <ThemeContext.Provider
         value={{...appTheming, theme, setCurrentTheme, toggleTheme}}>
         <ApplicationProvider
+          // {...eva}
           mapping={mapping}
           customMapping={appMapping}
-          {...eva}
           theme={{...eva[theme], ...appTheming}}>
           <SafeAreaProvider>
             <NavigationContainer ref={RootNavigation.navigationRef}>
@@ -177,7 +173,14 @@ const App = (props: any): React.ReactElement => {
                   <TouchableOpacity
                     style={styles.touchableView}
                     onPress={onPlayerPress}>
-                    <Image style={styles.imageCard} source={{uri: SOURCE + props.bookChapter.currentChapter.book.imageUrl}} />
+                    <Image
+                      style={styles.imageCard}
+                      source={{
+                        uri:
+                          SOURCE +
+                          props.bookChapter.currentChapter.book.imageUrl,
+                      }}
+                    />
                     <View style={styles.labelContainer}>
                       <TextTicker
                         style={styles.textTitle}
@@ -279,6 +282,10 @@ const Splash = ({loading}): React.ReactElement => (
 
 const loadingTasks: Task[] = [
   () =>
+    LoadFontsTask({
+      'Hanuman-Regular': require('../assets/fonts/Hanuman-Regular.ttf'),
+    }),
+  () =>
     AppStorage.getTheme(defaultConfig.theme).then(result => [
       'currentTheme',
       result,
@@ -288,17 +295,14 @@ const loadingTasks: Task[] = [
       'currentLang',
       result,
     ]),
-  () => 
+  () =>
     AccessToken.getCurrentAccessToken().then(data => {
-      console.log('SUCCESS LOADING', initRouteName);
-      console.log({data});
       if (data) {
         initRouteName = AppRoute.HOME;
       }
-    })
+    }),
 ];
 
-console.log({loadingTasks});
 
 const AppComponent = (props: any): React.ReactElement => (
   <AppLoading

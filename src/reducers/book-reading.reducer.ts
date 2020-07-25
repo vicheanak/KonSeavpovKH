@@ -11,7 +11,7 @@ import {
 const initialState = {
     currentChapter: {},
     totalChapters: 1,
-    textSize: 15,
+    textSize: 18,
     textSizeVisibility: false,
     data: [],
     dataFetched: false,

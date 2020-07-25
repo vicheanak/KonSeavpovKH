@@ -10,3 +10,5 @@ export { AboutUsScreen } from './about-us.component';
 export { ContactUsScreen } from './contact-us.component';
 export { MenuDrawer } from './menu-drawer.component';
 export { MenuTabBar } from './menu-tab-bar.component';
+import ProfileScreen from './profile.component';
+export { ProfileScreen };

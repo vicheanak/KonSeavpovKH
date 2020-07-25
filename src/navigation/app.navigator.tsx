@@ -6,6 +6,7 @@ import {AppRoute} from './app-routes';
 import {ReadingNavigator} from './reading.navigator';
 import {ListeningNavigator} from './listening.navigator';
 import {DetailNavigator} from './detail.navigator';
+import {ProfileNavigator} from './profile.navigator';
 
 type StackNavigatorProps = React.ComponentProps<typeof Stack.Navigator>;
 
@@ -28,5 +29,6 @@ export const AppNavigator = (
     <Stack.Screen name={AppRoute.BOOK_READING} component={ReadingNavigator} />
     <Stack.Screen name={AppRoute.BOOK_LISTENING} component={ListeningNavigator} />
     <Stack.Screen name={AppRoute.BOOK_DETAIL} component={DetailNavigator} />
+    <Stack.Screen name={AppRoute.PROFILE} component={ProfileNavigator} />
   </Stack.Navigator>
 );

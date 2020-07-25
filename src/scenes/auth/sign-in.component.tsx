@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import {ImageBackground, StyleSheet, View, Image} from 'react-native';
 import {Button, CheckBox, Layout, ViewPager, Text} from '@ui-kitten/components';
 import {Formik, FormikProps} from 'formik';
 import {SignInScreenProps} from '../../navigation/auth.navigator';
@@ -22,6 +22,7 @@ import {
   SafeAreaLayoutElement,
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
+
 
 const SignInScreen = (props: any) => {
   const [shouldRemember, setShouldRemember] = React.useState<boolean>(false);
@@ -64,6 +65,7 @@ const SignInScreen = (props: any) => {
             console.log('Error fetching data: ', error);
           } else {
             console.log('Success fetching data: ', result);
+            props.navigation.navigate(AppRoute.HOME);
           }
         };
         const infoRequest = new GraphRequest(
@@ -82,33 +84,6 @@ const SignInScreen = (props: any) => {
     }
   };
 
-  const onAccessToken = () => {
-    console.log('Access Token');
-    AccessToken.getCurrentAccessToken().then(data => {
-      console.log({data});
-      if (data){
-        const _responseInfoCallback = (error: any, result: any) => {
-          if (error) {
-            console.log('Error fetching data: ', error);
-          } else {
-            console.log('Success fetching data: ', result);
-          }
-        };
-        const infoRequest = new GraphRequest(
-          '/me?fields=name,picture,email,friends,age_range',
-          {
-            parameters: {
-              fields: {
-                string: 'id,name,email,friends,age_range,picture.type(large)',
-              },
-            },
-          },
-          _responseInfoCallback,
-        );
-        new GraphRequestManager().addRequest(infoRequest).start();
-      }
-    });
-  }
 
   const renderForm = (
     formProps: FormikProps<SignInData>,
@@ -145,14 +120,11 @@ const SignInScreen = (props: any) => {
       {/* <Button style={styles.submitButton} onPress={formProps.handleSubmit}>
         {i18n('auth.sign_in')}
       </Button> */}
-      <Button style={styles.submitButton} onPress={onAccessToken}>
-        Get Accesstoken
-      </Button>
       <LoginButton
-        style={styles.loginButton}
         publishPermissions={['publish_actions', 'picture', 'email', 'friends', 'age_range']}
         onLoginFinished={onLoginFinished}
         onLogoutFinished={() => console.log('logout.')}
+        style={styles.loginButton}
       />
     </React.Fragment>
   );
@@ -169,63 +141,32 @@ const SignInScreen = (props: any) => {
       <Layout
         style={styles.tab}
         level='2'>
-        <Text category='h5'>ចុះពី $6/ខែ សល់ត្រឹម $3/ខែ​ លោកអ្នកអាចអានអក្សរ និងស្តាប់សម្លេង ក្នុងសៀវភៅដែលលក់ដាច់ជាងគេបំផុតលេីសកលលោក ជាភាសាខ្មែរ ចំនួន​រាប់រយក្បាល</Text>
-        {/* <Text category='h5'>ជាភាសាខ្មែរ</Text>
-        <Text category='h5'>ចំនួន​រាប់រយក្បាល</Text> */}
+        <Image style={styles.image} source={require('./../../assets/images/startup_1.jpg')} />
       </Layout>
       <Layout
         style={styles.tab}
         level='2'>
-        <Text category='h5'>ដកស្រង់តែចំនុចសំខាន់ៗរបស់សៀវភៅ​ ធ្វេីអោយការអាននិងស្តាប់សៀវភៅមួយក្បាល ចំនាយពេលត្រឹមតែ​ 15នាទី - 30នាទី​ តែប៉ុណ្ណោះ</Text>
+        <Image style={styles.image} source={require('./../../assets/images/startup_2.jpg')} />
       </Layout>
       <Layout
         style={styles.tab}
         level='2'>
-        <Text category='h5'>មានការ​ Update នូវសៀវភៅថ្មីៗចូលក្នុង​ App "កូនសៀវភៅ" ជារៀងរាល់ថ្ងៃ</Text>
+        <Image style={styles.image} source={require('./../../assets/images/startup_3.jpg')} />
+      </Layout>
+      <Layout
+        style={styles.tab}
+        level='2'>
+        <Image style={styles.image} source={require('./../../assets/images/startup_4.jpg')} />
       </Layout>
     </ViewPager>
-      <View style={styles.bottom}>
-        <Button style={styles.submitButton} onPress={onAccessToken}>
-          Get Accesstoken
-        </Button>
+      <View style={styles.bottomContainer}>
         <LoginButton
           publishPermissions={['publish_actions', 'picture', 'email', 'friends', 'age_range']}
           onLoginFinished={onLoginFinished}
           onLogoutFinished={() => console.log('logout.')}
+          style={styles.loginButton}
         />
       </View>
-      {/* <ImageBackground
-        style={styles.appBar}
-        source={require('../../assets/image-background.jpeg')}
-      />
-      <Layout style={styles.formContainer}>
-        <Formik
-          initialValues={SignInData.empty()}
-          validationSchema={SignInSchema}
-          onSubmit={onFormSubmit}>
-          {renderForm}
-        </Formik>
-        <Button
-          style={styles.noAccountButton}
-          appearance="ghost"
-          status="basic"
-          onPress={() => props.fetchData()}>
-          Don't have an account?
-        </Button>
-        <View>
-          {props.appData.isFetching && <Text>Loading</Text>}
-          {props.appData.data.length
-            ? props.appData.data.map((person, i) => {
-                return (
-                  <View key={i}>
-                    <Text>Name: {person.name}</Text>
-                    <Text>Email: {person.email}</Text>
-                  </View>
-                );
-              })
-            : null}
-        </View>
-      </Layout> */}
     </SafeAreaLayout>
   );
 };
@@ -233,13 +174,21 @@ const SignInScreen = (props: any) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    // alignItems: 'center',
   },
-  bottom: {
+  image: {
+    height: '100%',
+    width: '100%'
+  },
+  loginButton: { 
+    width: '100%', 
+    height: 48 
+  },
+  bottomContainer: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginBottom: 36
+    marginBottom: 36,
+    padding: 20,
   },
   tab: {
     height: '95%',

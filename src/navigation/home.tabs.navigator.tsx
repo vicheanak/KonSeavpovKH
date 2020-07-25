@@ -8,6 +8,7 @@ import {
   HomeTabBar,
 } from '../scenes/home';
 
+import {Text} from '@ui-kitten/components';
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBarProps,
@@ -71,8 +72,18 @@ const HomeTabsNavigator = (props: any): React.ReactElement => {
         // @ts-ignore: `tabBar` also contains a DrawerNavigationProp & BottomTabNavigationProp
         <TopTab.Navigator
         swipeEnabled={false}
+        tabBarOptions={{
+          activeTintColor: '#e91e63',
+          labelStyle: { fontSize: 12 },
+          style: { backgroundColor: 'powderblue' },
+        }}
         tabBar={props => <HomeTabBar {...props} />}>
           <TopTab.Screen
+              tabBarOptions={{
+                labelStyle: { fontSize: 50 },
+                // tabStyle: { width: 100 },
+                style: { backgroundColor: 'powderblue' },
+              }}
               name={AppRoute.BOOK}
               component={BookScreen}
               options={{title: props.intlData.messages['BOOKS'], tabBarIcon: BookIcon}}

@@ -1,8 +1,101 @@
 {
     "strict": {
-        "text-font-family": "roboto-regular"
+        "text-font-family": "Battambang-Regular",
+        "text-line-height": 50,
+        "text-heading-1-font-size": 36,
+        "text-heading-1-font-weight": "800",
+        "text-heading-1-font-family": "Battambang-Bold",
+        // Same for `h2...h6`
+        "text-subtitle-1-font-size": 15,
+        "text-subtitle-1-font-weight": "600",
+        "text-subtitle-1-font-family": "Battambang-Bold",
+        // Same for `s2`
+        "text-paragraph-1-font-size": 15,
+        "text-paragraph-1-font-weight": "400",
+        "text-paragraph-1-font-family": "Battambang-Regular",
+        // Same for `p2`
+        "text-caption-1-font-size": 12,
+        "text-caption-1-font-weight": "400",
+        "text-caption-1-font-family": "Battambang-Regular",
+        // Same for `c2`
+        "text-label-font-size": 12,
+        "text-label-font-weight": "800",
+        "text-label-font-family": "Battambang-Bold"
     },
     "components": {
+        "Button": {
+            "meta": {},
+            "appearance": {
+                "filled": {
+                    "variantGroups": {
+                        "size": {
+                            "tiny": {
+                                "textLineHeight": 30
+                            },
+                            "small": {
+                                "textLineHeight": 30
+                            },
+                            "medium": {
+                                "textLineHeight": 30
+                            },
+                            "large": {
+                                "textLineHeight": 30
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Text": {
+            "meta": {},
+            "appearances": {
+                "default": {
+                    "variantGroups": {
+                        "category": {
+                            "h1": {
+                                "lineHeight": 25
+                            },
+                            "h2": {
+                                "lineHeight": 25
+                            },
+                            "h3": {
+                                "lineHeight": 25
+                            },
+                            "h4": {
+                                "lineHeight": 50
+                            },
+                            "h5": {
+                                "lineHeight": 25
+                            },
+                            "h6": {
+                                "lineHeight": 35
+                            },
+                            "s1": {
+                                "lineHeight": 25
+                            },
+                            "s2": {
+                                "lineHeight": 25
+                            },
+                            "p1": {
+                                "lineHeight": 25
+                            },
+                            "p2": {
+                                "lineHeight": 25
+                            },
+                            "c1": {
+                                "lineHeight": 25
+                            },
+                            "c2": {
+                                "lineHeight": 25
+                            },
+                            "label": {
+                                "lineHeight": 25
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "StatusBar": {
             "meta": {
                 "scope": "mobile",
