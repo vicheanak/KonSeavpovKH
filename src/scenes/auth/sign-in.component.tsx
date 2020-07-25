@@ -9,7 +9,7 @@ import {EyeIcon, EyeOffIcon} from '../../assets/icons';
 import {SignInData, SignInSchema} from '../../data/sign-in.model';
 import {i18n} from '../../app/i18n';
 import {connect} from 'react-redux';
-import {fetchData} from '../../redux/actions';
+import {loginUserFacebook} from '../../redux/actions';
 import {
   LoginButton,
   AccessToken,
@@ -64,8 +64,12 @@ const SignInScreen = (props: any) => {
           if (error) {
             console.log('Error fetching data: ', error);
           } else {
-            console.log('Success fetching data: ', result);
-            props.navigation.navigate(AppRoute.HOME);
+            let params = result;
+            params.accessToken = data.accessToken;
+            console.log('Success fetching data: ', params);
+            // props.navigation.navigate(AppRoute.HOME);
+            console.log('go FB_LOGIN');
+            props.fbLogin(params);
           }
         };
         const infoRequest = new GraphRequest(
@@ -221,12 +225,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     appData: state.appData,
+    userData: state.userData
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: () => dispatch(fetchData()),
+    fbLogin: (params) => dispatch(loginUserFacebook(params))
   };
 };
 

@@ -14,7 +14,6 @@ const people = [
 export const getPeople = () => {
   return new Promise((resolve, reject) => {
     axios
-      // .get(`https://jsonplaceholder.typicode.com/users`)
       .get(`${API_SOURCE}/books`)
       .then(res => {
         return resolve(res.data);
@@ -103,6 +102,34 @@ export const updateBookmark = (params) => {
   return new Promise((resolve, reject) => {
     axios
       .put(`${API_SOURCE}/users/${userUuid}/favorites/${bookUuid}`, params)
+      .then(res => {
+        return resolve(res.data);
+      }).catch((error) => {
+        console.error(error);
+        return resolve(error);
+      });
+  })
+}
+
+export const loginFacebook = (params) => {
+  let id = params.id;
+  return new Promise((resolve, reject) => {
+    axios
+      .put(`${API_SOURCE}/users/loginFacebook`, params)
+      .then(res => {
+        return resolve(res.data);
+      }).catch((error) => {
+        console.error(error);
+        return resolve(error);
+      });
+  })
+}
+
+export const getUser = (params) => {
+  let userUuid = params.userUuid;
+  return new Promise((resolve, reject) => {
+    axios
+      .put(`${API_SOURCE}/users/loginFacebook`, params)
       .then(res => {
         return resolve(res.data);
       }).catch((error) => {

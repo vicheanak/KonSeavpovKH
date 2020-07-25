@@ -46,7 +46,7 @@ const BookScreen = (props: any): ListElement => {
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
+  const {userData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
@@ -62,7 +62,7 @@ const BookScreen = (props: any): ListElement => {
     const {[bookIndex]: book} = books;
     setBookDetail(book);
     fetchChapters(book.uuid);
-    fetchFavorite({userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid});
+    fetchFavorite({userUuid: userData.uuid, bookUuid: book.uuid});
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
@@ -230,7 +230,8 @@ const mapStateToProps = state => {
     intlData: state.intlData,
     books: state.books.data,
     bookChapter: state.bookChapter,
-    user: state.user.favorites
+    user: state.user.favorites,
+    userData: state.user.userData
   };
 };
 

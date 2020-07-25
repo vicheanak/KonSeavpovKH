@@ -16,7 +16,6 @@ import {SplashImage} from '../components/splash-image.component';
 import {AppIconsPack} from './app-icons-pack';
 import {i18n, switchLanguage} from './i18n';
 import {connect} from 'react-redux';
-import {fetchData} from '../redux/actions';
 import {
   Image,
   ImageStyle,
@@ -34,7 +33,7 @@ import {
 import {CloseOutlineIcon} from '../assets/icons';
 import TrackPlayer from 'react-native-track-player';
 import {usePlaybackState} from 'react-native-track-player/lib/hooks';
-import {updatePlayerVisibility} from './../redux/actions';
+import {loginUserFacebook, updatePlayerVisibility} from './../redux/actions';
 import {SOURCE} from './app-environment';
 import TextTicker from 'react-native-text-ticker';
 import * as RootNavigation from './RootNavigation';
@@ -71,6 +70,30 @@ const App = (props: any): React.ReactElement => {
   useEffect(() => {
     (async () => {
       switchLanguage(currentLang);
+      const data = await AccessToken.getCurrentAccessToken();
+      if (data) {
+        const _responseInfoCallback = (error: any, result: any) => {
+          if (error) {
+            console.log('Error fetching data: ', error);
+          } else {
+            let params = result;
+            params.accessToken = data.accessToken;
+            props.fbLogin(params);
+          }
+        };
+        const infoRequest = new GraphRequest(
+          '/me?fields=name,picture,email,friends,age_range',
+          {
+            parameters: {
+              fields: {
+                string: 'id,name,email,friends,age_range,picture.type(large)',
+              },
+            },
+          },
+          _responseInfoCallback,
+        );
+        new GraphRequestManager().addRequest(infoRequest).start();
+      }
       // isLogin();
     })();
   }, [bookId]);
@@ -303,7 +326,6 @@ const loadingTasks: Task[] = [
     }),
 ];
 
-
 const AppComponent = (props: any): React.ReactElement => (
   <AppLoading
     tasks={loadingTasks}
@@ -326,6 +348,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setPlayerVisibility: playerVisibility =>
       dispatch(updatePlayerVisibility(playerVisibility)),
+    fbLogin: params => dispatch(loginUserFacebook(params)),
   };
 };
 

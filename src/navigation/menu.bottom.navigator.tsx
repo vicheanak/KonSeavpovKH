@@ -29,7 +29,8 @@ const BottomTab = createBottomTabNavigator<MenuBottomTabsNavigatorParams>();
 const HomeBottomNavigator = (props:any): React.ReactElement => {
   return (
     // @ts-ignore: `tabBar` also contains a DrawerNavigationProp
-    <BottomTab.Navigator tabBar={MenuTabBar}>
+    <BottomTab.Navigator 
+     tabBar={MenuTabBar}>
       <BottomTab.Screen
         name={AppRoute.HOME}
         component={HomeNavigator}

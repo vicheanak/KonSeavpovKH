@@ -25,6 +25,7 @@ export const MenuTabBar = (props: MenuBottomScreenProps): SafeAreaLayoutElement 
       <BottomNavigationTab
         key={route.key}
         title={options.title}
+        titleStyle={{lineHeight: 30, fontSize: 14}}
         // @ts-ignore: all Tab Screens strictly have UI Kitten Icon
         icon={options.tabBarIcon}
       />

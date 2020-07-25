@@ -38,9 +38,13 @@ import {
   CREATE_USER_BOOKMARK_DATA,
   CREATE_USER_BOOKMARK_DATA_SUCCESS,
   UPDATE_USER_BOOKMARK_DATA,
-  UPDATE_USER_BOOKMARK_DATA_SUCCESS
+  UPDATE_USER_BOOKMARK_DATA_SUCCESS,
+  LOGIN_USER_FACEBOOK_DATA,
+  LOGIN_USER_FACEBOOK_DATA_SUCCESS,
+  FETCHING_USER_DATA,
+  FETCHING_USER_DATA_SUCCESS
 } from './constants'
-import { getPeople, addPeople, getBooksList, getUserFavorites, getUserFavorite, getBookDetail, getBookChapters, createBookmark, updateBookmark } from './api'
+import { getPeople, addPeople, getBooksList, getUserFavorites, getUserFavorite, getBookDetail, getBookChapters, createBookmark, updateBookmark, loginFacebook, getUser } from './api'
 
 export function getData() {
   return {
@@ -380,5 +384,39 @@ export const updatePlayerNavigation = (playerNavigation) => {
       type: UPDATE_PLAYER_NAVIGATION,
       playerNavigation
     })
+  }
+}
+
+export function loginUserFacebook(params) {
+  return (dispatch) => {
+    loginFacebook(params)
+      .then((data) => {
+        dispatch(loginUserFacebookSuccess(data))
+      })
+      .catch((err) => console.error('error login facebook', err))
+  };
+};
+
+export function loginUserFacebookSuccess(data) {
+  return {
+    type: LOGIN_USER_FACEBOOK_DATA_SUCCESS,
+    data,
+  }
+}
+
+export function fetchUser(params) {
+  return (dispatch) => {
+    getUser(params)
+      .then((data) => {
+        dispatch(fetchUserSuccess(data))
+      })
+      .catch((err) => console.error('error login facebook', err))
+  };
+};
+
+export function fetchUserSuccess(data) {
+  return {
+    type: FETCHING_USER_DATA_SUCCESS,
+    data,
   }
 }

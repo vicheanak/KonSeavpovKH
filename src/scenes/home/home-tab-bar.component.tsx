@@ -38,7 +38,7 @@ const HomeTabBar = (props: any): SafeAreaLayoutElement => {
     {title: props.intlData.messages['profile'], icon: PersonFillIcon},
     {title: props.intlData.messages['highlight'], icon: HighlightIcon},
     // { title: props.intlData.messages['saved'], icon: BookmarkIcon},
-    {title: props.intlData.messages['change_color'], icon: BrushIcon},
+    // {title: props.intlData.messages['change_color'], icon: BrushIcon},
     {title: props.intlData.messages['khmer'], icon: Khmer},
     {title: props.intlData.messages['english'], icon: English},
   ];
