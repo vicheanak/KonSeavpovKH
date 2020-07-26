@@ -59,17 +59,14 @@ const SignInScreen = (props: any) => {
       console.log('login is cancelled.');
     } else {
       AccessToken.getCurrentAccessToken().then(data => {
-        console.log({data});
         const _responseInfoCallback = (error: any, result: any) => {
           if (error) {
             console.log('Error fetching data: ', error);
           } else {
             let params = result;
             params.accessToken = data.accessToken;
-            console.log('Success fetching data: ', params);
-            // props.navigation.navigate(AppRoute.HOME);
-            console.log('go FB_LOGIN');
             props.fbLogin(params);
+            props.navigation.navigate(AppRoute.HOME);
           }
         };
         const infoRequest = new GraphRequest(
@@ -225,7 +222,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     appData: state.appData,
-    userData: state.userData
+    userData: state.user.userData
   };
 };
 

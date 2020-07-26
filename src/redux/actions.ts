@@ -42,7 +42,8 @@ import {
   LOGIN_USER_FACEBOOK_DATA,
   LOGIN_USER_FACEBOOK_DATA_SUCCESS,
   FETCHING_USER_DATA,
-  FETCHING_USER_DATA_SUCCESS
+  FETCHING_USER_DATA_SUCCESS,
+  UPDATE_USER_DATA
 } from './constants'
 import { getPeople, addPeople, getBooksList, getUserFavorites, getUserFavorite, getBookDetail, getBookChapters, createBookmark, updateBookmark, loginFacebook, getUser } from './api'
 
@@ -383,6 +384,15 @@ export const updatePlayerNavigation = (playerNavigation) => {
     dispatch({
       type: UPDATE_PLAYER_NAVIGATION,
       playerNavigation
+    })
+  }
+}
+
+export const updateUserData = (userData) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_USER_DATA,
+      userData
     })
   }
 }

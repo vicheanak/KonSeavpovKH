@@ -222,7 +222,7 @@ export default (props: any): React.ReactElement => {
           appearance="filled"
           disabled={true}
           footer={renderBookingFooter}>
-          <ButtonGroup status={'danger'} style={styles.buttonContainer} >
+          <ButtonGroup status={'success'} style={styles.buttonContainer} >
             <Button
               icon={ReadingIcon}
               style={styles.bookButton}

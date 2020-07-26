@@ -36,17 +36,18 @@ import {
   updateBookDetail,
   fetchBooksChapters,
   updateBookCurrentChapter,
-  fetchUserFavorite
+  fetchUserFavorite,
+  updateUserData,
 } from '../../redux/actions';
 import { SOURCE } from '../../app/app-environment';
-
+import {AppStorage} from './../../services/app-storage.service';
 
 const BookScreen = (props: any): ListElement => {
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {userData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
+  const {setUserData, userData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
@@ -54,6 +55,13 @@ const BookScreen = (props: any): ListElement => {
     // props.fetchPeople();
     // props.fetchBooks();
     (async () => {
+      if (userData.uuid){
+        AppStorage.setUser(JSON.stringify(userData));
+        setUserData(userData);
+      }else{
+        const userDataStorage = await AppStorage.getUser();
+        setUserData(JSON.parse(userDataStorage));
+      }
       fetchBooks();
     })();
   }, []);
@@ -244,6 +252,7 @@ const mapDispatchToProps = dispatch => {
     fetchChapters: bookId => 
       dispatch(fetchBooksChapters(bookId)),
     fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
+    setUserData: (params) => dispatch(updateUserData(params))
   };
 };
 

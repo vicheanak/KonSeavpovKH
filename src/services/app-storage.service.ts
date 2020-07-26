@@ -3,6 +3,7 @@ import { Theme, Local } from './theme.service';
 
 const THEME_KEY: string = 'theme';
 const LOCAL_KEY: string = 'local';
+const USER_KEY: string = 'user';
 
 export class AppStorage {
 
@@ -18,14 +19,24 @@ export class AppStorage {
   };
 
   static getLocal = (fallback?: Local): Promise<Local> => {
-    return AsyncStorage.getItem(LOCAL_KEY).then((theme: any) => {
-      return theme || fallback;
+    return AsyncStorage.getItem(LOCAL_KEY).then((local: any) => {
+      return local || fallback;
     });
   };
 
   static setLocal = (local: Local): Promise<void> => {
     return AsyncStorage.setItem(LOCAL_KEY, local);
   };
+
+  static getUser = (): Promise<any> => {
+    return AsyncStorage.getItem(USER_KEY).then((user: any) => {
+      return user
+    });
+  }
+
+  static setUser = (user: any): Promise<void> => {
+    return AsyncStorage.setItem(USER_KEY, user);
+  }
   
 }
 

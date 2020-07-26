@@ -100,7 +100,6 @@ export const BookDetailScreen = (props: any): SafeAreaLayoutElement => {
     let isCurrentChapterExist = Object.keys(props.bookChapter.currentChapter).length
     let playerVisibility = isCurrentChapterExist ? true : false;
     props.setPlayerVisibility(playerVisibility);
-    console.log('fetch Chapters', props.bookChapter.currentChapter.book);
     let bookCurrentChapter = props.bookChapter.currentChapter.book;
     if (bookCurrentChapter){
       fetchChapters(bookCurrentChapter.uuid);

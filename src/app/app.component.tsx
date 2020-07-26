@@ -57,8 +57,6 @@ const App = (props: any): React.ReactElement => {
   const isAuthorized: boolean = false;
   const [theme, setTheme] = React.useState(currentTheme);
 
-  const [bookId, setBookId] = useState(0);
-
   const _responseInfoCallback = (error: any, result: any) => {
     if (error) {
       console.log('Error fetching data: ', error);
@@ -70,33 +68,8 @@ const App = (props: any): React.ReactElement => {
   useEffect(() => {
     (async () => {
       switchLanguage(currentLang);
-      const data = await AccessToken.getCurrentAccessToken();
-      if (data) {
-        const _responseInfoCallback = (error: any, result: any) => {
-          if (error) {
-            console.log('Error fetching data: ', error);
-          } else {
-            let params = result;
-            params.accessToken = data.accessToken;
-            props.fbLogin(params);
-          }
-        };
-        const infoRequest = new GraphRequest(
-          '/me?fields=name,picture,email,friends,age_range',
-          {
-            parameters: {
-              fields: {
-                string: 'id,name,email,friends,age_range,picture.type(large)',
-              },
-            },
-          },
-          _responseInfoCallback,
-        );
-        new GraphRequestManager().addRequest(infoRequest).start();
-      }
-      // isLogin();
     })();
-  }, [bookId]);
+  }, []);
 
   const setCurrentTheme = (theme: any) => {
     const nextTheme = theme;
