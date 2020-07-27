@@ -1,10 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   Dimensions,
   ImageBackground,
   ListRenderItemInfo,
   ScrollView,
   View,
+  Image,
+  ImageStyle,
+  Linking,
+  Alert
 } from 'react-native';
 import {
   Input,
@@ -19,11 +23,14 @@ import {
   Card,
   Button,
   ListProps,
+  Modal,
+  Icon,
+  IconElement,
 } from '@ui-kitten/components';
 import {BookScreenProps} from '../../navigation/home.navigator';
 import {AppRoute} from '../../navigation/app-routes';
 import {ProgressBar} from '../../components/progress-bar.component';
-import {SearchIcon, BookmarkIcon} from '../../assets/icons';
+import {SearchIcon, BookmarkIcon, LockIcon} from '../../assets/icons';
 import {Todo} from '../../data/todo.model';
 import {i18n} from '../../app/i18n';
 import {connect} from 'react-redux';
@@ -38,16 +45,20 @@ import {
   updateBookCurrentChapter,
   fetchUserFavorite,
   updateUserData,
+  getUserLatestInvoice,
+  updatePricingModalVisibility
 } from '../../redux/actions';
 import { SOURCE } from '../../app/app-environment';
 import {AppStorage} from './../../services/app-storage.service';
+import moment from "moment";
+import ModalPricingView from './modal-pricing';
 
 const BookScreen = (props: any): ListElement => {
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {setUserData, userData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
+  const {updateViewPricingModal, getLatestInvoice, setUserData, userData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
@@ -55,13 +66,17 @@ const BookScreen = (props: any): ListElement => {
     // props.fetchPeople();
     // props.fetchBooks();
     (async () => {
+      let userLocalData:any = {};
       if (userData.uuid){
+        userLocalData = userData;
         AppStorage.setUser(JSON.stringify(userData));
         setUserData(userData);
       }else{
         const userDataStorage = await AppStorage.getUser();
-        setUserData(JSON.parse(userDataStorage));
+        userLocalData = JSON.parse(userDataStorage);
+        setUserData(userLocalData);
       }
+      getLatestInvoice(userLocalData?.uuid);
       fetchBooks();
     })();
   }, []);
@@ -88,6 +103,11 @@ const BookScreen = (props: any): ListElement => {
     );
   };
 
+
+  const setPricingModal = (isVisible) => {
+    props.setPricingModalVisibility(isVisible);
+  }
+
   const renderBookList = (item: ListRenderItemInfo<any>): ListItemElement => (
     <Card
       style={styles.productItem}
@@ -102,18 +122,28 @@ const BookScreen = (props: any): ListElement => {
           {/* {item.item.title} */}
           សួស្តីឆ្នាំថ្មី ខ្ញុំស្រលាញ់វត្តអារាម
         </Text>
-        {/* <Button
+        {moment() < moment(parseInt(props.invoice[0].endSubscriptionDate)) && <Button
           appearance="ghost"
-          status="primary"
+          status="danger"
           style={styles.iconButton}
-          icon={BookmarkIcon}
-        /> */}
+          icon={LockIcon}
+          onPress={() => setPricingModal(true)}
+        />}
       </View>
       <Text category="c1" style={styles.productShortDescription}>
         {/* {item.item.shortDescription} */}
         អារម្មណ៍ស្រស់ស្រាយ ជាទីមនោរម្យ
       </Text>
     </Card>
+  );
+
+  const renderOptionItemIcon = (
+    style: ImageStyle,
+    icon: string,
+  ): React.ReactElement => <Icon {...style} name={icon} />;
+
+  const CheckIcon = (style): IconElement => (
+    <Icon {...style} name="checkmark-outline" />
   );
 
   return (
@@ -151,14 +181,68 @@ const BookScreen = (props: any): ListElement => {
         renderItem={renderBookList}
         {...listProps}
       />
+      <ModalPricingView {...props} />
     </ScrollView>
   );
 };
 
 const themedStyles = StyleService.create({
+  checkContainer: {
+    // height: 192,
+  },
   container: {
     flex: 1,
     backgroundColor: 'background-basic-color-1',
+  },
+  priceCardModal: {
+    marginVertical: 5,
+    backgroundColor: '#e6edf9'
+  },
+  checkButtonModal: {
+    padding: 0,
+    width: '80%'
+  },
+  allPlanButtonModal: {
+    height: 50,
+    fontSize: 30,
+  },
+  subscribeButtonModal: {
+    marginTop: 10,
+    lineHeight: 30,
+    fontSize: 30,
+    padding: 20
+  },
+  checkLabelModal: {
+    fontSize: 14,
+    lineHeight: 25,
+    marginVertical: 10
+  },
+  allPlanLabelModal: {
+    fontSize: 17,
+    lineHeight: 30,
+    marginVertical: 10
+  },
+  labelModal: {
+    fontSize: 17,
+    textAlign: 'center',
+    lineHeight: 30
+  },
+  allPlanCardModal: {
+    width: Dimensions.get('window').width - 100,
+    height: Dimensions.get('window').height - 370,
+    flex: 1,
+    // justifyContent: 'center',
+  },
+  cardModal: {
+    width: 300,
+    // height: 300,
+    flex: 1,
+    justifyContent: 'center',
+  },
+  imageModal: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10
   },
   labelHeader: {
     margin: 16,
@@ -231,15 +315,21 @@ const themedStyles = StyleService.create({
   itemHeader: {
     height: 140,
   },
+  backdrop: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
 });
 
 const mapStateToProps = state => {
+  console.log({state});
   return {
     intlData: state.intlData,
     books: state.books.data,
     bookChapter: state.bookChapter,
     user: state.user.favorites,
-    userData: state.user.userData
+    userData: state.user.userData,
+    invoice: state.user.invoice,
+    isPricingModalVisible: state.user.isPricingModalVisible
   };
 };
 
@@ -252,7 +342,9 @@ const mapDispatchToProps = dispatch => {
     fetchChapters: bookId => 
       dispatch(fetchBooksChapters(bookId)),
     fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
-    setUserData: (params) => dispatch(updateUserData(params))
+    setUserData: (params) => dispatch(updateUserData(params)),
+    getLatestInvoice: (userUuid) => dispatch(getUserLatestInvoice(userUuid)),
+    setPricingModalVisibility: (isVisible) => dispatch(updatePricingModalVisibility(isVisible))
   };
 };
 

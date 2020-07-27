@@ -9,7 +9,6 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 import {EdgeInsets, useSafeArea} from 'react-native-safe-area-context';
-import {BookDetailScreenProps} from '../../navigation/home.navigator';
 import {Toolbar} from '../../components/toolbar.component';
 import {ImageOverlay} from '../../components/image-overlay.component';
 import {ProgressBar} from '../../components/progress-bar.component';
@@ -30,7 +29,8 @@ import {
   updatePlayerVisibility,
   fetchUserFavorite,
   createUserBookmark,
-  updateUserBookmark
+  updateUserBookmark,
+  updatePricingModalVisibility
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
@@ -157,7 +157,10 @@ const mapStateToProps = state => {
     bookDetail: state.bookDetail,
     bookChapter: state.bookChapter,
     intlData: state.intlData,
-    favorite: state.user.favorite
+    favorite: state.user.favorite,
+    userData: state.user.userData,
+    invoice: state.user.invoice,
+    isPricingModalVisible: state.user.isPricingModalVisible
   };
 };
 
@@ -171,7 +174,8 @@ const mapDispatchToProps = dispatch => {
     setPlayerVisibility: (playerVisibility) => dispatch(updatePlayerVisibility(playerVisibility)),
     fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
     updateBookmark: (params) => dispatch(updateUserBookmark(params)),
-    createBookmark: (params) => dispatch(createUserBookmark(params))
+    createBookmark: (params) => dispatch(createUserBookmark(params)),
+    setPricingModalVisibility: (isVisible) => dispatch(updatePricingModalVisibility(isVisible))
   };
 };
 

@@ -29,6 +29,7 @@ import {usePlaybackState} from 'react-native-track-player/lib/hooks';
 import {CloseIcon} from './../../../assets/icons';
 import {SOURCE} from '../../../app/app-environment';
 import {connect} from 'react-redux';
+import moment from 'moment';
 
 const product: Product = Product.centralParkApartment();
 
@@ -45,7 +46,7 @@ export default (props: any): React.ReactElement => {
   // export default (props: any): React.ReactElement => {
   const styles = useStyleSheet(themedStyles);
   const {book} = props.bookDetail;
-  const {updateBookmark, fetchChapters, bookChapter, setPlayerVisibility} = props;
+  const {invoice, userData, updateBookmark, fetchChapters, bookChapter, setPlayerVisibility} = props;
 
   let favorite : {
     currentChapter: number;
@@ -66,7 +67,9 @@ export default (props: any): React.ReactElement => {
   };
 
   useEffect(() => {
-    (async () => {})();
+    (async () => {
+      console.log({userData, invoice});
+    })();
   }, []);
 
   const setFavorite = () => {
@@ -222,7 +225,8 @@ export default (props: any): React.ReactElement => {
           appearance="filled"
           disabled={true}
           footer={renderBookingFooter}>
-          <ButtonGroup status={'success'} style={styles.buttonContainer} >
+          {moment() <= moment(parseInt(props.invoice[0].endSubscriptionDate)) && <ButtonGroup
+           status={'success'} style={styles.buttonContainer} >
             <Button
               icon={ReadingIcon}
               style={styles.bookButton}
@@ -231,14 +235,22 @@ export default (props: any): React.ReactElement => {
               {props.intlData.messages['reading']}
             </Button>
             <Button
-              // status="basic"
               icon={ListeningIcon}
               style={styles.bookButton}
               textStyle={{fontSize: 17, lineHeight: 30}}
               onPress={onListeningButtonPress}>
               {props.intlData.messages['listening']}
             </Button>
-          </ButtonGroup>
+          </ButtonGroup>}
+          {moment() < moment(parseInt(props.invoice[0].endSubscriptionDate)) && <ButtonGroup
+           status={'info'} style={styles.buttonContainer} >
+            <Button
+              style={styles.bookButton}
+              textStyle={{fontSize: 17, lineHeight: 30}}
+              onPress={() => props.setPricingModalVisibility(true)}>
+              {props.intlData.messages['join_membership']}
+            </Button>
+          </ButtonGroup>}
         </Card>
         <Text style={styles.sectionLabel} category="h6">
           {props.intlData.messages['about']}

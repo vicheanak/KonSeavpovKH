@@ -10,6 +10,9 @@ export const LayoutIcon = (style): IconElement => (
   <Icon {...style} name='layout-outline'/>
 );
 
+export const LockIcon = (style): IconElement => (
+  <Icon {...style} name='lock-outline'/>
+);
 
 export const PersonIcon = (style): IconElement => (
   <Icon {...style} name='person-outline'/>

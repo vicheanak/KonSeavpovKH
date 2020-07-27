@@ -53,7 +53,7 @@ export const getUserFavorites = () => {
   }
   return new Promise((resolve, reject) => {
     axios
-      .get(`${API_SOURCE}/users/1/favorites`, {params})
+      .get(`${API_SOURCE}/users/1/favorites`, { params })
       .then(res => {
         return resolve(res.data);
       }).catch((error) => {
@@ -70,8 +70,8 @@ export const getUserFavorite = (params) => {
       .get(`${API_SOURCE}/users/${userUuid}/favorites/${bookUuid}`)
       .then(res => {
         let result;
-        if (res.data.books.length){
-          result = res.data.books[0].favorite; 
+        if (res.data.books.length) {
+          result = res.data.books[0].favorite;
         }
         return resolve(result);
       }).catch((error) => {
@@ -139,13 +139,31 @@ export const getUser = (params) => {
   })
 }
 
+export const getUserLatestInvoiceApi = (userUuid) => {
+  // userUuid = 'ss';
+  let params = { isLatest: true };
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${API_SOURCE}/users/${userUuid}/invoices`, {
+        params: params
+      })
+      .then(res => {
+        console.log('INVOICE LATEST ===> ', res.data);
+        return resolve(res.data);
+      }).catch((error) => {
+        console.error(error);
+        return resolve(error);
+      });
+  })
+}
+
 export const getBookDetail = () => {
   let params = {
     id: 12,
   }
   return new Promise((resolve, reject) => {
     axios
-      .get(`${API_SOURCE}/books`, {params})
+      .get(`${API_SOURCE}/books`, { params })
       .then(res => {
         return resolve(res.data);
       }).catch((error) => {

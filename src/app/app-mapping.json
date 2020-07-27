@@ -53,19 +53,19 @@
                     "variantGroups": {
                         "category": {
                             "h1": {
-                                "lineHeight": 25
-                            },
-                            "h2": {
-                                "lineHeight": 25
-                            },
-                            "h3": {
-                                "lineHeight": 25
-                            },
-                            "h4": {
                                 "lineHeight": 50
                             },
+                            "h2": {
+                                "lineHeight": 50
+                            },
+                            "h3": {
+                                "lineHeight": 50
+                            },
+                            "h4": {
+                                "lineHeight": 40
+                            },
                             "h5": {
-                                "lineHeight": 25
+                                "lineHeight": 40
                             },
                             "h6": {
                                 "lineHeight": 35
