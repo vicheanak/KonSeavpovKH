@@ -149,11 +149,11 @@ const SignInScreen = (props: any) => {
         level='2'>
         <Image style={styles.image} source={require('./../../assets/images/startup_2.jpg')} />
       </Layout>
-      <Layout
+      {/* <Layout
         style={styles.tab}
         level='2'>
         <Image style={styles.image} source={require('./../../assets/images/startup_3.jpg')} />
-      </Layout>
+      </Layout> */}
       <Layout
         style={styles.tab}
         level='2'>

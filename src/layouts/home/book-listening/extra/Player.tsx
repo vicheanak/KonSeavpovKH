@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 24,
-    color: '#EAEEF4',
+    // color: '#EAEEF4',
     marginBottom: 20
   },
   artist: {

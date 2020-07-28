@@ -46,15 +46,16 @@ export const getBookChapters = (bookUuid) => {
   })
 }
 
-export const getUserFavorites = () => {
+export const getUserFavorites = (userUuid) => {
   let params = {
     pagination: { page: 1, perPage: 100 },
     // sort: { field: "title", order: "ASC" },
   }
   return new Promise((resolve, reject) => {
     axios
-      .get(`${API_SOURCE}/users/1/favorites`, { params })
+      .get(`${API_SOURCE}/users/${userUuid}/favorites`, { params })
       .then(res => {
+        console.log('favorites', res.data[0].books);
         return resolve(res.data);
       }).catch((error) => {
         console.log('erorr ', error);
@@ -140,6 +141,7 @@ export const getUser = (params) => {
 }
 
 export const getUserLatestInvoiceApi = (userUuid) => {
+  userUuid = '3d222222-2fc2-4f39-92d2-faba81c4326d';
   let params = { isLatest: true };
   return new Promise((resolve, reject) => {
     axios

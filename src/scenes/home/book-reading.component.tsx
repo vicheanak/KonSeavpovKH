@@ -191,8 +191,8 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
         <Card
           style={styles.bookingCard}
           appearance="filled"
-          disabled={true}
-          footer={renderBookingFooter}>
+          disabled={true}>
+          {/* // footer={renderBookingFooter}> */}
           <View style={styles.sliderContainer}>
             <Text style={styles.smallText}>A</Text>
             <MultiSlider

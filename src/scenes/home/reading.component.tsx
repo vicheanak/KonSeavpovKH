@@ -84,7 +84,7 @@ const ReadingScreen = (props: any): ListElement => {
         <Text
           appearance='hint'
           category='c1'>
-          Author Name
+          Author Name 
         </Text>
         <ProgressBarLibrary
           style={styles.itemProgressBar}

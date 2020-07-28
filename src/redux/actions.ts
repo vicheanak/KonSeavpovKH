@@ -234,10 +234,10 @@ export function fetchBooksData() {
   }
 }
 
-export function fetchUserFavorites() {
+export function fetchUserFavorites(userUuid) {
   return (dispatch) => {
     dispatch(getUserFavoritesData())
-    getUserFavorites()
+    getUserFavorites(userUuid)
       .then((data) => {
         dispatch(getUserFavoritesDataSuccess(data))
       })

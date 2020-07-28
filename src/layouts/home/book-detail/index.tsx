@@ -225,7 +225,7 @@ export default (props: any): React.ReactElement => {
           disabled={true}
           footer={renderBookingFooter}>
           {/* {props.invoice.length && moment() < moment(1221042181804) && <ButtonGroup */}
-          {props.invoice.length && moment() < moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
+          {props.invoice.length > 0 && moment() < moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
            status={'success'} style={styles.buttonContainer} >
             <Button
               icon={ReadingIcon}
@@ -243,7 +243,7 @@ export default (props: any): React.ReactElement => {
             </Button>
           </ButtonGroup>}
           {/* {!props.invoice.length || moment() > moment(1221042181804) && <Button */}
-          {!props.invoice.length && <ButtonGroup
+          {Object.keys(props.invoice).length === 0 && <ButtonGroup
            status={'info'} style={styles.buttonContainer} >
             <Button
               style={styles.bookButton}
@@ -253,7 +253,7 @@ export default (props: any): React.ReactElement => {
             </Button>
           </ButtonGroup>}
           {/* {props.invoice.length && moment() > moment(1221042181804) && <ButtonGroup */}
-          {props.invoice.length && moment() > moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
+          {props.invoice.length > 0 && moment() > moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
            status={'info'} style={styles.buttonContainer} >
             <Button
               style={styles.bookButton}

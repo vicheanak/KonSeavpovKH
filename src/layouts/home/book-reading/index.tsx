@@ -28,6 +28,8 @@ import {Product, ProductOption} from './extra/data';
 import {ProgressBar} from '../../../components/progress-bar.component';
 import {SelectableText} from '@astrocoders/react-native-selectable-text';
 import TrackPlayer from 'react-native-track-player';
+import { user } from 'src/reducers/user';
+import { updateUserData } from 'src/redux/actions';
 
 const product: Product = Product.centralParkApartment();
 
@@ -213,8 +215,11 @@ export default (props: any): React.ReactElement => {
                   {chapter.content}
                 </Text> */}
                 <SelectableText
+                  onPress={() => {
+                    console.log('hello');
+                  }}
                   selectable={true}
-                  menuItems={['Highlight', 'Copy', 'Share']}
+                  menuItems={['Copy']}
                   onSelection={({
                     eventType,
                     content,
@@ -243,9 +248,9 @@ export default (props: any): React.ReactElement => {
                     )
                   }}
                 >
-                  <Text>
+                  {/* <Text>
                     {chapter.content}
-                  </Text>
+                  </Text> */}
                 </SelectableText>
               </View>
             </ScrollView>

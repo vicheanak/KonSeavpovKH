@@ -46,19 +46,22 @@ import {
   fetchUserFavorite,
   updateUserData,
   getUserLatestInvoice,
-  updatePricingModalVisibility
+  updatePricingModalVisibility,
+  getUserFavoritesData,
+  fetchUserFavorites
 } from '../../redux/actions';
 import { SOURCE } from '../../app/app-environment';
 import {AppStorage} from './../../services/app-storage.service';
 import moment from "moment";
 import ModalPricingView from './modal-pricing';
+import { getUserFavorites } from 'src/redux/api';
 
 const BookScreen = (props: any): ListElement => {
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {updateViewPricingModal, getLatestInvoice, setUserData, userData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
+  const {invoice, getUserFavorites, updateViewPricingModal, getLatestInvoice, setUserData, userData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
@@ -77,6 +80,8 @@ const BookScreen = (props: any): ListElement => {
         setUserData(userLocalData);
       }
       getLatestInvoice(userLocalData?.uuid);
+      getUserFavorites(userLocalData?.uuid);
+      console.log({invoice});
       fetchBooks();
     })();
   }, []);
@@ -122,14 +127,14 @@ const BookScreen = (props: any): ListElement => {
           {/* {item.item.title} */}
           សួស្តីឆ្នាំថ្មី ខ្ញុំស្រលាញ់វត្តអារាម
         </Text>
-        {props.invoice.length && <Button
+        {Object.keys(props.invoice).length === 0 && <Button
           appearance="ghost"
           status="danger"
           style={styles.iconButton}
           icon={LockIcon}
           onPress={() => setPricingModal(true)}
         />}
-        {props.invoice.length && moment() > moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <Button
+        {props.invoice.length > 0 && moment() > moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <Button
           appearance="ghost"
           status="danger"
           style={styles.iconButton}
@@ -350,7 +355,8 @@ const mapDispatchToProps = dispatch => {
     fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
     setUserData: (params) => dispatch(updateUserData(params)),
     getLatestInvoice: (userUuid) => dispatch(getUserLatestInvoice(userUuid)),
-    setPricingModalVisibility: (isVisible) => dispatch(updatePricingModalVisibility(isVisible))
+    setPricingModalVisibility: (isVisible) => dispatch(updatePricingModalVisibility(isVisible)),
+    getUserFavorites: (userUuid) => dispatch(fetchUserFavorites(userUuid))
   };
 };
 
