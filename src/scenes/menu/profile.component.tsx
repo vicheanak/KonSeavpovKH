@@ -24,7 +24,8 @@ import {
 } from 'react-native-fbsdk';
 import {AppRoute} from '../../navigation/app-routes';
 import {connect} from 'react-redux';
-import {fetchData} from '../../redux/actions';
+import {updatePricingModalVisibility} from '../../redux/actions';
+import moment from "moment";
 
 const data = new Array(8).fill({
   title: 'Title for Item',
@@ -33,8 +34,8 @@ const data = new Array(8).fill({
 
 const ProfileScreen = (props: any): SafeAreaLayoutElement => {
 
+  const { userData, invoice } = props;
   useEffect(() => {
-    console.log({props});
   }, []);
   return (
     <SafeAreaLayout style={styles.safeArea} insets={SaveAreaInset.TOP}>
@@ -43,9 +44,44 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
       <Layout style={styles.container}>
         {/* <List style={styles.listContainer} data={data} renderItem={renderItem} /> */}
         <View style={styles.rowContainer}>
-            <Avatar style={styles.avatar} size='giant' source={{ uri: 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1005836986555487&height=200&width=200&ext=1597997083&hash=AeSlKRpDkQuyhRKQ' }}/>
-            <Text>Pu Den</Text>
+            <Avatar style={styles.avatar} size='giant' source={{ uri: userData.picture }}/>
+            <Text>{userData.name}</Text>
         </View>
+        <Divider/>
+        {invoice.length && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.rowContainer}>
+            <Text style={styles.rowLabel}>{props.intlData.messages['membership']}: {props.intlData.messages['expired']}</Text>
+        </View>)}
+        {invoice.length && moment() < moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.rowContainer}>
+            <Text style={styles.rowLabel}>{props.intlData.messages['membership']}: {props.invoice[0]?.membership.name}</Text>
+        </View>)}
+        {!invoice.length && (<View style={styles.rowContainer}>
+            <Text style={styles.rowLabel}>{props.intlData.messages['membership']}: {props.intlData.messages['not_yet_join']}</Text>
+        </View>)}
+        <Divider/>
+        {invoice.length && (<View style={styles.rowContainer}>
+        {/* <Text style={styles.rowLabel}>{props.intlData.messages['expired']}: {props.invoice[0]?.endSubscriptionDate}{moment(parseInt(props.invoice[0]?.endSubscriptionDate)).format('L')}</Text> */}
+        <Text style={styles.rowLabel}>{props.intlData.messages['expired']}: {moment(parseInt(props.invoice[0]?.endSubscriptionDate)).format('L')}</Text>
+        </View>)}
+        {invoice.length && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View>
+          <Button
+          status="success"
+          appearance="ghost"
+          style={styles.bookButton}
+          textStyle={{fontSize: 17, lineHeight: 30}}
+          onPress={() => props.setPricingModalVisibility(true)}>
+          {props.intlData.messages['join_membership']}
+          </Button>
+        </View>)}
+        {!invoice.length && (<View>
+          <Button
+          status="success"
+          appearance="ghost"
+          style={styles.bookButton}
+          textStyle={{fontSize: 17, lineHeight: 30}}
+          onPress={() => props.setPricingModalVisibility(true)}>
+          {props.intlData.messages['join_membership']}
+          </Button>
+        </View>)}
         <Divider/>
         <View style={styles.buttonContainer}>
           <LoginButton
@@ -76,6 +112,13 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
   },
+  rowLabel: {
+    marginLeft: 10
+  },
+  bookButton: {
+    // width: 250,
+    // padding: 90
+  },
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -96,12 +139,16 @@ const mapStateToProps = state => {
     intlData: state.intlData,
     books: state.books.data,
     bookChapter: state.bookChapter,
-    user: state.user.favorites
+    user: state.user.favorites,
+    userData: state.user.userData,
+    invoice: state.user.invoice,
+    isPricingModalVisible: state.user.isPricingModalVisible,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    setPricingModalVisibility: (isVisible) => dispatch(updatePricingModalVisibility(isVisible))
   };
 };
 

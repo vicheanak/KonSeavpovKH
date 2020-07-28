@@ -69,5 +69,7 @@
     "reading": "Reading",
     "listening": "Listening",
     "profile": "Profile",
-    "join_membership": "Join Membership"
+    "join_membership": "Join Membership",
+    "expired": "Expired",
+    "not_yet_join": "Not yet join"
   }

@@ -122,7 +122,7 @@ const BookScreen = (props: any): ListElement => {
           {/* {item.item.title} */}
           សួស្តីឆ្នាំថ្មី ខ្ញុំស្រលាញ់វត្តអារាម
         </Text>
-        {!props.invoice.length && <Button
+        {props.invoice.length && <Button
           appearance="ghost"
           status="danger"
           style={styles.iconButton}

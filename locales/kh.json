@@ -69,5 +69,7 @@
     "reading": "អាន",
     "listening": "ស្តាប់",
     "profile": "គណនី",
-    "join_membership": "ចូលសមាជិក"
+    "join_membership": "ចូលសមាជិក",
+    "expired": "ផុតកំណត់",
+    "not_yet_join": "មិនទាន់ចូល"
 }
