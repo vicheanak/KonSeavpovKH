@@ -122,7 +122,14 @@ const BookScreen = (props: any): ListElement => {
           {/* {item.item.title} */}
           សួស្តីឆ្នាំថ្មី ខ្ញុំស្រលាញ់វត្តអារាម
         </Text>
-        {moment() < moment(parseInt(props.invoice[0].endSubscriptionDate)) && <Button
+        {!props.invoice.length && <Button
+          appearance="ghost"
+          status="danger"
+          style={styles.iconButton}
+          icon={LockIcon}
+          onPress={() => setPricingModal(true)}
+        />}
+        {props.invoice.length && moment() > moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <Button
           appearance="ghost"
           status="danger"
           style={styles.iconButton}
@@ -321,7 +328,6 @@ const themedStyles = StyleService.create({
 });
 
 const mapStateToProps = state => {
-  console.log({state});
   return {
     intlData: state.intlData,
     books: state.books.data,

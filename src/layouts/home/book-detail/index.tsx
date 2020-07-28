@@ -68,7 +68,6 @@ export default (props: any): React.ReactElement => {
 
   useEffect(() => {
     (async () => {
-      console.log({userData, invoice});
     })();
   }, []);
 
@@ -225,7 +224,8 @@ export default (props: any): React.ReactElement => {
           appearance="filled"
           disabled={true}
           footer={renderBookingFooter}>
-          {moment() <= moment(parseInt(props.invoice[0].endSubscriptionDate)) && <ButtonGroup
+          {/* {props.invoice.length && moment() < moment(1221042181804) && <ButtonGroup */}
+          {props.invoice.length && moment() < moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
            status={'success'} style={styles.buttonContainer} >
             <Button
               icon={ReadingIcon}
@@ -242,7 +242,18 @@ export default (props: any): React.ReactElement => {
               {props.intlData.messages['listening']}
             </Button>
           </ButtonGroup>}
-          {moment() < moment(parseInt(props.invoice[0].endSubscriptionDate)) && <ButtonGroup
+          {/* {!props.invoice.length || moment() > moment(1221042181804) && <Button */}
+          {!props.invoice.length && <ButtonGroup
+           status={'info'} style={styles.buttonContainer} >
+            <Button
+              style={styles.bookButton}
+              textStyle={{fontSize: 17, lineHeight: 30}}
+              onPress={() => props.setPricingModalVisibility(true)}>
+              {props.intlData.messages['join_membership']}
+            </Button>
+          </ButtonGroup>}
+          {/* {props.invoice.length && moment() > moment(1221042181804) && <ButtonGroup */}
+          {props.invoice.length && moment() > moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
            status={'info'} style={styles.buttonContainer} >
             <Button
               style={styles.bookButton}

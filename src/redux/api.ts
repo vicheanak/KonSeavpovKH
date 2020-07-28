@@ -140,7 +140,6 @@ export const getUser = (params) => {
 }
 
 export const getUserLatestInvoiceApi = (userUuid) => {
-  // userUuid = 'ss';
   let params = { isLatest: true };
   return new Promise((resolve, reject) => {
     axios
@@ -148,7 +147,6 @@ export const getUserLatestInvoiceApi = (userUuid) => {
         params: params
       })
       .then(res => {
-        console.log('INVOICE LATEST ===> ', res.data);
         return resolve(res.data);
       }).catch((error) => {
         console.error(error);
