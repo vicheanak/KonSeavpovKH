@@ -224,7 +224,6 @@ export default (props: any): React.ReactElement => {
           appearance="filled"
           disabled={true}
           footer={renderBookingFooter}>
-          {/* {props.invoice.length && moment() < moment(1221042181804) && <ButtonGroup */}
           {props.invoice.length > 0 && moment() < moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
            status={'success'} style={styles.buttonContainer} >
             <Button
@@ -242,7 +241,6 @@ export default (props: any): React.ReactElement => {
               {props.intlData.messages['listening']}
             </Button>
           </ButtonGroup>}
-          {/* {!props.invoice.length || moment() > moment(1221042181804) && <Button */}
           {Object.keys(props.invoice).length === 0 && <ButtonGroup
            status={'info'} style={styles.buttonContainer} >
             <Button
@@ -252,7 +250,6 @@ export default (props: any): React.ReactElement => {
               {props.intlData.messages['join_membership']}
             </Button>
           </ButtonGroup>}
-          {/* {props.invoice.length && moment() > moment(1221042181804) && <ButtonGroup */}
           {props.invoice.length > 0 && moment() > moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
            status={'info'} style={styles.buttonContainer} >
             <Button

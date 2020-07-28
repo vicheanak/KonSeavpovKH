@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { ListRenderItemInfo, Image, View } from 'react-native';
 import {
   Input,
@@ -22,27 +22,30 @@ import { ProgressBarLibrary } from '../../components/progress-bar.component';
 import { SearchIcon, StarIcon, ArrowIosForwardIcon } from '../../assets/icons';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
-
-const allTodos: Todo[] = [
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
-];
+import { SOURCE } from '../../app/app-environment';
+import {
+  fetchUserFavorites,
+  updateBookDetail,
+  fetchBooksChapters,
+  fetchUserFavorite,
+} from '../../redux/actions';
 
 
 const ReadingScreen = (props: any): ListElement => {
 
-  const [todos, setTodos] = React.useState<Todo[]>(allTodos);
+  // const [todos, setTodos] = React.useState<any[]>(allTodos);
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
 
+  const { setBookDetail, fetchChapters, fetchFavorite, userData, favorites, getUserFavorites } = props;
 
+
+  useEffect(() => {
+    // props.fetchPeople();
+    // props.fetchBooks();
+    (async () => {
+    })();
+  }, []);
   const defaultOptions: any[] = [
     { id: 1, text: props.intlData.messages['read_in_progress'] },
     { id: 2, text: props.intlData.messages['done_reading'] },
@@ -57,25 +60,36 @@ const ReadingScreen = (props: any): ListElement => {
   };
 
   const onChangeQuery = (query: string): void => {
-    const nextTodos: Todo[] = allTodos.filter((todo: Todo): boolean => {
-      return todo.title.toLowerCase().includes(query.toLowerCase());
+    const nextTodos: any = props.favorites.filter((favorite: any): boolean => {
+      return favorite.title.toLowerCase().includes(query.toLowerCase());
     });
 
-    setTodos(nextTodos);
+    // setTodos(nextTodos);
     setQuery(query);
   };
 
-  const navigateBookDetail = (todoIndex: number): void => {
+  const navigateBookDetail = (bookIndex: number): void => {
+    const {[bookIndex]: book} = favorites;
+    setBookDetail(book);
+    fetchChapters(book.uuid);
+    fetchFavorite({userUuid: userData.uuid, bookUuid: book.uuid});
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
-  const renderReading = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => (
+  const renderReading = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => {
+    let photo = SOURCE + item?.imageUrl;
+    let allChapters = item?.chapters?.length;
+    let currentChapter = item?.favorite?.currentChapter;
+    let progress = Math.round((currentChapter * 100) / allChapters);
+
+    return (
     <ListItem
       style={styles.item}
       onPress={navigateBookDetail}>
       <Image
         style={styles.image}
-        source={item.photo}
+        // source={item.photo}
+        source={{uri: photo}}
       />
       <View style={styles.detailsContainer}>
         <Text category='s1'>
@@ -84,12 +98,12 @@ const ReadingScreen = (props: any): ListElement => {
         <Text
           appearance='hint'
           category='c1'>
-          Author Name 
+          {item.authorname} 
         </Text>
         <ProgressBarLibrary
           style={styles.itemProgressBar}
-          progress={item.progress}
-          text={`${item.progress}%`}
+          progress={progress}
+          text={`${progress}%`}
         />
       </View>
       <Button
@@ -99,11 +113,15 @@ const ReadingScreen = (props: any): ListElement => {
         icon={ArrowIosForwardIcon}
       />
     </ListItem>
-  );
+  )
+};
 
+  const onRefresh = () => {
+    getUserFavorites(userData.uuid);
+  }
   return (
     <Layout style={styles.container} level='1'>
-      <Input
+      {/* <Input
         style={styles.filterInput}
         placeholder={props.intlData.messages['search']}
         value={query}
@@ -116,10 +134,13 @@ const ReadingScreen = (props: any): ListElement => {
         data={defaultOptions}
         selectedOption={selectedOption}
         onSelect={onSelect}
-      />
+      /> */}
+      <Button onPress={onRefresh} textStyle={{fontSize: 15, lineHeight: 25}}>
+        {props.intlData.messages['refresh']}
+      </Button>
       <List
         style={styles.list}
-        data={todos}
+        data={props.favorites}
         renderItem={renderReading}
         ItemSeparatorComponent={Divider}
       />
@@ -152,7 +173,7 @@ const themedStyles = StyleService.create({
     paddingHorizontal: 12,
   },
   itemProgressBar: {
-    width: '50%',
+    width: '100%',
     marginVertical: 12,
   },
   image: {
@@ -173,11 +194,18 @@ const themedStyles = StyleService.create({
 const mapStateToProps = state => {
   return {
     intlData: state.intlData,
+    favorites: state.user.favorites,
+    userData: state.user.userData,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    setBookDetail: (book) => dispatch(updateBookDetail(book)),
+    fetchChapters: bookId => 
+      dispatch(fetchBooksChapters(bookId)),
+    fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
+   getUserFavorites: (userUuid) => dispatch(fetchUserFavorites(userUuid))
   };
 };
 

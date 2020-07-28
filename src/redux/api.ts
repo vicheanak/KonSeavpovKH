@@ -47,6 +47,7 @@ export const getBookChapters = (bookUuid) => {
 }
 
 export const getUserFavorites = (userUuid) => {
+  // userUuid = '3d222222-2fc2-4f39-92d2-faba81c4326d';
   let params = {
     pagination: { page: 1, perPage: 100 },
     // sort: { field: "title", order: "ASC" },
@@ -55,8 +56,8 @@ export const getUserFavorites = (userUuid) => {
     axios
       .get(`${API_SOURCE}/users/${userUuid}/favorites`, { params })
       .then(res => {
-        console.log('favorites', res.data[0].books);
-        return resolve(res.data);
+        // console.log('favorites', res.data[0].books);
+        return resolve(res.data[0].books);
       }).catch((error) => {
         console.log('erorr ', error);
         return resolve(error);
@@ -141,7 +142,7 @@ export const getUser = (params) => {
 }
 
 export const getUserLatestInvoiceApi = (userUuid) => {
-  userUuid = '3d222222-2fc2-4f39-92d2-faba81c4326d';
+  // userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
   let params = { isLatest: true };
   return new Promise((resolve, reject) => {
     axios

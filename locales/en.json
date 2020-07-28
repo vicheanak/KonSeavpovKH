@@ -71,5 +71,6 @@
     "profile": "Profile",
     "join_membership": "Join Membership",
     "expired": "Expired",
-    "not_yet_join": "Not yet join"
+    "not_yet_join": "Not yet join",
+    "refresh": "Refresh"
   }

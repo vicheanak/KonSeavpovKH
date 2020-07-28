@@ -81,7 +81,6 @@ const BookScreen = (props: any): ListElement => {
       }
       getLatestInvoice(userLocalData?.uuid);
       getUserFavorites(userLocalData?.uuid);
-      console.log({invoice});
       fetchBooks();
     })();
   }, []);
@@ -337,7 +336,7 @@ const mapStateToProps = state => {
     intlData: state.intlData,
     books: state.books.data,
     bookChapter: state.bookChapter,
-    user: state.user.favorites,
+    favorites: state.user.favorites,
     userData: state.user.userData,
     invoice: state.user.invoice,
     isPricingModalVisible: state.user.isPricingModalVisible

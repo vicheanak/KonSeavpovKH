@@ -48,21 +48,20 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
             <Text>{userData.name}</Text>
         </View>
         <Divider/>
-        {invoice.length && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.rowContainer}>
+        {invoice.length > 0 && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.rowContainer}>
             <Text style={styles.rowLabel}>{props.intlData.messages['membership']}: {props.intlData.messages['expired']}</Text>
         </View>)}
-        {invoice.length && moment() < moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.rowContainer}>
+        {invoice.length > 0 && moment() < moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.rowContainer}>
             <Text style={styles.rowLabel}>{props.intlData.messages['membership']}: {props.invoice[0]?.membership.name}</Text>
         </View>)}
-        {!invoice.length && (<View style={styles.rowContainer}>
+        {Object.keys(props.invoice).length === 0 && (<View style={styles.rowContainer}>
             <Text style={styles.rowLabel}>{props.intlData.messages['membership']}: {props.intlData.messages['not_yet_join']}</Text>
         </View>)}
         <Divider/>
-        {invoice.length && (<View style={styles.rowContainer}>
-        {/* <Text style={styles.rowLabel}>{props.intlData.messages['expired']}: {props.invoice[0]?.endSubscriptionDate}{moment(parseInt(props.invoice[0]?.endSubscriptionDate)).format('L')}</Text> */}
+        {invoice.length > 0 && (<View style={styles.rowContainer}>
         <Text style={styles.rowLabel}>{props.intlData.messages['expired']}: {moment(parseInt(props.invoice[0]?.endSubscriptionDate)).format('L')}</Text>
         </View>)}
-        {invoice.length && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View>
+        {invoice.length > 0 && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View>
           <Button
           status="success"
           appearance="ghost"
@@ -72,7 +71,7 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
           {props.intlData.messages['join_membership']}
           </Button>
         </View>)}
-        {!invoice.length && (<View>
+        {Object.keys(props.invoice).length === 0 && (<View>
           <Button
           status="success"
           appearance="ghost"
