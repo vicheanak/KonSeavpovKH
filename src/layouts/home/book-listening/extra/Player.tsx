@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import TrackPlayer from "react-native-track-player";
 import {useTrackPlayerEvents, useTrackPlayerProgress, usePlaybackState} from 'react-native-track-player/lib/hooks';
@@ -145,10 +145,15 @@ export default function Player(props) {
     playPauseButton = PauseIcon;
   }
 
+  useLayoutEffect(()=> {
+  },[]);
+
+  useEffect(() => {
+  }, []);
 
   return (
     <View style={[styles.card, style]}>
-      <Image style={styles.cover} source={{ uri: SOURCE + props.bookChapter.currentChapter.book.imageUrl }} />
+      <Image style={styles.cover} source={{ uri: SOURCE + props.bookChapter?.currentChapter?.book?.imageUrl }} />
       <ProgressBar />
       <View style={styles.titleAuthor}>
         <TextTicker
@@ -158,7 +163,7 @@ export default function Player(props) {
           bounce
           repeatSpacer={50}
           marqueeDelay={100}>
-          {props.bookChapter.currentChapter.currentChapter.chapterNumber} of {props.bookChapter.chapters.length} - {props.bookChapter.currentChapter.currentChapter.title}
+          {props.bookChapter?.currentChapter?.currentChapter?.chapterNumber} of {props.bookChapter?.chapters?.length} - {props.bookChapter?.currentChapter?.currentChapter?.title}
         </TextTicker>
         <Text style={styles.artist}>{trackArtist}</Text>
       </View>
@@ -166,7 +171,8 @@ export default function Player(props) {
       <View style={styles.mediaController}>
         <Button
           style={styles.mediaButtonSmall}
-          status='basic'
+          appearance='ghost'
+          status='primary'
           icon={SkipBackIcon}
           onPress={onPrevious}
         />
@@ -178,7 +184,8 @@ export default function Player(props) {
         /> */}
         <Button
           style={styles.mediaButtonLarge}
-          status='basic'
+          appearance='ghost'
+          status='primary'
           icon={playPauseButton}
           onPress={onTogglePlayback}
         />
@@ -190,7 +197,8 @@ export default function Player(props) {
         /> */}
         <Button
           style={styles.mediaButtonSmall}
-          status='basic'
+          appearance='ghost'
+          status='primary'
           icon={SkipForwardIcon}
           onPress={onNext}
         />

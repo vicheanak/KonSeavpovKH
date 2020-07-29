@@ -57,18 +57,21 @@ export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
   useEffect(() => {
     (async () => {
       props.setPlayerVisibility(false);
-      const currentTrack = await TrackPlayer.getCurrentTrack();
-      if (!currentTrack || currentTrack == 'undefined') {
-        await setup();
-        await resetPlaylist();
-      } else {
-        let foundTrack = book.chapters.find(matching => {
-          return matching.uuid == currentTrack;
-        });
-        if (!foundTrack) {
-          await resetPlaylist();
-        }
-      }
+      // const currentTrack = await TrackPlayer.getCurrentTrack();
+      // if (!currentTrack || currentTrack == 'undefined') {
+      //   await setup();
+      //   await resetPlaylist();
+      // } else {
+      //   let foundTrack = book.chapters.find(matching => {
+      //     return matching.uuid == currentTrack;
+      //   });
+      //   if (!foundTrack) {
+      //     await resetPlaylist();
+      //   }
+      // }
+      await TrackPlayer.destroy();
+      await setup();
+      await resetPlaylist();
       await TrackPlayer.skip(bookChapter.currentChapter.currentChapter.uuid.toString());
       await TrackPlayer.play();
     })();
@@ -143,7 +146,7 @@ export const BookListeningScreen = (props: any): SafeAreaLayoutElement => {
         leftControl={renderBackAction()}
         rightControls={[
           renderChapterListAction(), 
-          renderBookReading()
+          // renderBookReading()
         ]}
       />
       <ContentView {...props} />
@@ -182,7 +185,8 @@ const mapStateToProps = state => {
     totalChapters: state.totalChapters,
     bookDetail: state.bookDetail,
     bookChapter: state.bookChapter,
-    favorite: state.user.favorite
+    favorite: state.user.favorite,
+    userData: state.user.userData,
   };
 };
 

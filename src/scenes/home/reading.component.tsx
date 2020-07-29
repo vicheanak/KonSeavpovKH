@@ -135,7 +135,7 @@ const ReadingScreen = (props: any): ListElement => {
         selectedOption={selectedOption}
         onSelect={onSelect}
       /> */}
-      <Button onPress={onRefresh} textStyle={{fontSize: 15, lineHeight: 25}}>
+      <Button onPress={onRefresh} appearance="ghost" status="info" textStyle={{fontSize: 15, lineHeight: 25}}>
         {props.intlData.messages['refresh']}
       </Button>
       <List

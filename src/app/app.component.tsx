@@ -33,7 +33,7 @@ import {
 import {CloseOutlineIcon} from '../assets/icons';
 import TrackPlayer from 'react-native-track-player';
 import {usePlaybackState} from 'react-native-track-player/lib/hooks';
-import {loginUserFacebook, updatePlayerVisibility} from './../redux/actions';
+import {loginUserFacebook, updatePlayerVisibility, updateBookCurrentChapter, updateUserBookmark} from './../redux/actions';
 import {SOURCE} from './app-environment';
 import TextTicker from 'react-native-text-ticker';
 import * as RootNavigation from './RootNavigation';
@@ -44,6 +44,8 @@ import {
   GraphRequestManager,
 } from 'react-native-fbsdk';
 
+import { useTrackPlayerEvents} from 'react-native-track-player/lib/hooks';
+
 const defaultConfig: {local: Local; theme: Theme} = {
   local: 'kh',
   theme: 'light',
@@ -52,7 +54,7 @@ const defaultConfig: {local: Local; theme: Theme} = {
 let initRouteName = AppRoute.AUTH;
 
 const App = (props: any): React.ReactElement => {
-  const {currentTheme, currentLang, bookChapter, bookDetail} = props;
+  const {userData, updateBookmark, setBookCurrentChapter, currentTheme, currentLang, bookChapter, bookDetail} = props;
   // This value is used to determine the initial screen
   const isAuthorized: boolean = false;
   const [theme, setTheme] = React.useState(currentTheme);
@@ -149,6 +151,56 @@ const App = (props: any): React.ReactElement => {
     RootNavigation.navigate(routeName, {});
   };
 
+  const {book} = props.bookDetail;
+
+  let favorite : {
+    currentChapter: number;
+    isAudioDownloaded: boolean; 
+    isBookmarked: boolean;
+    isFinished: boolean;
+    isProgress: boolean;
+    isStarted: boolean;
+    audioLocalSource: string;
+    userUuid: string;
+    bookUuid: string;
+  } = {
+    currentChapter: 0,
+    isAudioDownloaded: false, 
+    isBookmarked: false,
+    isFinished: false,
+    isProgress: false,
+    isStarted: true,
+    audioLocalSource: 'na',
+    userUuid: props.userData.uuid,
+    bookUuid: book.uuid
+  };
+
+  const setCurrentChapter = async () => {
+      let newTrack = await TrackPlayer.getCurrentTrack();
+      let matchingChapter = bookChapter.chapters.find(chapter => {
+        return chapter.uuid == newTrack;
+      });
+      setBookCurrentChapter({currentChapter: matchingChapter, book: book});
+      favorite.isAudioDownloaded = props.favorite.isAudioDownloaded;
+      favorite.isBookmarked = props.favorite.isBookmarked;
+      favorite.isStarted = true;
+      favorite.audioLocalSource = props.favorite.audioLocalSource;
+      favorite.userUuid = props.userData.uuid;
+      favorite.bookUuid = book.uuid;
+      favorite.currentChapter = matchingChapter.chapterNumber;
+      updateBookmark(favorite);
+  }
+  const events = [
+    TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED,
+    TrackPlayer.TrackPlayerEvents.PLAYBACK_QUEUE_ENDED,
+  ];
+
+  useTrackPlayerEvents(events, (event) => {
+    if (event.track){
+      setCurrentChapter();
+    }
+  });
+
   return (
     <React.Fragment>
       <IconRegistry icons={[EvaIconsPack, AppIconsPack]} />
@@ -174,7 +226,7 @@ const App = (props: any): React.ReactElement => {
                       source={{
                         uri:
                           SOURCE +
-                          props.bookChapter.currentChapter.book.imageUrl,
+                          props.bookChapter?.currentChapter?.book?.imageUrl,
                       }}
                     />
                     <View style={styles.labelContainer}>
@@ -185,10 +237,10 @@ const App = (props: any): React.ReactElement => {
                         bounce
                         repeatSpacer={50}
                         marqueeDelay={500}>
-                        {bookChapter.currentChapter.currentChapter.title}
+                        {bookChapter?.currentChapter?.currentChapter?.title}
                       </TextTicker>
                       <Text appearance="hint" category="c1">
-                        {bookChapter.currentChapter.book.authorname}
+                        {bookChapter?.currentChapter?.book?.authorname}
                       </Text>
                     </View>
                     <View style={styles.mediaController}>
@@ -314,6 +366,8 @@ const mapStateToProps = state => {
     bookDetail: state.bookDetail,
     books: state.books.data,
     intlData: state.intlData,
+    favorite: state.user.favorite,
+    userData: state.user.userData,
   };
 };
 
@@ -322,6 +376,9 @@ const mapDispatchToProps = dispatch => {
     setPlayerVisibility: playerVisibility =>
       dispatch(updatePlayerVisibility(playerVisibility)),
     fbLogin: params => dispatch(loginUserFacebook(params)),
+    setBookCurrentChapter: currentChapter =>
+      dispatch(updateBookCurrentChapter(currentChapter)),
+    updateBookmark: (params) => dispatch(updateUserBookmark(params)),
   };
 };
 

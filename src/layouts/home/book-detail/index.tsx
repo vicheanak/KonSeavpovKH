@@ -226,13 +226,13 @@ export default (props: any): React.ReactElement => {
           footer={renderBookingFooter}>
           {props.invoice.length > 0 && moment() < moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && <ButtonGroup
            status={'success'} style={styles.buttonContainer} >
-            <Button
+            {/* <Button
               icon={ReadingIcon}
               style={styles.bookButton}
               textStyle={{fontSize: 17, lineHeight: 30}}
               onPress={onReadingButtonPress}>
               {props.intlData.messages['reading']}
-            </Button>
+            </Button> */}
             <Button
               icon={ListeningIcon}
               style={styles.bookButton}
@@ -387,7 +387,7 @@ const themedStyles = StyleService.create({
     color: 'white',
   },
   bookButton: {
-    width: 150,
+    width: 300,
     padding: 90
   },
   headerContainer: {

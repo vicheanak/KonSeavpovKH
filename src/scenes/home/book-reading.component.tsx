@@ -171,8 +171,8 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
   const hideTextSizeCard = () => {
     props.setBookTextSizeVisibility({textSizeVisibility: false});
   }
-  let chapterNumber = props.bookChapter.currentChapter.currentChapter.chapterNumber.toString();
-  let totalChapters = book.chapters.length.toString();
+  let chapterNumber = props.bookChapter?.currentChapter?.currentChapter?.chapterNumber.toString();
+  let totalChapters = book.chapters?.length.toString();
   return (
     <SafeAreaLayout
     style={styles.safeArea}

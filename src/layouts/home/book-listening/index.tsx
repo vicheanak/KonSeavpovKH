@@ -33,7 +33,7 @@ import {ProfileSetting} from './extra/profile-setting.component';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import Slider from '@react-native-community/slider';
 import TrackPlayer from 'react-native-track-player';
-import {usePlaybackState} from 'react-native-track-player/lib/hooks';
+import { usePlaybackState, useTrackPlayerEvents} from 'react-native-track-player/lib/hooks';
 import Player from './extra/Player';
 // import playlistData from "./extra/playlist.json";
 
@@ -64,44 +64,6 @@ export default (props: any): React.ReactElement => {
   const playbackState = usePlaybackState();
 
   const {book} = props.bookDetail;
-
-  let favorite : {
-    currentChapter: number;
-    isAudioDownloaded: boolean; 
-    isBookmarked: boolean;
-    isFinished: boolean;
-    isProgress: boolean;
-    isStarted: boolean;
-    audioLocalSource: string;
-    userUuid: string;
-    bookUuid: string;
-  } = {
-    currentChapter: 0,
-    isAudioDownloaded: false, 
-    isBookmarked: false,
-    isFinished: false,
-    isProgress: false,
-    isStarted: true,
-    audioLocalSource: 'na',
-    userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d',
-    bookUuid: book.uuid
-  };
-
-  const setCurrentChapter = async () => {
-      let newTrack = await TrackPlayer.getCurrentTrack();
-      let matchingChapter = bookChapter.chapters.find(chapter => {
-        return chapter.uuid == newTrack;
-      });
-      props.setBookCurrentChapter({currentChapter: matchingChapter, book: book});
-      favorite.isAudioDownloaded = props.favorite.isAudioDownloaded;
-      favorite.isBookmarked = props.favorite.isBookmarked;
-      favorite.isStarted = true;
-      favorite.audioLocalSource = props.favorite.audioLocalSource;
-      favorite.userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
-      favorite.bookUuid = book.uuid;
-      favorite.currentChapter = matchingChapter.chapterNumber;
-      updateBookmark(favorite);
-  }
 
   const skipToNext = async () => {
     try {
@@ -135,41 +97,6 @@ export default (props: any): React.ReactElement => {
     // await TrackPlayer.seekTo(newProgress);
   }
 
-  useEffect(() => {
-    (async () => {
-      TrackPlayer.addEventListener('playback-track-changed', async (trackChanged) => {
-        const currentTrack = await TrackPlayer.getCurrentTrack();
-        const track = await TrackPlayer.getTrack(currentTrack);
-        setCurrentChapter();
-      });
-      TrackPlayer.addEventListener('playback-queue-ended', async (trackEnded) => {
-        const currentTrack = await TrackPlayer.getCurrentTrack();
-        const track = await TrackPlayer.getTrack(currentTrack);
-        setCurrentChapter();
-      });
-    })();
-  }, []);
-
-  const setup = async () => {
-    await TrackPlayer.setupPlayer({});
-    await TrackPlayer.updateOptions({
-      stopWithApp: true,
-      capabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-        TrackPlayer.CAPABILITY_STOP,
-        TrackPlayer.CAPABILITY_SEEK_TO,
-      ],
-      compactCapabilities: [
-        TrackPlayer.CAPABILITY_PLAY,
-        TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SEEK_TO,
-      ],
-    });
-  }
-
   const togglePlayback = async () => {
     if (playbackState === TrackPlayer.STATE_PAUSED) {
       await TrackPlayer.play();
@@ -178,16 +105,6 @@ export default (props: any): React.ReactElement => {
     } else {
       await TrackPlayer.pause();
     }
-    // const currentTrack = await TrackPlayer.getCurrentTrack();
-    // if (currentTrack == null) {
-    //   await TrackPlayer.reset();
-    //   const playlistData = Playlist.getPlaylist(bookDetail);
-    //   console.log({playlistData});
-    //   await TrackPlayer.add(playlistData);
-    //   await TrackPlayer.play();
-    // } else {
-    //   await TrackPlayer.play();
-    // }
   }
 
   return (
