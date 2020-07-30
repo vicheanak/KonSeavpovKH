@@ -23,91 +23,79 @@ import {
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 import { AppRoute } from '../../navigation/app-routes';
-import { ProgressBar } from '../../components/progress-bar.component';
+import { ProgressBarLibrary } from '../../components/progress-bar.component';
 import { SearchIcon, StarIcon, ArrowIosForwardIcon, PersonFillIcon } from '../../assets/icons';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import { BookmarkIcon } from './../../assets/icons';
 
+import { SOURCE } from '../../app/app-environment';
+import {
+  fetchUserFavorites,
+  updateBookDetail,
+  fetchBooksChapters,
+  fetchUserFavorite,
+} from '../../redux/actions';
 
 
-const allTodos: Todo[] = [
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
-  Todo.mocked0(),
-  Todo.mocked1(),
-  Todo.mocked2(),
-];
 
 
 const SavedScreen = (props: any): SafeAreaLayoutElement => {
 
-  const [todos, setTodos] = React.useState<Todo[]>(allTodos);
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
 
 
-  const defaultOptions: any[] = [
-    { id: 1, text: props.intlData.messages['read_in_progress'] },
-    { id: 2, text: props.intlData.messages['done_reading'] },
-    { id: 3, text: props.intlData.messages['finished_downloads'] },
-    { id: 4, text: props.intlData.messages['not_yet_read'] },
-  ];
+  const { setBookDetail, fetchChapters, fetchFavorite, userData, favorites, getUserFavorites } = props;
 
-  const [selectedOption, setSelectedOption] = React.useState(defaultOptions);
 
-  const onSelect = (option) => {
-    setSelectedOption(option);
-  };
-
-  const onChangeQuery = (query: string): void => {
-    const nextTodos: Todo[] = allTodos.filter((todo: Todo): boolean => {
-      return todo.title.toLowerCase().includes(query.toLowerCase());
-    });
-
-    setTodos(nextTodos);
-    setQuery(query);
-  };
-
-  const navigateBookDetail = (todoIndex: number): void => {
+  const navigateBookDetail = (bookIndex: number): void => {
+    const {[bookIndex]: book} = favorites;
+    setBookDetail(book);
+    fetchChapters(book.uuid);
+    fetchFavorite({userUuid: userData.uuid, bookUuid: book.uuid});
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
-  const renderSaved = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => (
-    <ListItem
-      style={styles.item}
-      onPress={navigateBookDetail}>
-      <Image
-        style={styles.image}
-        source={item.photo}
-      />
-      <View style={styles.detailsContainer}>
-        <Text category='s1'>
-          {item.title}
-        </Text>
-        <Text
-          appearance='hint'
-          category='c1'>
-          Author Name
-        </Text>
-        <ProgressBar
-          style={styles.itemProgressBar}
-          progress={item.progress}
-          text={`${item.progress}%`}
+  const renderSaved = ({ item }: ListRenderItemInfo<any>): ListItemElement => {
+      let photo = SOURCE + item?.imageUrl;
+      let allChapters = item?.chapters?.length;
+      let currentChapter = item?.favorite?.currentChapter;
+      let progress = Math.round((currentChapter * 100) / allChapters);
+
+      return (
+      <ListItem
+        style={styles.item}
+        onPress={navigateBookDetail}>
+        <Image
+          style={styles.image}
+          // source={item.photo}
+          source={{uri: photo}}
         />
-      </View>
-      <Button
-        style={[styles.iconButton, styles.removeButton]}
-        appearance='ghost'
-        status="primary"
-        icon={BookmarkIcon}
-      />
-    </ListItem>
-  );
+        <View style={styles.detailsContainer}>
+          <Text category='s1'>
+            {item.title}
+          </Text>
+          <Text
+            appearance='hint'
+            category='c1'>
+            {item.authorname} 
+          </Text>
+          <ProgressBarLibrary
+            style={styles.itemProgressBar}
+            progress={progress}
+            text={`${progress}%`}
+          />
+        </View>
+        <Button
+          style={[styles.iconButton, styles.removeButton]}
+          appearance='ghost'
+          status="primary"
+          icon={ArrowIosForwardIcon}
+        />
+      </ListItem>
+    )
+  };
 
   const onProfilePress = () => {
     props.navigation.navigate(AppRoute.PROFILE);
@@ -119,6 +107,10 @@ const SavedScreen = (props: any): SafeAreaLayoutElement => {
       onPress={onProfilePress}
     />
   );
+
+  const onRefresh = () => {
+    getUserFavorites(userData.uuid);
+  }
 
   return (
     <SafeAreaLayout
@@ -139,10 +131,13 @@ const SavedScreen = (props: any): SafeAreaLayoutElement => {
     <Layout style={styles.container} level='1'>
       <List
         style={styles.list}
-        data={todos}
+        data={props.favorites}
         renderItem={renderSaved}
         ItemSeparatorComponent={Divider}
       />
+      <Button onPress={onRefresh} appearance="ghost" status="success" textStyle={{fontSize: 15, lineHeight: 25}}>
+        {props.intlData.messages['refresh']}
+      </Button>
     </Layout>
 
   </SafeAreaLayout>
@@ -176,7 +171,7 @@ const themedStyles = StyleService.create({
     paddingHorizontal: 12,
   },
   itemProgressBar: {
-    width: '50%',
+    width: '90%',
     marginVertical: 12,
   },
   image: {
@@ -198,11 +193,18 @@ const themedStyles = StyleService.create({
 const mapStateToProps = state => {
   return {
     intlData: state.intlData,
+    favorites: state.user.favorites,
+    userData: state.user.userData,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    setBookDetail: (book) => dispatch(updateBookDetail(book)),
+    fetchChapters: bookId => 
+      dispatch(fetchBooksChapters(bookId)),
+    fetchFavorite: (params) => dispatch(fetchUserFavorite(params)),
+   getUserFavorites: (userUuid) => dispatch(fetchUserFavorites(userUuid))
   };
 };
 

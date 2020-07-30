@@ -76,7 +76,7 @@ const ReadingScreen = (props: any): ListElement => {
     props.navigation.navigate(AppRoute.BOOK_DETAIL);
   };
 
-  const renderReading = ({ item }: ListRenderItemInfo<Todo>): ListItemElement => {
+  const renderReading = ({ item }: ListRenderItemInfo<any>): ListItemElement => {
     let photo = SOURCE + item?.imageUrl;
     let allChapters = item?.chapters?.length;
     let currentChapter = item?.favorite?.currentChapter;

@@ -63,7 +63,7 @@ export const HomeNavigator = (): React.ReactElement => (
   <Stack.Navigator headerMode='none'>
     <Stack.Screen name={AppRoute.HOME} component={HomeTabsNavigator}/>
     {/* <Stack.Screen name={AppRoute.BOOK_DETAIL} component={BookDetailScreen}/> */}
-    <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightNavigator}/>
+    {/* <Stack.Screen name={AppRoute.HIGHLIGHT} component={HighlightNavigator}/> */}
     {/* <Stack.Screen name={AppRoute.SAVED} component={SavedScreen}/> */}
   </Stack.Navigator>
 );
