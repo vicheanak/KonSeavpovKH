@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import {
   Divider,
   Layout,
@@ -24,8 +24,9 @@ import {
 } from 'react-native-fbsdk';
 import {AppRoute} from '../../navigation/app-routes';
 import {connect} from 'react-redux';
-import {updatePricingModalVisibility} from '../../redux/actions';
+import {updatePricingModalVisibility, updateLanguage} from '../../redux/actions';
 import moment from "moment";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const data = new Array(8).fill({
   title: 'Title for Item',
@@ -82,6 +83,23 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
           </Button>
         </View>)}
         <Divider/>
+        <View style={styles.rowContainer}>
+          <Text status="info" style={styles.rowLabel}>
+            {props.intlData.messages['language']}
+          </Text>
+        </View>
+        <TouchableOpacity onPress={() => {props.updateLanguage('kh')}} style={styles.rowContainer}>
+          <Avatar style={styles.avatar} size='medium' source={require('./../../assets/images/khmer_flag.png')}/>
+          <Text style={[styles.rowLabel]}>
+            {props.intlData.messages['khmer']}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {props.updateLanguage('en')}} style={styles.rowContainer}>
+          <Avatar style={styles.avatar} size='medium' source={require('./../../assets/images/english_flag.png')}/>
+          <Text style={[styles.rowLabel]}>
+            {props.intlData.messages['english']}
+          </Text>
+        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <LoginButton
             publishPermissions={['publish_actions', 'picture', 'email', 'friends', 'age_range']}
@@ -112,7 +130,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rowLabel: {
-    marginLeft: 10
+    marginLeft: 10,
+    alignSelf: 'center'
+  },
+  image: {
+    height: 30,
+    width: 30
   },
   bookButton: {
     // width: 250,
@@ -147,7 +170,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setPricingModalVisibility: (isVisible) => dispatch(updatePricingModalVisibility(isVisible))
+    setPricingModalVisibility: (isVisible) => dispatch(updatePricingModalVisibility(isVisible)),
+    updateLanguage: (lang) => dispatch(updateLanguage(lang))
   };
 };
 

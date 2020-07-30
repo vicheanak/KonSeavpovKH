@@ -12,7 +12,9 @@ import {
   useStyleSheet,
   Select, 
   Divider,
-  Button } from '@ui-kitten/components';
+  Button,
+  TopNavigation,
+  TopNavigationAction } from '@ui-kitten/components';
 // import { SavedScreenProps } from '../../navigation/home.navigator';
 import { Toolbar } from '../../components/toolbar.component';
 import {
@@ -22,7 +24,7 @@ import {
 } from '../../components/safe-area-layout.component';
 import { AppRoute } from '../../navigation/app-routes';
 import { ProgressBar } from '../../components/progress-bar.component';
-import { SearchIcon, StarIcon, ArrowIosForwardIcon } from '../../assets/icons';
+import { SearchIcon, StarIcon, ArrowIosForwardIcon, PersonFillIcon } from '../../assets/icons';
 import { Todo } from '../../data/todo.model';
 import { connect } from 'react-redux';
 import { BookmarkIcon } from './../../assets/icons';
@@ -107,13 +109,31 @@ const SavedScreen = (props: any): SafeAreaLayoutElement => {
     </ListItem>
   );
 
+  const onProfilePress = () => {
+    props.navigation.navigate(AppRoute.PROFILE);
+  };
+
+  const renderProfileAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={PersonFillIcon}
+      onPress={onProfilePress}
+    />
+  );
+
   return (
     <SafeAreaLayout
     style={styles.safeArea}
     insets={SaveAreaInset.TOP}>
-    <Toolbar
+    {/* <Toolbar
       title='Kon Seavpov'
       onBackPress={props.navigation.goBack}
+    /> */}
+    <TopNavigation
+      title="Kon Seavpov"
+      alignment="center"
+      rightControls={[
+        renderProfileAction(),
+      ]}
     />
     <Divider/>
     <Layout style={styles.container} level='1'>

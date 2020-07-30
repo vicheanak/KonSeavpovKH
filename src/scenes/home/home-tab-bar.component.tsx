@@ -1,5 +1,5 @@
 import React from 'react';
-import {Divider, Tab, TabBar, TabElement, StyleService, useStyleSheet} from '@ui-kitten/components';
+import { TopNavigation, TopNavigationAction, Divider, Tab, TabBar, TabElement, StyleService, useStyleSheet} from '@ui-kitten/components';
 import {HomeScreenProps} from '../../navigation/home.navigator';
 import {AppRoute} from '../../navigation/app-routes';
 import {
@@ -94,18 +94,36 @@ const HomeTabBar = (props: any): SafeAreaLayoutElement => {
     );
   };
 
+  const onProfilePress = () => {
+    props.navigation.navigate(AppRoute.PROFILE);
+  };
+
+  const renderProfileAction = (): React.ReactElement => (
+    <TopNavigationAction
+      icon={PersonFillIcon}
+      onPress={onProfilePress}
+    />
+  );
+
   return (
     <SafeAreaLayout insets={SaveAreaInset.TOP}>
-      <Toolbar
+      {/* <Toolbar
         title="Kon Seavpov"
         onMenuItemSelect={onMenuItemSelect}
         menu={menu}
         backIcon={MenuIcon}
         onBackPress={props.navigation.toggleDrawer}
+      /> */}
+      <TopNavigation
+        title="Kon Seavpov"
+        alignment="center"
+        rightControls={[
+          renderProfileAction(),
+        ]}
       />
-      <TabBar selectedIndex={props.state.index} onSelect={onTabSelect}>
+      {/* <TabBar selectedIndex={props.state.index} onSelect={onTabSelect}>
         {props.state.routes.map(createNavigationTabForRoute)}
-      </TabBar>
+      </TabBar> */}
       <Divider />
     </SafeAreaLayout>
   );
