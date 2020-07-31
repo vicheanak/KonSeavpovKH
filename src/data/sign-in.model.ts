@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export class SignInData {
 
   constructor(
-    readonly email: string,
+    readonly phonenumber: string,
     readonly password: string) {
 
   }

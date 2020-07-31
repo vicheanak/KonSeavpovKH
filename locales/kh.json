@@ -22,7 +22,7 @@
     "terms_of_services": "លក្ខខណ្ឌ​នៃ​សេវាកម្ម",
     "privacy_policy": "គោលការណ៍​ភាព​ឯកជន",
     "feedback": "បញ្ចេញមតិ",
-    "follow_us_facebook": "Like Facebook",
+    "follow_us_facebook": "ទំព័រ Facebook",
     "about_us": "អំពីយេីង",
     "filter": "តម្រង",
     "read_in_progress": "កំពុងអាន",
@@ -73,5 +73,7 @@
     "expired": "ផុតកំណត់",
     "not_yet_join": "មិនទាន់ចូល",
     "refresh": "ទាញយកទិន្ន័យថ្មី",
-    "language": "ភាសា"
+    "language": "ភាសា",
+    "others": "ផ្សេងៗ",
+    "get_started": "ចាប់ផ្តេីម"
 }

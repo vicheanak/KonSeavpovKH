@@ -1,6 +1,7 @@
 export enum AppRoute {
   AUTH = 'Auth',
   SIGN_IN = 'Sign In',
+  STARTED = 'Started',
   SIGN_UP = 'Sign Up',
   RESET_PASSWORD = 'Reset Passrord',
   HOME = 'Home',

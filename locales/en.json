@@ -22,7 +22,7 @@
     "terms_of_services": "Terms of Services",
     "privacy_policy": "Privacy Policy",
     "feedback": "Feedback",
-    "follow_us_facebook": "Follow Us Facebook",
+    "follow_us_facebook": "Facebook Page",
     "about_us": "About Us",
     "filter": "Filter",
     "read_in_progress": "Read in Progress",
@@ -73,5 +73,7 @@
     "expired": "Expired",
     "not_yet_join": "Not yet join",
     "refresh": "Refresh",
-    "language": "Language"
+    "language": "Language",
+    "others": "Others",
+    "get_started": "Get Started"
   }

@@ -51,7 +51,7 @@ const defaultConfig: {local: Local; theme: Theme} = {
   theme: 'light',
 };
 
-let initRouteName = AppRoute.AUTH;
+let initRouteName = AppRoute.STARTED;
 
 const App = (props: any): React.ReactElement => {
   const {userData, updateBookmark, setBookCurrentChapter, currentTheme, currentLang, bookChapter, bookDetail} = props;
@@ -171,7 +171,7 @@ const App = (props: any): React.ReactElement => {
     isProgress: false,
     isStarted: true,
     audioLocalSource: 'na',
-    userUuid: props.userData.uuid,
+    userUuid: props.userData?.uuid,
     bookUuid: book.uuid
   };
 
@@ -185,7 +185,7 @@ const App = (props: any): React.ReactElement => {
       favorite.isBookmarked = props.favorite.isBookmarked;
       favorite.isStarted = true;
       favorite.audioLocalSource = props.favorite.audioLocalSource;
-      favorite.userUuid = props.userData.uuid;
+      favorite.userUuid = props.userData?.uuid;
       favorite.bookUuid = book.uuid;
       favorite.currentChapter = matchingChapter.chapterNumber;
       updateBookmark(favorite);
@@ -247,14 +247,14 @@ const App = (props: any): React.ReactElement => {
                       <Button
                         style={[styles.iconButton]}
                         appearance="ghost"
-                        status="primary"
+                        status="basic"
                         icon={playPauseButton}
                         onPress={onTogglePlayback}
                       />
                       <Button
                         style={[styles.iconButton]}
                         appearance="ghost"
-                        status="primary"
+                        status="basic"
                         icon={CloseOutlineIcon}
                         onPress={onClosePlayer}
                       />
@@ -301,13 +301,13 @@ const themedStyles = StyleService.create({
     alignSelf: 'center',
     alignItems: 'flex-start',
     position: 'absolute',
-    bottom: 90,
+    bottom: 0,
     left: 0,
     right: 0,
     backgroundColor: '#222A43',
-    borderColor: '#1C2237',
-    borderWidth: 2,
-    marginBottom: 2,
+    // borderColor: '#1C2237',
+    // borderWidth: 2,
+    // marginBottom: 2,
     height: 70,
   },
   imageCard: {

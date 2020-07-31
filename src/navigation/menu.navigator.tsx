@@ -237,7 +237,7 @@ const MenuNavigator = (props: any): React.ReactElement => {
           drawerIcon: DownloadsIcon,
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name={AppRoute.TERMS_OF_SERVICES}
         component={TermsOfServicesScreen}
         options={{
@@ -284,7 +284,7 @@ const MenuNavigator = (props: any): React.ReactElement => {
           title: props.intlData.messages['contact_us'],
           drawerIcon: ContactUsIcon,
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };

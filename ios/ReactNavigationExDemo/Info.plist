@@ -67,6 +67,7 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+		<string>fb</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
@@ -93,6 +94,8 @@
 		<string>Hanuman-Regular.ttf</string>
 		<string>Battambang-Bold.ttf</string>
 		<string>Battambang-Regular.ttf</string>
+		<string>NotoSansKhmer-Bold.ttf</string>
+		<string>NotoSansKhmer-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -61,7 +61,8 @@ const BookScreen = (props: any): ListElement => {
   const styles = useStyleSheet(themedStyles);
   const [bookId, setBookId] = useState(0);
 
-  const {invoice, getUserFavorites, updateViewPricingModal, getLatestInvoice, setUserData, userData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
+  const {invoice, getUserFavorites, updateViewPricingModal, getLatestInvoice, setUserData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
+  let {userData} = props;
 
   //  const [count, setCount] = useState(0);
   // Similar to componentDidMount and componentDidUpdate:
@@ -69,18 +70,17 @@ const BookScreen = (props: any): ListElement => {
     // props.fetchPeople();
     // props.fetchBooks();
     (async () => {
-      let userLocalData:any = {};
       if (userData.uuid){
-        userLocalData = userData;
+        userData = userData;
         AppStorage.setUser(JSON.stringify(userData));
-        setUserData(userData);
       }else{
         const userDataStorage = await AppStorage.getUser();
-        userLocalData = JSON.parse(userDataStorage);
-        setUserData(userLocalData);
+        userData = JSON.parse(userDataStorage);
+        console.log('userData ===> ', userData);
       }
-      getLatestInvoice(userLocalData?.uuid);
-      getUserFavorites(userLocalData?.uuid);
+      setUserData(userData);
+      getLatestInvoice(userData?.uuid);
+      getUserFavorites(userData?.uuid);
       fetchBooks();
     })();
   }, []);

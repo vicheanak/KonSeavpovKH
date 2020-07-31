@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, Linking} from 'react-native';
 import {
   Divider,
   Layout,
@@ -38,6 +38,17 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
   const { userData, invoice } = props;
   useEffect(() => {
   }, []);
+  const openFacebookUrl = async () => {
+    const facebookPage = "fb://page/111874160485392";
+    const facebookPageWebsite = "https://www.facebook.com/111874160485392";
+    const supported = await Linking.canOpenURL(facebookPage);
+
+    if (supported) {
+      await Linking.openURL(facebookPage);
+    } else {
+      await Linking.openURL(facebookPageWebsite);
+    }
+  }
   return (
     <SafeAreaLayout style={styles.safeArea} insets={SaveAreaInset.TOP}>
       <Toolbar title="Profile" onBackPress={props.navigation.goBack} />
@@ -49,6 +60,11 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
             <Text>{userData.name}</Text>
         </View>
         <Divider/>
+        <View style={styles.rowContainer}>
+          <Text status="info" style={styles.rowLabel}>
+            {props.intlData.messages['membership']}
+          </Text>
+        </View>
         {invoice.length > 0 && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.rowContainer}>
             <Text style={styles.rowLabel}>{props.intlData.messages['membership']}: {props.intlData.messages['expired']}</Text>
         </View>)}
@@ -100,6 +116,26 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
             {props.intlData.messages['english']}
           </Text>
         </TouchableOpacity>
+        <View style={styles.rowContainer}>
+          <Text status="info" style={styles.rowLabel}>
+            {props.intlData.messages['others']}
+          </Text>
+        </View>
+        <TouchableOpacity onPress={() => {props.navigation.navigate(AppRoute.TERMS_OF_SERVICES)}} style={styles.rowContainer}>
+          <Text style={[styles.rowLabel]}>
+            {props.intlData.messages['terms_of_services']}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {props.navigation.navigate(AppRoute.PRIVACY_POLICY)}} style={styles.rowContainer}>
+          <Text style={[styles.rowLabel]}>
+            {props.intlData.messages['privacy_policy']}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={openFacebookUrl} style={styles.rowContainer}>
+          <Text style={[styles.rowLabel]}>
+            {props.intlData.messages['follow_us_facebook']}
+          </Text>
+        </TouchableOpacity>
         <View style={styles.buttonContainer}>
           <LoginButton
             publishPermissions={['publish_actions', 'picture', 'email', 'friends', 'age_range']}
@@ -145,7 +181,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    padding: 8,
+    padding: 5,
   },
   avatar: {
     margin: 8,

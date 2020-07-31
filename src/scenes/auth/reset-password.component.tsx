@@ -8,8 +8,14 @@ import { AppRoute } from '../../navigation/app-routes';
 import { FormInput } from '../../components/form-input.component';
 import { Toolbar } from '../../components/toolbar.component';
 import { ResetPasswordData, ResetPasswordSchema } from '../../data/reset-password.model';
+import {
+  SafeAreaLayout,
+  SafeAreaLayoutElement,
+  SaveAreaInset,
+} from '../../components/safe-area-layout.component';
+import { connect } from 'react-redux'
 
-export const ResetPasswordScreen = (props: ResetPasswordScreenProps): LayoutElement => {
+const ResetPasswordScreen = (props: any) => {
 
   const insets: EdgeInsets = useSafeArea();
 
@@ -38,9 +44,9 @@ export const ResetPasswordScreen = (props: ResetPasswordScreenProps): LayoutElem
   );
 
   return (
-    <React.Fragment>
+    <SafeAreaLayout style={styles.safeArea} insets={[SaveAreaInset.TOP, SaveAreaInset.BOTTOM]}>
       <ImageBackground
-        style={[styles.appBar, { paddingTop: insets.top }]}
+        style={styles.appBar}
         source={require('../../assets/image-background.jpeg')}>
         <Toolbar
           appearance='control'
@@ -55,11 +61,14 @@ export const ResetPasswordScreen = (props: ResetPasswordScreenProps): LayoutElem
           {renderForm}
         </Formik>
       </Layout>
-    </React.Fragment>
+    </SafeAreaLayout>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1
+  },
   appBar: {
     height: 192,
   },
@@ -75,3 +84,21 @@ const styles = StyleSheet.create({
     marginVertical: 24,
   },
 });
+
+const mapStateToProps = state => {
+  return {
+    intlData: state.intlData,
+    appData: state.appData,
+    userData: state.user.userData,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ResetPasswordScreen);

@@ -62,7 +62,7 @@ export default (props: any): React.ReactElement => {
     isBookmarked: false,
     isStarted: false,
     audioLocalSource: 'na',
-    userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d',
+    userUuid: userData?.uuid,
     bookUuid: book.uuid
   };
 
@@ -81,7 +81,7 @@ export default (props: any): React.ReactElement => {
       favorite.isBookmarked = props.favorite.isBookmarked;
       favorite.isStarted = true;
       favorite.audioLocalSource = props.favorite.audioLocalSource;
-      favorite.userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
+      favorite.userUuid = userData?.uuid;
       favorite.bookUuid = book.uuid;
       updateBookmark(favorite);
     }

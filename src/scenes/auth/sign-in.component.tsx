@@ -1,37 +1,34 @@
-import React from 'react';
-import {ImageBackground, StyleSheet, View, Image} from 'react-native';
-import {Button, CheckBox, Layout, ViewPager, Text} from '@ui-kitten/components';
-import {Formik, FormikProps} from 'formik';
-import {SignInScreenProps} from '../../navigation/auth.navigator';
-import {AppRoute} from '../../navigation/app-routes';
-import {FormInput} from '../../components/form-input.component';
-import {EyeIcon, EyeOffIcon} from '../../assets/icons';
-import {SignInData, SignInSchema} from '../../data/sign-in.model';
-import {i18n} from '../../app/i18n';
-import {connect} from 'react-redux';
-import {loginUserFacebook} from '../../redux/actions';
-import {
-  LoginButton,
-  AccessToken,
-  GraphRequest,
-  GraphRequestManager,
-} from 'react-native-fbsdk';
 
+import React from 'react';
+import { ImageBackground, StyleSheet, View, Text } from 'react-native';
+import { Button, CheckBox, Layout } from '@ui-kitten/components';
+import { Formik, FormikProps } from 'formik';
+import { SignInScreenProps } from '../../navigation/auth.navigator';
+import { AppRoute } from '../../navigation/app-routes';
+import { FormInput } from '../../components/form-input.component';
+import { EyeIcon, EyeOffIcon } from '../../assets/icons';
+import { SignInData, SignInSchema } from '../../data/sign-in.model';
+import { i18n } from '../../app/i18n';
+import { connect } from 'react-redux'
+import { loginUserFacebook } from '../../redux/actions';
 import {
   SafeAreaLayout,
   SafeAreaLayoutElement,
   SaveAreaInset,
 } from '../../components/safe-area-layout.component';
 
+import { Toolbar } from '../../components/toolbar.component';
 
 const SignInScreen = (props: any) => {
+
   const [shouldRemember, setShouldRemember] = React.useState<boolean>(false);
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false);
 
   // props.fetchData();
 
   const onFormSubmit = (values: SignInData): void => {
-    navigateHome();
+    console.log({values});
+    // navigateHome();
   };
 
   const navigateHome = (): void => {
@@ -50,124 +47,72 @@ const SignInScreen = (props: any) => {
     setPasswordVisible(!passwordVisible);
   };
 
-  //Create response callback.
-
-  const onLoginFinished = (error, result) => {
-    if (error) {
-      console.log('login has error: ' + result.error);
-    } else if (result.isCancelled) {
-      console.log('login is cancelled.');
-    } else {
-      AccessToken.getCurrentAccessToken().then(data => {
-        const _responseInfoCallback = (error: any, result: any) => {
-          if (error) {
-            console.log('Error fetching data: ', error);
-          } else {
-            let params = result;
-            params.accessToken = data.accessToken;
-            props.fbLogin(params);
-            props.navigation.navigate(AppRoute.HOME);
-          }
-        };
-        const infoRequest = new GraphRequest(
-          '/me?fields=name,picture,email,friends,age_range',
-          {
-            parameters: {
-              fields: {
-                string: 'id,name,email,friends,age_range,picture.type(large)',
-              },
-            },
-          },
-          _responseInfoCallback,
-        );
-        new GraphRequestManager().addRequest(infoRequest).start();
-      });
-    }
-  };
-
-
-  const renderForm = (
-    formProps: FormikProps<SignInData>,
-  ): React.ReactFragment => (
+  const renderForm = (formProps: FormikProps<SignInData>): React.ReactFragment => (
     <React.Fragment>
       <FormInput
-        id="email"
+        id='phonenumber'
         style={styles.formControl}
-        placeholder={i18n('auth.email')}
-        keyboardType="email-address"
+        placeholder="Phone Number"
+        keyboardType='number-pad'
       />
       <FormInput
-        id="password"
+        id='password'
         style={styles.formControl}
-        placeholder={i18n('auth.password')}
+        placeholder="Password"
         secureTextEntry={!passwordVisible}
         icon={passwordVisible ? EyeIcon : EyeOffIcon}
         onIconPress={onPasswordIconPress}
       />
       <View style={styles.resetPasswordContainer}>
-        <CheckBox
-          style={styles.formControl}
-          checked={shouldRemember}
-          onChange={setShouldRemember}
-          text={i18n('auth.remember_me')}
-        />
         <Button
-          appearance="ghost"
-          status="basic"
+          appearance='ghost'
+          status='basic'
+          textStyle={{fontSize: 13, lineHeight: 30}}
           onPress={navigateResetPassword}>
-          {i18n('auth.forgot_password')}
+            Forgot Password
         </Button>
       </View>
-      {/* <Button style={styles.submitButton} onPress={formProps.handleSubmit}>
-        {i18n('auth.sign_in')}
-      </Button> */}
-      <LoginButton
-        publishPermissions={['publish_actions', 'picture', 'email', 'friends', 'age_range']}
-        onLoginFinished={onLoginFinished}
-        onLogoutFinished={() => console.log('logout.')}
-        style={styles.loginButton}
-      />
+      <Button
+        style={styles.submitButton}
+        textStyle={{fontSize: 15, lineHeight: 25}}
+        appearance="outline"
+        onPress={formProps.handleSubmit}>
+          Sign In
+      </Button>
     </React.Fragment>
   );
 
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-
   return (
-    <SafeAreaLayout
-    style={styles.safeArea}
-    insets={SaveAreaInset.TOP}>
-      <ViewPager
-      selectedIndex={selectedIndex}
-      onSelect={index => setSelectedIndex(index)}>
-      <Layout
-        style={styles.tab}
-        level='2'>
-        <Image style={styles.image} source={require('./../../assets/images/startup_1.jpg')} />
-      </Layout>
-      <Layout
-        style={styles.tab}
-        level='2'>
-        <Image style={styles.image} source={require('./../../assets/images/startup_2.jpg')} />
-      </Layout>
-      {/* <Layout
-        style={styles.tab}
-        level='2'>
-        <Image style={styles.image} source={require('./../../assets/images/startup_3.jpg')} />
-      </Layout> */}
-      <Layout
-        style={styles.tab}
-        level='2'>
-        <Image style={styles.image} source={require('./../../assets/images/startup_4.jpg')} />
-      </Layout>
-    </ViewPager>
-      <View style={styles.bottomContainer}>
-        <LoginButton
-          publishPermissions={['publish_actions', 'picture', 'email', 'friends', 'age_range']}
-          onLoginFinished={onLoginFinished}
-          onLogoutFinished={() => console.log('logout.')}
-          style={styles.loginButton}
+    <SafeAreaLayout style={styles.safeArea} insets={[SaveAreaInset.TOP, SaveAreaInset.BOTTOM]}>
+      <ImageBackground
+        style={styles.appBar}
+        source={require('../../assets/image-background.jpeg')}
+      >
+        <Toolbar
+          appearance='control'
+          onBackPress={props.navigation.goBack}
         />
-      </View>
+        </ImageBackground>
+      <Layout style={styles.formContainer}>
+        <Formik
+          initialValues={SignInData.empty()}
+          // validationSchema={SignInSchema}
+          onSubmit={onFormSubmit}>
+          {renderForm}
+        </Formik>
+        <View>
+        {
+          props.appData.data.length ? (
+            props.appData.data.map((person, i) => {
+              return <View key={i} >
+                <Text>Name: {person.name}</Text>
+                <Text>Phonenumber: {person.phonenumber}</Text>
+              </View>
+            })
+          ) : null
+        }
+        </View>
+      </Layout>
     </SafeAreaLayout>
   );
 };
@@ -175,26 +120,6 @@ const SignInScreen = (props: any) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-  },
-  image: {
-    height: '100%',
-    width: '100%'
-  },
-  loginButton: { 
-    width: '100%', 
-    height: 48 
-  },
-  bottomContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 36,
-    padding: 20,
-  },
-  tab: {
-    height: '95%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   appBar: {
     height: 192,
@@ -206,13 +131,13 @@ const styles = StyleSheet.create({
   },
   resetPasswordContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   formControl: {
     marginVertical: 4,
   },
   submitButton: {
-    marginVertical: 24,
+    marginVertical: 24
   },
   noAccountButton: {
     alignSelf: 'center',
@@ -221,14 +146,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
+    intlData: state.intlData,
     appData: state.appData,
-    userData: state.user.userData
+    userData: state.user.userData,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fbLogin: (params) => dispatch(loginUserFacebook(params))
+    fbLogin: params => dispatch(loginUserFacebook(params)),
   };
 };
 
@@ -236,5 +162,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(SignInScreen);
-
-// export default connect()(SignInScreen)
