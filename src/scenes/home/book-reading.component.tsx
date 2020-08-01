@@ -43,10 +43,10 @@ export const BookReadingScreen = (props: any): SafeAreaLayoutElement => {
 
   const [bookId, setBookId] = useState(0);
 
-  const {setPlayerVisibility, textSize, bookDetail, ...listProps} = props;
+  const {userData, setPlayerVisibility, textSize, bookDetail, ...listProps} = props;
 
   const { book } = bookDetail;
-  const userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
+  const userUuid = userData.uuid;
 
   let favorite : {
     currentChapter: number;
@@ -273,7 +273,8 @@ const mapStateToProps = state => {
     textSizeVisibility: state.bookReading.textSizeVisibility,
     bookReading: state.bookReading.data,
     bookChapter: state.bookChapter,
-    favorite: state.user.favorite
+    favorite: state.user.favorite,
+    userData: state.user.userData
   };
 };
 

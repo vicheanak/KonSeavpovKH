@@ -30,7 +30,8 @@ import {
   fetchUserFavorite,
   createUserBookmark,
   updateUserBookmark,
-  updatePricingModalVisibility
+  updatePricingModalVisibility,
+  loginUserData
 } from '../../redux/actions';
 import {bookDetail} from './../../reducers/book-detail.reducer';
 import ContentView from '../../layouts/home/book-detail';
@@ -51,7 +52,7 @@ export const BookDetailScreen = (props: any): SafeAreaLayoutElement => {
   // const {book} = props.route.params;
   const insets: EdgeInsets = useSafeArea();
 
-  const {fetchFavorite, favorite, bookDetail, setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
+  const {userData, fetchFavorite, favorite, bookDetail, setBookTextSizeVisibility, setBookCurrentChapter, fetchChapters, ...listProps} = props;
   const book = bookDetail.book;
 
   let isBookmarked = false;
@@ -76,10 +77,10 @@ export const BookDetailScreen = (props: any): SafeAreaLayoutElement => {
 
   const onBookmarkActionPress = (): void => {
     if (props.favorite == undefined){
-      props.createBookmark({userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid, isBookmarked: true});
+      props.createBookmark({userUuid: userData.uuid, bookUuid: book.uuid, isBookmarked: true});
     }
     else{
-      props.updateBookmark({userUuid: '1d222222-2fc2-4f39-92d2-faba81c4326d', bookUuid: book.uuid, isBookmarked: !props.favorite?.isBookmarked});
+      props.updateBookmark({userUuid: userData.uuid, bookUuid: book.uuid, isBookmarked: !props.favorite?.isBookmarked});
     }
   };
 

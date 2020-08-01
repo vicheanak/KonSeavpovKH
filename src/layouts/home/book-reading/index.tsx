@@ -57,10 +57,11 @@ export default (props: any): React.ReactElement => {
     hideTextSizeCard,
     bookReading,
     updateBookmark,
+    userData
   } = props;
   const {book} = props.bookDetail;
   const styles = useStyleSheet(themedStyles);
-  const userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
+  const userUuid = userData.uuid;
 
   let favorite : {
     currentChapter: number;

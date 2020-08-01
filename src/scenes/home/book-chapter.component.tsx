@@ -62,10 +62,10 @@ const BookChapterScreen = (props: any): SafeAreaLayoutElement => {
     { id: 4, text: props.intlData.messages['not_yet_read'] },
   ];
 
-  const { bookChapter, bookDetail, setBookCurrentChapter, updateBookmark } = props;
+  const { userData, bookChapter, bookDetail, setBookCurrentChapter, updateBookmark } = props;
 
   const {book} = bookDetail;
-  const userUuid = '1d222222-2fc2-4f39-92d2-faba81c4326d';
+  const userUuid = userData.uuid;
 
   const [selectedOption, setSelectedOption] = React.useState(defaultOptions);
 
@@ -235,6 +235,7 @@ const mapStateToProps = state => {
     bookDetail: state.bookDetail,
     favorite: state.user.favorite,
     bookChapter: state.bookChapter,
+    userData: state.user.userData
   };
 };
 

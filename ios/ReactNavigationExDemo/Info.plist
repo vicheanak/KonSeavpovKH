@@ -20,23 +20,6 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -46,6 +29,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
 	<key>FacebookAppID</key>
 	<string>2318363681804608</string>
 	<key>FacebookDisplayName</key>
@@ -69,8 +54,40 @@
 		<string>fbshareextension</string>
 		<string>fb</string>
 	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NotoSerifKhmer-Bold.ttf</string>
+		<string>NotoSerifKhmer-Regular.ttf</string>
+		<string>NotoSerifKhmer-SemiBold.ttf</string>
+		<string>Hanuman-Bold.ttf</string>
+		<string>Hanuman-Regular.ttf</string>
+		<string>Battambang-Bold.ttf</string>
+		<string>Battambang-Regular.ttf</string>
+		<string>NotoSansKhmer-Bold.ttf</string>
+		<string>NotoSansKhmer-Regular.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>processing</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -85,17 +102,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>NotoSerifKhmer-Bold.ttf</string>
-		<string>NotoSerifKhmer-Regular.ttf</string>
-		<string>NotoSerifKhmer-SemiBold.ttf</string>
-		<string>Hanuman-Bold.ttf</string>
-		<string>Hanuman-Regular.ttf</string>
-		<string>Battambang-Bold.ttf</string>
-		<string>Battambang-Regular.ttf</string>
-		<string>NotoSansKhmer-Bold.ttf</string>
-		<string>NotoSansKhmer-Regular.ttf</string>
-	</array>
 </dict>
 </plist>

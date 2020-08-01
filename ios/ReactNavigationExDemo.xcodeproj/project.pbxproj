@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ReactNavigationExDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNavigationExDemoTests.m */; };
+		0F93F9148F1E4E178D389743 /* Battambang-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 56190B2FAEAD432693EA2AD8 /* Battambang-Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -18,15 +19,14 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* ReactNavigationExDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNavigationExDemoTests.m */; };
+		442148F2778E49689BF07450 /* NotoSansKhmer-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6278F29C6AA4DF9B33FDB65 /* NotoSansKhmer-Bold.ttf */; };
+		49384034DE3D4619BE282EA5 /* Battambang-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA6F9A6B0FD4491B8E49B9D1 /* Battambang-Bold.ttf */; };
+		5BBEC482101E43C6A995CBDB /* NotoSansKhmer-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 571DA9DF10164CB8B5747FAE /* NotoSansKhmer-Regular.ttf */; };
 		67A7A49A6535649AB9F344A3 /* libPods-ReactNavigationExDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74ECEFE7F8B19AD5EF9DF3FA /* libPods-ReactNavigationExDemoTests.a */; };
 		9230AD92CFE2480ABD070AFF /* Hanuman-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1526F7B5B1024F3590E049FE /* Hanuman-Bold.ttf */; };
 		B66EDD7A4E924BB7BA17EB0F /* Hanuman-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E124384B6EF94F919ECA9404 /* Hanuman-Regular.ttf */; };
 		B71A0DEB24C1F2420089F812 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71A0DEA24C1F2420089F812 /* dummy.swift */; };
 		DAAFEC79B844CA1FD1141CB9 /* libPods-ReactNavigationExDemo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C72C3A8DD913FD5600CD8B1D /* libPods-ReactNavigationExDemo-tvOS.a */; };
-		49384034DE3D4619BE282EA5 /* Battambang-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA6F9A6B0FD4491B8E49B9D1 /* Battambang-Bold.ttf */; };
-		0F93F9148F1E4E178D389743 /* Battambang-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 56190B2FAEAD432693EA2AD8 /* Battambang-Regular.ttf */; };
-		442148F2778E49689BF07450 /* NotoSansKhmer-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6278F29C6AA4DF9B33FDB65 /* NotoSansKhmer-Bold.ttf */; };
-		5BBEC482101E43C6A995CBDB /* NotoSansKhmer-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 571DA9DF10164CB8B5747FAE /* NotoSansKhmer-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +65,8 @@
 		2D02E4901E0B4A5D006451C7 /* ReactNavigationExDemo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReactNavigationExDemo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44E19D8D84C34B56AA33E4DB /* NotoSerifKhmer-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerifKhmer-SemiBold.ttf"; path = "../src/assets/fonts/NotoSerifKhmer-SemiBold.ttf"; sourceTree = "<group>"; };
 		475AA05AAD8063EA249A5F6D /* Pods-ReactNavigationExDemo-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNavigationExDemo-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNavigationExDemo-tvOSTests/Pods-ReactNavigationExDemo-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		56190B2FAEAD432693EA2AD8 /* Battambang-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Battambang-Regular.ttf"; path = "../src/assets/fonts/Battambang-Regular.ttf"; sourceTree = "<group>"; };
+		571DA9DF10164CB8B5747FAE /* NotoSansKhmer-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKhmer-Regular.ttf"; path = "../src/assets/fonts/NotoSansKhmer-Regular.ttf"; sourceTree = "<group>"; };
 		6C7123553D4815D953947139 /* Pods-ReactNavigationExDemo-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNavigationExDemo-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-ReactNavigationExDemo-tvOS/Pods-ReactNavigationExDemo-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		71971E4C0A29C3B75072C122 /* Pods-ReactNavigationExDemo-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNavigationExDemo-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNavigationExDemo-tvOSTests/Pods-ReactNavigationExDemo-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		74ECEFE7F8B19AD5EF9DF3FA /* libPods-ReactNavigationExDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNavigationExDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,17 +76,16 @@
 		B71A0DE924C1F2420089F812 /* ReactNavigationExDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactNavigationExDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		B71A0DEA24C1F2420089F812 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		B77CA8095E584628824F2BBF /* NotoSerifKhmer-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerifKhmer-Bold.ttf"; path = "../src/assets/fonts/NotoSerifKhmer-Bold.ttf"; sourceTree = "<group>"; };
+		B7F6574924D5B06E00438219 /* ReactNavigationExDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ReactNavigationExDemo.entitlements; path = ReactNavigationExDemo/ReactNavigationExDemo.entitlements; sourceTree = "<group>"; };
+		BA6F9A6B0FD4491B8E49B9D1 /* Battambang-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Battambang-Bold.ttf"; path = "../src/assets/fonts/Battambang-Bold.ttf"; sourceTree = "<group>"; };
 		C3E9353AC57ED718AABD82D2 /* Pods-ReactNavigationExDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNavigationExDemo.debug.xcconfig"; path = "Target Support Files/Pods-ReactNavigationExDemo/Pods-ReactNavigationExDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		C6278F29C6AA4DF9B33FDB65 /* NotoSansKhmer-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSansKhmer-Bold.ttf"; path = "../src/assets/fonts/NotoSansKhmer-Bold.ttf"; sourceTree = "<group>"; };
 		C72C3A8DD913FD5600CD8B1D /* libPods-ReactNavigationExDemo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNavigationExDemo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE43391400DC738087BD243A /* Pods-ReactNavigationExDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNavigationExDemo.release.xcconfig"; path = "Target Support Files/Pods-ReactNavigationExDemo/Pods-ReactNavigationExDemo.release.xcconfig"; sourceTree = "<group>"; };
 		DA4A2B67C26F2449FD262BE1 /* libPods-ReactNavigationExDemo-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNavigationExDemo-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E124384B6EF94F919ECA9404 /* Hanuman-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Hanuman-Regular.ttf"; path = "../src/assets/fonts/Hanuman-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		BA6F9A6B0FD4491B8E49B9D1 /* Battambang-Bold.ttf */ = {isa = PBXFileReference; name = "Battambang-Bold.ttf"; path = "../src/assets/fonts/Battambang-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		56190B2FAEAD432693EA2AD8 /* Battambang-Regular.ttf */ = {isa = PBXFileReference; name = "Battambang-Regular.ttf"; path = "../src/assets/fonts/Battambang-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		C6278F29C6AA4DF9B33FDB65 /* NotoSansKhmer-Bold.ttf */ = {isa = PBXFileReference; name = "NotoSansKhmer-Bold.ttf"; path = "../src/assets/fonts/NotoSansKhmer-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		571DA9DF10164CB8B5747FAE /* NotoSansKhmer-Regular.ttf */ = {isa = PBXFileReference; name = "NotoSansKhmer-Regular.ttf"; path = "../src/assets/fonts/NotoSansKhmer-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +144,7 @@
 		13B07FAE1A68108700A75B9A /* ReactNavigationExDemo */ = {
 			isa = PBXGroup;
 			children = (
+				B7F6574924D5B06E00438219 /* ReactNavigationExDemo.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -698,6 +700,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ReactNavigationExDemo/ReactNavigationExDemo.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -726,6 +729,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ReactNavigationExDemo/ReactNavigationExDemo.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
