@@ -33,7 +33,15 @@ import {
 import {CloseOutlineIcon} from '../assets/icons';
 import TrackPlayer from 'react-native-track-player';
 import {usePlaybackState} from 'react-native-track-player/lib/hooks';
-import {loginUserFacebook, updatePlayerVisibility, updateBookCurrentChapter, updateUserBookmark} from './../redux/actions';
+import {loginUserFacebook,
+  updatePlayerVisibility,
+  updateBookCurrentChapter,
+  updateUserBookmark,
+  fetchUser,
+  getUserLatestInvoice,
+  fetchUserFavorites,
+  fetchBooksData,
+  updateUserData} from './../redux/actions';
 import {SOURCE} from './app-environment';
 import TextTicker from 'react-native-text-ticker';
 import * as RootNavigation from './RootNavigation';
@@ -45,31 +53,31 @@ import {
 } from 'react-native-fbsdk';
 
 import { useTrackPlayerEvents} from 'react-native-track-player/lib/hooks';
+import axios from 'axios';
+import { API_SOURCE } from './../app/app-environment';
 
 const defaultConfig: {local: Local; theme: Theme} = {
   local: 'kh',
   theme: 'light',
 };
 
+
 let initRouteName = AppRoute.STARTED;
-
 const App = (props: any): React.ReactElement => {
-  const {userData, updateBookmark, setBookCurrentChapter, currentTheme, currentLang, bookChapter, bookDetail} = props;
-  // This value is used to determine the initial screen
-  const isAuthorized: boolean = false;
+  const {setUserData, userData, updateBookmark, setBookCurrentChapter, currentTheme, currentLang, bookChapter, bookDetail, userLoading, userAccessToken} = props;
   const [theme, setTheme] = React.useState(currentTheme);
-
-  const _responseInfoCallback = (error: any, result: any) => {
-    if (error) {
-      console.log('Error fetching data: ', error);
-    } else {
-      console.log('Success fetching data: ', result);
-    }
-  };
 
   useEffect(() => {
     (async () => {
       switchLanguage(currentLang);
+      const userDataStorage = await AppStorage.getUser();
+      if (userDataStorage){
+        let user = JSON.parse(userDataStorage);
+        setUserData(user);
+        props.getLatestInvoice(user.uuid);
+        props.getUserFavorites(user.uuid);
+        props.fetchBooks();
+      }
     })();
   }, []);
 
@@ -84,8 +92,6 @@ const App = (props: any): React.ReactElement => {
     AppStorage.setTheme(nextTheme);
     setTheme(nextTheme);
   };
-
-  const [count, setCount] = React.useState(0);
 
   const styles = useStyleSheet(themedStyles);
 
@@ -344,9 +350,31 @@ const loadingTasks: Task[] = [
       result,
     ]),
   () =>
-    AccessToken.getCurrentAccessToken().then(data => {
-      if (data) {
+    AppStorage.getUser().then(result => {
+      if (result){
         initRouteName = AppRoute.HOME;
+      }
+    }),
+  // () =>
+  //   AccessToken.getCurrentAccessToken().then(result => [
+  //     'initRouteName',
+  //     AppRoute.HOME,
+  //   ]),
+  () =>
+    AccessToken.getCurrentAccessToken().then(data => {
+      if (data){
+        initRouteName = AppRoute.HOME;
+        AppStorage.getUser().then((userData) => {
+          if (!userData){
+            axios
+            .get(`${API_SOURCE}/users/${data.userID}`)
+            .then(res => {
+              AppStorage.setUser(JSON.stringify(res.data));
+            }).catch((error) => {
+              console.error(error);
+            });
+          }
+        });
       }
     }),
 ];
@@ -379,6 +407,11 @@ const mapDispatchToProps = dispatch => {
     setBookCurrentChapter: currentChapter =>
       dispatch(updateBookCurrentChapter(currentChapter)),
     updateBookmark: (params) => dispatch(updateUserBookmark(params)),
+    getUser: (userId) => dispatch(fetchUser(userId)),
+    setUserData: (params) => dispatch(updateUserData(params)),
+    getLatestInvoice: (userUuid) => dispatch(getUserLatestInvoice(userUuid)),
+    getUserFavorites: (userUuid) => dispatch(fetchUserFavorites(userUuid)),
+    fetchBooks: () => dispatch(fetchBooksData()),
   };
 };
 

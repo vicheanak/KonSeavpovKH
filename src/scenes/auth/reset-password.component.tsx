@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { ImageBackground, StyleSheet, Alert } from 'react-native';
 import { EdgeInsets, useSafeArea } from 'react-native-safe-area-context';
 import { Button, Layout, LayoutElement } from '@ui-kitten/components';
 import { Formik, FormikProps } from 'formik';
@@ -24,21 +24,22 @@ const ResetPasswordScreen = (props: any) => {
   };
 
   const navigateSignIn = (): void => {
+    // Alert.alert('Please contact our Facebook Page - (Kon Seavpov)');
     props.navigation.navigate(AppRoute.SIGN_IN);
   };
 
   const renderForm = (props: FormikProps<ResetPasswordData>): React.ReactFragment => (
     <React.Fragment>
       <FormInput
-        id='email'
+        id='phonenumber'
         style={styles.formControl}
-        placeholder='Email'
-        keyboardType='email-address'
+        placeholder='Phone Number'
+        keyboardType='number-pad'
       />
       <Button
         style={styles.button}
         onPress={props.handleSubmit}>
-        DONE
+        RECOVER
       </Button>
     </React.Fragment>
   );

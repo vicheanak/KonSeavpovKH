@@ -56,6 +56,7 @@ import moment from "moment";
 import ModalPricingView from './modal-pricing';
 import { getUserFavorites } from 'src/redux/api';
 
+let isFirstRender = true;
 const BookScreen = (props: any): ListElement => {
   const [query, setQuery] = React.useState<string>('');
   const styles = useStyleSheet(themedStyles);
@@ -64,26 +65,22 @@ const BookScreen = (props: any): ListElement => {
   const {invoice, getUserFavorites, updateViewPricingModal, getLatestInvoice, setUserData, fetchFavorite, fetchChapters, setBookDetail, books, fetchBooks, ...listProps} = props;
   let {userData} = props;
 
-  //  const [count, setCount] = useState(0);
-  // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    // props.fetchPeople();
-    // props.fetchBooks();
     (async () => {
-      if (userData.uuid){
-        userData = userData;
-        AppStorage.setUser(JSON.stringify(userData));
-      }else{
-        const userDataStorage = await AppStorage.getUser();
-        userData = JSON.parse(userDataStorage);
-        console.log('userData ===> ', userData);
-      }
-      setUserData(userData);
-      getLatestInvoice(userData?.uuid);
-      getUserFavorites(userData?.uuid);
-      fetchBooks();
     })();
   }, []);
+
+  if (isFirstRender){
+    (async () => {
+      isFirstRender = false;
+      // const userDataStorage = await AppStorage.getUser();
+      // userData = JSON.parse(userDataStorage);
+      // setUserData(userData);
+      // getLatestInvoice(userData?.uuid);
+      // getUserFavorites(userData?.uuid);
+      // fetchBooks();
+    })();
+  }
 
   const navigateBookDetail = (bookIndex: number): void => {
     const {[bookIndex]: book} = books;
@@ -96,12 +93,12 @@ const BookScreen = (props: any): ListElement => {
   const renderItemHeader = ({
     item,
   }: ListRenderItemInfo<any>): React.ReactElement => {
-    let photo = SOURCE + item.imageUrl;
+    let photo = SOURCE + item?.imageUrl;
     return (
       <View>
         <ImageBackground style={styles.itemHeader} source={{uri: photo}} />
         <Text numberOfLines={1} style={styles.authorName}>
-          {item.authorname}
+          {item?.authorname}
         </Text>
       </View>
     );

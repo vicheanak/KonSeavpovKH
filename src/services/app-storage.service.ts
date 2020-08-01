@@ -37,6 +37,12 @@ export class AppStorage {
   static setUser = (user: any): Promise<void> => {
     return AsyncStorage.setItem(USER_KEY, user);
   }
+
+  static deleteUser = (): Promise<void> => {
+    return AsyncStorage.removeItem(USER_KEY).then((user: any) => {
+      return user;
+    });
+  }
   
 }
 

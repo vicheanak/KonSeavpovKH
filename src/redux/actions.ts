@@ -461,6 +461,16 @@ export function loginUserDataSuccess(data) {
   }
 }
 
+export function fetchUserById(userId) {
+  return (dispatch) => {
+    getUser(userId)
+      .then((data) => {
+        dispatch(loginUserDataSuccess(data))
+      })
+      .catch((err) => console.error('error login facebook', err))
+  };
+};
+
 export function setIsDoneLogin(isDone){
   return {
     type: SET_IS_DONE_LOGIN,
@@ -468,9 +478,9 @@ export function setIsDoneLogin(isDone){
   }
 }
 
-export function fetchUser(params) {
+export function fetchUser(userId) {
   return (dispatch) => {
-    getUser(params)
+    getUser(userId)
       .then((data) => {
         dispatch(fetchUserSuccess(data))
       })

@@ -13,7 +13,8 @@ import {
   FETCHING_USER_FAVORITE_DATA,
   FETCHING_USER_FAVORITE_DATA_SUCCESS,
   LOGIN_USER_DATA_SUCCESS,
-  SET_IS_DONE_LOGIN
+  SET_IS_DONE_LOGIN,
+  FETCHING_USER_DATA_SUCCESS
 } from '../redux/constants'
 const initialState = {
   favorites: [],
@@ -47,7 +48,8 @@ export const user = (state = initialState, action) => {
     case LOGIN_USER_FACEBOOK_DATA_SUCCESS:
       return {
         ...state,
-        userData: action.data
+        userData: action.data,
+        isDoneLogin: true
       }
     case SET_IS_DONE_LOGIN:
       return {
@@ -103,6 +105,12 @@ export const user = (state = initialState, action) => {
         ...state,
         favorite: action.data,
         isFavoriteFetching: false
+      }
+    case FETCHING_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        userData: action.data,
+        isDoneLogin: true
       }
     default:
       return state

@@ -27,6 +27,7 @@ import {connect} from 'react-redux';
 import {updatePricingModalVisibility, updateLanguage} from '../../redux/actions';
 import moment from "moment";
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {AppStorage} from './../../services/app-storage.service';
 
 const data = new Array(8).fill({
   title: 'Title for Item',
@@ -51,6 +52,10 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
     } else {
       await Linking.openURL(facebookPageWebsite);
     }
+  }
+  const onLogoutPress = async () => {
+    const deleteUser = await AppStorage.deleteUser();
+    props.navigation.navigate(AppRoute.AUTH);
   }
   return (
     <SafeAreaLayout style={styles.safeArea} insets={SaveAreaInset.TOP}>
@@ -139,13 +144,21 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
           </Text>
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
+          {userData.email && 
           <LoginButton
             publishPermissions={['publish_actions', 'picture', 'email', 'friends', 'age_range']}
-            onLogoutFinished={() => {
+            onLogoutFinished={async () => {
+              const deleteUser = await AppStorage.deleteUser();
               props.navigation.navigate(AppRoute.AUTH);
             }}
             style={styles.loginButton}
-          />
+          />}
+          {!userData.email && 
+          <Button
+          status="primary"
+          textStyle={{fontSize: 15, lineHeight: 25}}
+          onPress={onLogoutPress}
+          style={styles.loginButton}>{props.intlData.messages['sign_out']}</Button>}
         </View>
       </Layout>
     </SafeAreaLayout>

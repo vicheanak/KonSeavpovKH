@@ -139,11 +139,10 @@ export const loginUser = (params) => {
       });
   })
 }
-export const getUser = (params) => {
-  let userUuid = params.userUuid;
+export const getUser = (userId) => {
   return new Promise((resolve, reject) => {
     axios
-      .put(`${API_SOURCE}/users/loginFacebook`, params)
+      .get(`${API_SOURCE}/users/${userId}`)
       .then(res => {
         return resolve(res.data);
       }).catch((error) => {

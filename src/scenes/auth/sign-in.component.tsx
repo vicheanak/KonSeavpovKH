@@ -10,7 +10,14 @@ import { EyeIcon, EyeOffIcon } from '../../assets/icons';
 import { SignInData, SignInSchema } from '../../data/sign-in.model';
 import { i18n } from '../../app/i18n';
 import { connect } from 'react-redux'
-import { loginUserFacebook, loginUserData, setIsDoneLogin } from '../../redux/actions';
+import { loginUserFacebook,
+   loginUserData,
+   setIsDoneLogin,
+   updateUserData,
+    getUserLatestInvoice,
+    fetchUserFavorites,
+    fetchBooksData,
+   } from '../../redux/actions';
 import {
   SafeAreaLayout,
   SafeAreaLayoutElement,
@@ -20,6 +27,16 @@ import {
 import { Toolbar } from '../../components/toolbar.component';
 import { getUniqueId, getManufacturer, getDeviceId, getDevice } from 'react-native-device-info';
 import moment from "moment";
+import axios from 'axios';
+
+import {
+  LoginButton,
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk';
+import {AppStorage} from './../../services/app-storage.service';
+import { API_SOURCE } from './../../app/app-environment';
 
 const SignInScreen = (props: any) => {
 
@@ -29,16 +46,18 @@ const SignInScreen = (props: any) => {
   // props.fetchData();
 
   useEffect(() => {
-    if (Object.keys(props.userData).length){
-      if (props.userData.status != false && props.isDoneLogin){
-        props.setIsDoneLogin(false);
-        navigateHome();
-      }else{
-        if (props.isDoneLogin){
-          Alert.alert(props.userData.message);
-        }
-      }
-    }
+    // if (Object.keys(props.userData).length){
+    //   if (props.userData.status != false && props.isDoneLogin){
+    //     console.log('Login Correct');
+    //     props.setIsDoneLogin(false);
+    //     AppStorage.setUser(JSON.stringify(props.userData));
+    //     navigateHome();
+    //   }else{
+    //     if (props.isDoneLogin){
+    //       Alert.alert(props.userData.message);
+    //     }
+    //   }
+    // }
   });
 
   const onFormSubmit = (values: SignInData): void => {
@@ -52,7 +71,24 @@ const SignInScreen = (props: any) => {
         deviceId: getUniqueId(),
         endLockTime: endLockTime
       }
-      props.login(params);
+      axios
+      .post(`${API_SOURCE}/users/login`, params)
+      .then(res => {
+        if (res.data.status != false){
+          props.setUserData(res.data);
+          props.getLatestInvoice(res.data.uuid);
+          props.getUserFavorites(res.data.uuid);
+          props.fetchBooks();
+          AppStorage.setUser(JSON.stringify(res.data));
+          navigateHome();
+        }else{
+          Alert.alert(res.data.message);
+        }
+        // AppStorage.setUser(JSON.stringify(res.data));
+      }).catch((error) => {
+        console.error(error);
+      });
+      // props.login(params);
     }
     else{
       Alert.alert('Phonenumber or Password is required');
@@ -73,6 +109,50 @@ const SignInScreen = (props: any) => {
 
   const onPasswordIconPress = (): void => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const onLoginFinished = (error, result) => {
+    if (error) {
+      Alert.alert('login has error: ' + result.error);
+    } else if (result.isCancelled) {
+      Alert.alert('login is cancelled.');
+    } else {
+      AccessToken.getCurrentAccessToken().then(data => {
+        const _responseInfoCallback = (error: any, result: any) => {
+          if (error) {
+            Alert.alert('Error fetching data: '+ error);
+          } else {
+            let params = result;
+            params.accessToken = data.accessToken;
+            props.fbLogin(params);
+            axios
+            .get(`${API_SOURCE}/users/${data.userID}`)
+            .then(res => {
+              AppStorage.setUser(JSON.stringify(res.data));
+              props.setUserData(res.data);
+              props.getLatestInvoice(res.data.uuid);
+              props.getUserFavorites(res.data.uuid);
+              props.fetchBooks();
+              props.navigation.navigate(AppRoute.HOME);
+            }).catch((error) => {
+              console.error(error);
+            });
+          }
+        };
+        const infoRequest = new GraphRequest(
+          '/me?fields=name,picture,email,friends,age_range',
+          {
+            parameters: {
+              fields: {
+                string: 'id,name,email,friends,age_range,picture.type(large)',
+              },
+            },
+          },
+          _responseInfoCallback,
+        );
+        new GraphRequestManager().addRequest(infoRequest).start();
+      });
+    }
   };
 
   const renderForm = (formProps: FormikProps<SignInData>): React.ReactFragment => (
@@ -104,8 +184,9 @@ const SignInScreen = (props: any) => {
         style={styles.submitButton}
         textStyle={{fontSize: 15, lineHeight: 25}}
         appearance="outline"
+        status="warning"
         onPress={formProps.handleSubmit}>
-          Sign In
+          Sign In / Create Account
       </Button>
     </React.Fragment>
   );
@@ -128,9 +209,17 @@ const SignInScreen = (props: any) => {
           onSubmit={onFormSubmit}>
           {renderForm}
         </Formik>
-        <View>
-        </View>
       </Layout>
+      <View style={styles.buttonContainer}>
+        <LoginButton
+          publishPermissions={['publish_actions', 'picture', 'email', 'friends', 'age_range']}
+          onLoginFinished={onLoginFinished}
+          onLogoutFinished={() => {
+            props.navigation.navigate(AppRoute.AUTH);
+          }}
+          style={styles.loginButton}
+        />
+      </View>
     </SafeAreaLayout>
   );
 };
@@ -138,6 +227,14 @@ const SignInScreen = (props: any) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+  },
+  loginButton: { 
+    width: '100%', 
+    height: 48 
+  },
+  buttonContainer: {
+    padding: 20,
+    alignItems: 'center',
   },
   appBar: {
     height: 192,
@@ -175,7 +272,11 @@ const mapDispatchToProps = dispatch => {
   return {
     fbLogin: params => dispatch(loginUserFacebook(params)),
     login: params => dispatch(loginUserData(params)),
-    setIsDoneLogin: isDone => dispatch(setIsDoneLogin(isDone))
+    setIsDoneLogin: isDone => dispatch(setIsDoneLogin(isDone)),
+    setUserData: (params) => dispatch(updateUserData(params)),
+    getLatestInvoice: (userUuid) => dispatch(getUserLatestInvoice(userUuid)),
+    getUserFavorites: (userUuid) => dispatch(fetchUserFavorites(userUuid)),
+    fetchBooks: () => dispatch(fetchBooksData()),
   };
 };
 
