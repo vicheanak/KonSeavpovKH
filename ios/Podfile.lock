@@ -214,7 +214,7 @@ PODS:
     - React
   - react-native-safe-area-context (0.7.3):
     - React
-  - react-native-selectable-text (1.4.0):
+  - react-native-selectable-text (1.5.0):
     - React
   - react-native-slider (2.0.9):
     - React
@@ -256,6 +256,8 @@ PODS:
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
   - RNCMaskedView (0.1.10):
+    - React
+  - RNDeviceInfo (5.6.3):
     - React
   - RNGestureHandler (1.6.1):
     - React
@@ -304,6 +306,7 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -381,6 +384,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNI18n:
@@ -416,7 +421,7 @@ SPEC CHECKSUMS:
   react-native-fbsdk: 00c15d138bba6d4efa628670886fc58cec858c19
   react-native-restart: 57fd9e5b65cb905ddd973990d5cc364b9888f68a
   react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
-  react-native-selectable-text: 11f981efb0faa3f4a8377d3c386e958de54d71d5
+  react-native-selectable-text: 2a0a077350fea319e128e624e57a31adfa15ec30
   react-native-slider: b34d943dc60deb96d952ba6b6b249aa8091e86da
   react-native-track-player: 8663287af4ee20a666e95e818f1f9571b90e7e67
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
@@ -430,6 +435,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
+  RNDeviceInfo: c5fa705c8914c42800ff36e86d25d277e8eb16ff
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
@@ -437,6 +443,6 @@ SPEC CHECKSUMS:
   RNSVG: 67f1f12dae2cef6ed59a42cae74a6b8f5a9e7b46
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 5af5d20c4c8ee1fb1fd6818d6bbcb08b00ef3485
+PODFILE CHECKSUM: ccc935bdc0e26aece759bf3711081bbf51023003
 
 COCOAPODS: 1.9.3

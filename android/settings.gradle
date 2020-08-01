@@ -1,4 +1,6 @@
 rootProject.name = 'KonSeavpovKH'
+include ':react-native-device-info'
+project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':@astrocoders_react-native-selectable-text'
 project(':@astrocoders_react-native-selectable-text').projectDir = new File(rootProject.projectDir, '../node_modules/@astrocoders/react-native-selectable-text/android')
 include ':app', ':react-native-i18n', ':react-native-restart'
@@ -11,3 +13,5 @@ include ':react-native-track-player'
 project(':react-native-track-player').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-track-player/android')
 include ':react-native-fbsdk'
 project(':react-native-fbsdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fbsdk/android')
+include ':react-native-device-info'
+project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')

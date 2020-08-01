@@ -44,6 +44,8 @@ target 'ReactNavigationExDemo' do
 
   pod 'react-native-selectable-text', :path => '../node_modules/@astrocoders/react-native-selectable-text'
 
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
   target 'ReactNavigationExDemoTests' do
     inherit! :search_paths
     # Pods for testing

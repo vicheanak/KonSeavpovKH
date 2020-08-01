@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { ImageBackground, StyleSheet, View, Text } from 'react-native';
+import React, {useEffect} from 'react';
+import { ImageBackground, StyleSheet, View, Text, Alert } from 'react-native';
 import { Button, CheckBox, Layout } from '@ui-kitten/components';
 import { Formik, FormikProps } from 'formik';
 import { SignInScreenProps } from '../../navigation/auth.navigator';
@@ -10,7 +10,7 @@ import { EyeIcon, EyeOffIcon } from '../../assets/icons';
 import { SignInData, SignInSchema } from '../../data/sign-in.model';
 import { i18n } from '../../app/i18n';
 import { connect } from 'react-redux'
-import { loginUserFacebook } from '../../redux/actions';
+import { loginUserFacebook, loginUserData, setIsDoneLogin } from '../../redux/actions';
 import {
   SafeAreaLayout,
   SafeAreaLayoutElement,
@@ -18,6 +18,8 @@ import {
 } from '../../components/safe-area-layout.component';
 
 import { Toolbar } from '../../components/toolbar.component';
+import { getUniqueId, getManufacturer, getDeviceId, getDevice } from 'react-native-device-info';
+import moment from "moment";
 
 const SignInScreen = (props: any) => {
 
@@ -26,9 +28,35 @@ const SignInScreen = (props: any) => {
 
   // props.fetchData();
 
+  useEffect(() => {
+    if (Object.keys(props.userData).length){
+      if (props.userData.status != false && props.isDoneLogin){
+        props.setIsDoneLogin(false);
+        navigateHome();
+      }else{
+        if (props.isDoneLogin){
+          Alert.alert(props.userData.message);
+        }
+      }
+    }
+  });
+
   const onFormSubmit = (values: SignInData): void => {
-    console.log({values});
-    // navigateHome();
+    if (values.phonenumber && values.password){
+
+      let endLockTime:any = moment().add(10, 'minutes');
+      endLockTime = endLockTime.valueOf();
+      let params = {
+        phonenumber: values.phonenumber,
+        password: values.password,
+        deviceId: getUniqueId(),
+        endLockTime: endLockTime
+      }
+      props.login(params);
+    }
+    else{
+      Alert.alert('Phonenumber or Password is required');
+    }
   };
 
   const navigateHome = (): void => {
@@ -101,16 +129,6 @@ const SignInScreen = (props: any) => {
           {renderForm}
         </Formik>
         <View>
-        {
-          props.appData.data.length ? (
-            props.appData.data.map((person, i) => {
-              return <View key={i} >
-                <Text>Name: {person.name}</Text>
-                <Text>Phonenumber: {person.phonenumber}</Text>
-              </View>
-            })
-          ) : null
-        }
         </View>
       </Layout>
     </SafeAreaLayout>
@@ -149,12 +167,15 @@ const mapStateToProps = state => {
     intlData: state.intlData,
     appData: state.appData,
     userData: state.user.userData,
+    isDoneLogin: state.user.isDoneLogin
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     fbLogin: params => dispatch(loginUserFacebook(params)),
+    login: params => dispatch(loginUserData(params)),
+    setIsDoneLogin: isDone => dispatch(setIsDoneLogin(isDone))
   };
 };
 

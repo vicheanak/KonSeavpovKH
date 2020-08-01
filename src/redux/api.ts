@@ -127,6 +127,18 @@ export const loginFacebook = (params) => {
   })
 }
 
+export const loginUser = (params) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`${API_SOURCE}/users/login`, params)
+      .then(res => {
+        return resolve(res.data);
+      }).catch((error) => {
+        console.error(error);
+        return resolve(error);
+      });
+  })
+}
 export const getUser = (params) => {
   let userUuid = params.userUuid;
   return new Promise((resolve, reject) => {

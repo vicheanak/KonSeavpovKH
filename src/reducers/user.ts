@@ -1,5 +1,20 @@
 
-import { UPDATE_PRICING_MODAL_VISIBILITY, GET_USER_LATEST_INVOICE_SUCCESS, UPDATE_USER_DATA, LOGIN_USER_FACEBOOK_DATA_SUCCESS, CREATE_USER_BOOKMARK_DATA, CREATE_USER_BOOKMARK_DATA_SUCCESS, UPDATE_USER_BOOKMARK_DATA, UPDATE_USER_BOOKMARK_DATA_SUCCESS, FETCHING_USER_FAVORITES_DATA, FETCHING_USER_FAVORITES_DATA_SUCCESS, FETCHING_USER_FAVORITE_DATA, FETCHING_USER_FAVORITE_DATA_SUCCESS } from '../redux/constants'
+import {
+  UPDATE_PRICING_MODAL_VISIBILITY,
+  GET_USER_LATEST_INVOICE_SUCCESS,
+  UPDATE_USER_DATA,
+  LOGIN_USER_FACEBOOK_DATA_SUCCESS,
+  CREATE_USER_BOOKMARK_DATA,
+  CREATE_USER_BOOKMARK_DATA_SUCCESS,
+  UPDATE_USER_BOOKMARK_DATA,
+  UPDATE_USER_BOOKMARK_DATA_SUCCESS,
+  FETCHING_USER_FAVORITES_DATA,
+  FETCHING_USER_FAVORITES_DATA_SUCCESS,
+  FETCHING_USER_FAVORITE_DATA,
+  FETCHING_USER_FAVORITE_DATA_SUCCESS,
+  LOGIN_USER_DATA_SUCCESS,
+  SET_IS_DONE_LOGIN
+} from '../redux/constants'
 const initialState = {
   favorites: [],
   favorite: {},
@@ -8,6 +23,7 @@ const initialState = {
   error: false,
   userData: {},
   invoice: {},
+  isDoneLogin: false,
   isPricingModalVisible: false
 }
 
@@ -32,6 +48,17 @@ export const user = (state = initialState, action) => {
       return {
         ...state,
         userData: action.data
+      }
+    case SET_IS_DONE_LOGIN:
+      return {
+        ...state,
+        isDoneLogin: action.isDone
+      }
+    case LOGIN_USER_DATA_SUCCESS:
+      return {
+        ...state,
+        userData: action.data,
+        isDoneLogin: true,
       }
     case FETCHING_USER_FAVORITES_DATA:
       return {

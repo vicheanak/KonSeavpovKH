@@ -46,9 +46,26 @@ import {
   UPDATE_USER_DATA,
   GET_USER_LATEST_INVOICE,
   GET_USER_LATEST_INVOICE_SUCCESS,
-  UPDATE_PRICING_MODAL_VISIBILITY
+  UPDATE_PRICING_MODAL_VISIBILITY,
+  LOGIN_USER_DATA,
+  LOGIN_USER_DATA_SUCCESS,
+  SET_IS_DONE_LOGIN
 } from './constants'
-import { getPeople, addPeople, getBooksList, getUserFavorites, getUserFavorite, getBookDetail, getBookChapters, createBookmark, updateBookmark, loginFacebook, getUser, getUserLatestInvoiceApi } from './api'
+import {
+  getPeople,
+  addPeople,
+  getBooksList,
+  getUserFavorites,
+  getUserFavorite,
+  getBookDetail,
+  getBookChapters,
+  createBookmark,
+  updateBookmark,
+  loginFacebook,
+  getUser,
+  getUserLatestInvoiceApi,
+  loginUser
+} from './api'
 
 export function getData() {
   return {
@@ -383,7 +400,7 @@ export const updatePlayerVisibility = (playerVisibility) => {
 }
 
 export const updatePricingModalVisibility = (isVisible) => {
-  console.log({isVisible});
+  console.log({ isVisible });
   return (dispatch) => {
     dispatch({
       type: UPDATE_PRICING_MODAL_VISIBILITY,
@@ -424,6 +441,30 @@ export function loginUserFacebookSuccess(data) {
   return {
     type: LOGIN_USER_FACEBOOK_DATA_SUCCESS,
     data,
+  }
+}
+
+export function loginUserData(params) {
+  return (dispatch) => {
+    loginUser(params)
+      .then((data) => {
+        dispatch(loginUserDataSuccess(data))
+      })
+      .catch((err) => console.error('error login facebook', err))
+  };
+};
+
+export function loginUserDataSuccess(data) {
+  return {
+    type: LOGIN_USER_DATA_SUCCESS,
+    data,
+  }
+}
+
+export function setIsDoneLogin(isDone){
+  return {
+    type: SET_IS_DONE_LOGIN,
+    isDone
   }
 }
 

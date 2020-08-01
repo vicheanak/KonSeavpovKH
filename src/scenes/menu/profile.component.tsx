@@ -37,6 +37,9 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
 
   const { userData, invoice } = props;
   useEffect(() => {
+    if (!userData.picture){
+      userData.picture = 'https://i.ibb.co/TKg9yH9/Kon-Seavpov-Logo.png';
+    }
   }, []);
   const openFacebookUrl = async () => {
     const facebookPage = "fb://page/111874160485392";
@@ -56,8 +59,8 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
       <Layout style={styles.container}>
         {/* <List style={styles.listContainer} data={data} renderItem={renderItem} /> */}
         <View style={styles.rowContainer}>
-            <Avatar style={styles.avatar} size='giant' source={{ uri: userData.picture }}/>
-            <Text>{userData.name}</Text>
+            <Avatar style={styles.avatar} size='giant' source={{ uri: userData.picture ? userData.picture : 'https://i.ibb.co/TKg9yH9/Kon-Seavpov-Logo.png' }}/>
+            <Text>{userData.name ? userData.name : userData.phoneNumber}</Text>
         </View>
         <Divider/>
         <View style={styles.rowContainer}>
@@ -65,6 +68,7 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
             {props.intlData.messages['membership']}
           </Text>
         </View>
+        
         {invoice.length > 0 && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.rowContainer}>
             <Text style={styles.rowLabel}>{props.intlData.messages['membership']}: {props.intlData.messages['expired']}</Text>
         </View>)}
@@ -78,22 +82,20 @@ const ProfileScreen = (props: any): SafeAreaLayoutElement => {
         {invoice.length > 0 && (<View style={styles.rowContainer}>
         <Text style={styles.rowLabel}>{props.intlData.messages['expired']}: {moment(parseInt(props.invoice[0]?.endSubscriptionDate)).format('L')}</Text>
         </View>)}
-        {invoice.length > 0 && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View>
+        {invoice.length > 0 && moment() >= moment(parseInt(props.invoice[0]?.endSubscriptionDate)) && (<View style={styles.buttonContainer}>
           <Button
           status="success"
-          appearance="ghost"
           style={styles.bookButton}
-          textStyle={{fontSize: 17, lineHeight: 30}}
+          textStyle={{fontSize: 15, lineHeight: 25}}
           onPress={() => props.setPricingModalVisibility(true)}>
           {props.intlData.messages['join_membership']}
           </Button>
         </View>)}
-        {Object.keys(props.invoice).length === 0 && (<View>
+        {Object.keys(props.invoice).length === 0 && (<View style={styles.buttonContainer}>
           <Button
           status="success"
-          appearance="ghost"
           style={styles.bookButton}
-          textStyle={{fontSize: 17, lineHeight: 30}}
+          textStyle={{fontSize: 15, lineHeight: 25}}
           onPress={() => props.setPricingModalVisibility(true)}>
           {props.intlData.messages['join_membership']}
           </Button>
@@ -174,8 +176,9 @@ const styles = StyleSheet.create({
     width: 30
   },
   bookButton: {
-    // width: 250,
-    // padding: 90
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'center',
   },
   rowContainer: {
     flexDirection: 'row',
