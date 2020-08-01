@@ -199,11 +199,31 @@ const App = (props: any): React.ReactElement => {
   const events = [
     TrackPlayer.TrackPlayerEvents.PLAYBACK_TRACK_CHANGED,
     TrackPlayer.TrackPlayerEvents.PLAYBACK_QUEUE_ENDED,
+    TrackPlayer.TrackPlayerEvents.REMOTE_PLAY,
+    TrackPlayer.TrackPlayerEvents.REMOTE_PAUSE,
+    TrackPlayer.TrackPlayerEvents.REMOTE_PREVIOUS,
+    TrackPlayer.TrackPlayerEvents.REMOTE_SEEK,
+    'remote-next',
   ];
 
   useTrackPlayerEvents(events, (event) => {
     if (event.track){
       setCurrentChapter();
+    }
+    if (event.type == 'remote-next'){
+      TrackPlayer.skipToNext();
+    }
+    if (event.type == 'remote-previous'){
+      TrackPlayer.skipToPrevious();
+    }
+    if (event.type == 'remote-play'){
+      TrackPlayer.play();
+    }
+    if (event.type == 'remote-pause'){
+      TrackPlayer.pause();
+    }
+    if (event.type == 'remote-seek'){
+      TrackPlayer.seekTo(event.position);
     }
   });
 
